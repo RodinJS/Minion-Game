@@ -1,5 +1,6 @@
 [submodule "lib"]
 	path = lib
 	url = git@github.com:RodinJS/Rodin-Lib.git
-[submodule "Rodin-Lib"]
 	branch = RO-548-Game
+[submodule "Rodin-Lib"]
+	branch = dev
