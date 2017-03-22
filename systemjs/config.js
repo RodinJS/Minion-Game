@@ -35,6 +35,9 @@
         'core/button',
         'core/gamePad',
         'core/utils',
+        'core/loader',
+        'core/plugin',
+        'core/particleSystem',
         'core/utils/threeWrappers',
         'core/video'
 	];
