@@ -38,8 +38,9 @@
         'core/loader',
         'core/plugin',
         'core/particleSystem',
-        'core/utils/threeWrappers',
-        'core/video'
+        'core/utils/math',
+        'core/video',
+		'core/eventEmitter'
 	];
 
 	function packIndex(moduleName) {
