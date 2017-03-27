@@ -1,20 +1,20 @@
 import * as R from 'rodin/core';
 
-class State extends R.EventEmitter {
+export default class State extends R.EventEmitter {
     constructor(name) {
         super();
         this.name = name;
     }
 
     start() {
-        this.emit('start');
+        this.emit('start', new R.RodinEvent());
     }
 
     fastForward() {
-        return this.emit('fastForward');
+        return this.emit('fastForward', new R.RodinEvent());
     }
 
     finish() {
-        this.emit('finish');
+        this.emit('finish', new R.RodinEvent());
     }
 }

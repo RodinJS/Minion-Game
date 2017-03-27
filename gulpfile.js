@@ -31,15 +31,7 @@ gulp.task('js', () => {
 	const s = size({title: 'JS -> ', pretty: true});
 	return gulp.src(JS)
 		.pipe(plumber(ERROR_MESSAGE))
-		.pipe(babel({
-            "presets": [
-                "es2015"
-            ],
-            "plugins": [
-                "transform-es2015-modules-systemjs",
-                "transform-class-properties"
-            ]
-		}))
+		.pipe(babel())
 		.pipe(s)
 		.pipe(plumber.stop())
 		.pipe(gulp.dest('./build'))

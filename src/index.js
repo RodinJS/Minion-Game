@@ -1,120 +1,91 @@
-import * as RODIN from 'rodin/core';
-RODIN.start();
+import * as R from 'rodin/core';
+import GameMechanics from './GameMechanics/GameMechanics.js'
+import State from './GameMechanics/State.js';
+import SharedObject from  './GameMechanics/SharedObject.js';
 
-const sphere = new RODIN.Sphere();
-const cube1 = new RODIN.Box();
-const cube2 = new RODIN.Box(.2, .2, .2, new THREE.MeshBasicMaterial({ wireframe: true, color: 0x996633 }));
-
-
-RODIN.Scene.active._scene.add(new THREE.AmbientLight());
-
-//scale animations
-const hoverAnimation = new RODIN.AnimationClip('hover', {
-    scale: {
-        x: 1.5,
-        y: 1.5,
-        z: 1.5
-    }
-});
-hoverAnimation.duration(200);
-
-const hoverOutAnimation = new RODIN.AnimationClip('hoverout', {
-    scale: {
-        x: 1,
-        y: 1,
-        z: 1
-    }
-});
-hoverOutAnimation.duration(200);
-
-//rotation animations
-const hoverAnimation2 = new RODIN.AnimationClip('hover', {
-    rotation: {
-        x: {from: 0, to: 0.2},
-        y: {from: 0, to: 0.2},
-        z: {from: 0, to: 0.2}
-    }
-});
-hoverAnimation2.duration(200);
-
-const hoverOutAnimation2 = new RODIN.AnimationClip('hoverout', {
-    rotation: {
-        x: {from: 0.2, to: 0},
-        y: {from: 0.2, to: 0},
-        z: {from: 0.2, to: 0}
-    }
-});
-hoverOutAnimation2.duration(200);
-
-sphere.on('ready', function () {
-    sphere.position.x = -1;
-    sphere.position.y = 0;
-    sphere.parent = cube1;
-});
-
-sphere.animation.add(hoverAnimation, hoverOutAnimation);
-
-sphere.on(RODIN.CONST.GAMEPAD_HOVER, function () {
-    if (sphere.animation.isPlaying('hoverout')) {
-        sphere.animation.stop('hoverout', false);
+class sharedObjectTest {
+    constructor() {
+        this._x = 0;
     }
 
-    sphere.animation.start('hover');
-});
-
-sphere.on(RODIN.CONST.GAMEPAD_HOVER_OUT, function () {
-    if (sphere.animation.isPlaying('hover')) {
-        sphere.animation.stop('hover', false);
+    get x() {
+        return this._x;
     }
 
-    sphere.animation.start('hoverout');
-});
-
-cube1.animation.add(hoverAnimation2, hoverOutAnimation2);
-
-cube1.on('ready', function () {
-    cube1.position.set(1, 1.6, -2);
-    cube1.scale.y = 2;
-    RODIN.Scene.add(cube1);
-});
-
-
-cube1.on(RODIN.CONST.GAMEPAD_HOVER, function () {
-    if (cube1.animation.isPlaying('hoverout')) {
-        cube1.animation.stop('hoverout', false);
+    set x(val) {
+        this._x = val;
+        console.log(`X changed to ${this._x}`);
     }
+}
 
-    cube1.animation.start('hover');
+R.start();
+
+let master = new GameMechanics();
+let slave = new GameMechanics();
+
+master.addDevice({name: 'master', isMaster: true});
+master.addDevice({name: 'slave', isMaster: false});
+master.setCurrentDevice('master');
+
+slave.addDevice({name: 'master', isMaster: true});
+slave.addDevice({name: 'slave', isMaster: false});
+slave.setCurrentDevice('slave');
+
+const masterStates = [];
+masterStates.push(new State('first master state'));
+masterStates.push(new State('second master state'));
+
+masterStates[0].on('start', () => {
+    console.log('first master state started');
 });
 
-cube1.on(RODIN.CONST.GAMEPAD_HOVER_OUT, function () {
-    if (cube1.animation.isPlaying('hover')) {
-        cube1.animation.stop('hover', false);
-    }
-
-    cube1.animation.start('hoverout');
+masterStates[1].on('start', () => {
+    console.log('second master state started');
 });
 
-cube2.animation.add(hoverAnimation, hoverOutAnimation);
+const slaveStates = [];
+slaveStates.push(new State('first slave state'));
+slaveStates.push(new State('second slave state'));
 
-cube2.on('ready', function () {
-    cube2.position = new THREE.Vector3(-1, 1.6, -2);
-    cube2._threeObject.rotation.z = Math.PI / 4;
-    RODIN.Scene.add(cube2);
+slaveStates[0].on('start', () => {
+    console.log('first slave state started');
 });
 
-cube2.on(RODIN.CONST.GAMEPAD_HOVER, function () {
-    if (cube2.animation.isPlaying('hoverout')) {
-        cube2.animation.stop('hoverout', false);
-    }
-
-    cube2.animation.start('hover');
+slaveStates[1].on('start', () => {
+    console.log('second slave state started');
 });
 
-cube2.on(RODIN.CONST.GAMEPAD_HOVER_OUT, function () {
-    if (cube2.animation.isPlaying('hover')) {
-        cube2.animation.stop('hover', false);
-    }
+for (let i in masterStates) {
+    master.addState({
+        master: masterStates[i],
+        slave: slaveStates[i]
+    });
+    slave.addState({
+        master: masterStates[i],
+        slave: slaveStates[i]
+    });
+}
 
-    cube2.animation.start('hoverout');
-});
+
+const init = function (gameMechanic) {
+    const sharedObj = new SharedObject(new sharedObjectTest(), ['x']);
+    gameMechanic.addSharedObject(sharedObj);
+    sharedObj.active = true;
+
+};
+
+const sendData = (data) => {
+    setTimeout(() => {
+        console.log(data);
+        slave.onData(data);
+    }, 100);
+};
+
+master.setDataSender(sendData);
+
+master.start(init, 0);
+slave.start(init, 0);
+
+document.onclick = function () {
+    master.next();
+};
