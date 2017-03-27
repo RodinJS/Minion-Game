@@ -8,6 +8,7 @@ export default class GameMechanics {
         this._currentDevice = null;
 
         this.locals = [];
+        this.globals = [];
 
         this.isMaster = false;
 
@@ -113,10 +114,10 @@ export default class GameMechanics {
         // Call finish of the current state
         // Before we change the state
         if (this._currentState !== null)
-            this.states[this._currentDevice][this._currentState].finish();
+            this.states[this._currentDevice][this._currentState].finish(this);
 
         this._currentState = val;
-        this.states[this._currentDevice][this._currentState].start();
+        this.states[this._currentDevice][this._currentState].start(this);
 
         // if we are the master we have to tell
         // all the slaves to change state as well
@@ -139,7 +140,7 @@ export default class GameMechanics {
         this._init.bind(this)(this);
 
         for (let i = 0; i < startState; i++) {
-            this.states[this._currentDevice][i].fastForward();
+            this.states[this._currentDevice][i].fastForward(this);
         }
 
         this.state = startState;

@@ -10,11 +10,12 @@ export const state_slide_2 = {
  * TARON
  */
 
-state_slide_2.taron.on('start', () => {
+state_slide_2.taron.on('start', (evt) => {
+    evt.gameMechanics.globals.box.position.x -= 0.6;
     console.log('second state started');
 });
 
-state_slide_2.taron.on('finish', () => {
+state_slide_2.taron.on('finish', (evt) => {
     console.log('second state finished');
 });
 
@@ -22,11 +23,12 @@ state_slide_2.taron.on('finish', () => {
  * CARDBOARD
  */
 
-state_slide_2.cardboard.on('start', () => {
+state_slide_2.cardboard.on('start', (evt) => {
+    evt.gameMechanics.globals.box.position.x -= 0.6;
     console.log('second state started');
 });
 
-state_slide_2.cardboard.on('finish', () => {
+state_slide_2.cardboard.on('finish', (evt) => {
     console.log('second state finished');
 });
 
@@ -35,10 +37,10 @@ state_slide_2.cardboard.on('finish', () => {
  * LAPTOP
  */
 
-state_slide_2.laptop.on('start', () => {
+state_slide_2.laptop.on('start', (evt) => {
     console.log('second state started');
 });
 
-state_slide_2.laptop.on('finish', () => {
+state_slide_2.laptop.on('finish', (evt) => {
     console.log('second state finished');
 });

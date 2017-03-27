@@ -6,15 +6,21 @@ export default class State extends R.EventEmitter {
         this.name = name;
     }
 
-    start() {
-        this.emit('start', new R.RodinEvent());
+    start(gameMechanics) {
+        const evt = new R.RodinEvent(null);
+        evt.gameMechanics = gameMechanics;
+        this.emit('start', evt);
     }
 
-    fastForward() {
-        return this.emit('fastForward', new R.RodinEvent());
+    fastForward(gameMechanics) {
+        const evt = new R.RodinEvent(null);
+        evt.gameMechanics = gameMechanics;
+        return this.emit('fastForward', evt);
     }
 
-    finish() {
-        this.emit('finish', new R.RodinEvent());
+    finish(gameMechanics) {
+        const evt = new R.RodinEvent(null);
+        evt.gameMechanics = gameMechanics;
+        this.emit('finish', evt);
     }
 }

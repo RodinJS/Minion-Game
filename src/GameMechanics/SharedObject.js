@@ -9,7 +9,7 @@ export default class SharedObject {
         this.object = object;
         this.properties = properties;
 
-        this.updateInterval = 1000;
+        this._updateInterval = 1000;
         this.lastUpdateTime = 0;
 
         this._active = false;
@@ -27,6 +27,12 @@ export default class SharedObject {
         this._isLerp = !!val;
         return this;
     }
+
+    updateInterval(val) {
+        this._updateInterval = val;
+        return this;
+    }
+
 
     lerpProperties(e, destination, v) {
         if (e !== enforce) {
@@ -74,7 +80,7 @@ export default class SharedObject {
      * @param timestamp
      */
     shouldUpdate(timestamp) {
-        return this._active && timestamp - this.lastUpdateTime > this.updateInterval;
+        return this._active && timestamp - this.lastUpdateTime > this._updateInterval;
     }
 
     update() {
