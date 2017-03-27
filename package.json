@@ -5,7 +5,8 @@
   "main": "gulpfile.js",
   "scripts": {
     "start": "./node_modules/.bin/gulp",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server":"gulp clientjs;  node server/index.js"
   },
   "keywords": [
     "rodin"
@@ -31,11 +32,17 @@
     "gulp-uglify": "^2.0.1",
     "run-sequence": "^1.2.2"
   },
-  "babel": {
-    "presets": ["es2015"], 
-    "plugins": [
-      "transform-es2015-modules-systemjs",
-      "transform-class-properties"
-    ]
+  "dependencies": {
+    "bluebird": "^3.5.0",
+    "body-parser": "^1.17.1",
+    "compression": "^1.6.2",
+    "cookie-parser": "^1.4.3",
+    "express": "^4.15.2",
+    "gulp": "^3.9.1",
+    "gulp-load-plugins": "^1.5.0",
+    "lodash": "^4.17.4",
+    "method-override": "^2.3.7",
+    "moment": "^2.18.1",
+    "socket.io": "^1.7.3"
   }
 }

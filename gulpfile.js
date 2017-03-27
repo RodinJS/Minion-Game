@@ -9,6 +9,10 @@ const plumber = require('gulp-plumber');
 const size = require('gulp-size');
 const connect = require('gulp-connect');
 const sourcemaps = require('gulp-sourcemaps');
+const gulpLoadPlugins = require('gulp-load-plugins');
+const plugins = gulpLoadPlugins();
+
+
 
 const JS = ['src/**/*.js'];
 const LIB = ['lib/src/**/*.js'];
@@ -27,7 +31,15 @@ gulp.task('js', () => {
 	const s = size({title: 'JS -> ', pretty: true});
 	return gulp.src(JS)
 		.pipe(plumber(ERROR_MESSAGE))
-		.pipe(babel())
+		.pipe(babel({
+            "presets": [
+                "es2015"
+            ],
+            "plugins": [
+                "transform-es2015-modules-systemjs",
+                "transform-class-properties"
+            ]
+		}))
 		.pipe(s)
 		.pipe(plumber.stop())
 		.pipe(gulp.dest('./build'))
@@ -71,3 +83,13 @@ gulp.task('connect', () => {
 gulp.task('default', (done) => {
 	sequence('clean', ['js', 'lib', 'connect', 'watch'], done);
 });
+
+gulp.task('clientjs', () =>
+    gulp.src(['./server/client.js'])
+        .pipe(babel({
+            "presets": [
+                "es2015"
+            ],
+		}))
+        .pipe(gulp.dest('./server/transpile'))
+);
