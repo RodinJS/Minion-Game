@@ -1,91 +1,73 @@
 import * as R from 'rodin/core';
-import GameMechanics from './GameMechanics/GameMechanics.js'
-import State from './GameMechanics/State.js';
-import SharedObject from  './GameMechanics/SharedObject.js';
-
-class sharedObjectTest {
-    constructor() {
-        this._x = 0;
-    }
-
-    get x() {
-        return this._x;
-    }
-
-    set x(val) {
-        this._x = val;
-        console.log(`X changed to ${this._x}`);
-    }
-}
 
 R.start();
 
-let master = new GameMechanics();
-let slave = new GameMechanics();
+import GameMechanics from './GameMechanics/GameMechanics.js'
+import SharedObject from  './GameMechanics/SharedObject.js';
+import {QueryString} from './util/url.js';
 
-master.addDevice({name: 'master', isMaster: true});
-master.addDevice({name: 'slave', isMaster: false});
-master.setCurrentDevice('master');
+import states from './states/index.js';
 
-slave.addDevice({name: 'master', isMaster: true});
-slave.addDevice({name: 'slave', isMaster: false});
-slave.setCurrentDevice('slave');
 
-const masterStates = [];
-masterStates.push(new State('first master state'));
-masterStates.push(new State('second master state'));
+const queryParameters = QueryString();
+if (!queryParameters.device) {
+    queryParameters.device = 'cardboard';
+}
+const currentDevice = queryParameters.device;
+console.log(currentDevice);
 
-masterStates[0].on('start', () => {
-    console.log('first master state started');
+const SS = new RodinSocket();
+SS.connect({});
+SS.getConnectedUsersList();
+
+SS.onMessage('getConnectedUsersList', (data) => {
+    console.log(data);
 });
 
-masterStates[1].on('start', () => {
-    console.log('second master state started');
-});
 
-const slaveStates = [];
-slaveStates.push(new State('first slave state'));
-slaveStates.push(new State('second slave state'));
+let gameMechanics = new GameMechanics();
 
-slaveStates[0].on('start', () => {
-    console.log('first slave state started');
-});
+gameMechanics.addDevice({name: 'taron', isMaster: true});
+gameMechanics.addDevice({name: 'cardboard', isMaster: false});
+gameMechanics.addDevice({name: 'laptop', isMaster: false});
 
-slaveStates[1].on('start', () => {
-    console.log('second slave state started');
-});
+gameMechanics.setCurrentDevice(currentDevice);
 
-for (let i in masterStates) {
-    master.addState({
-        master: masterStates[i],
-        slave: slaveStates[i]
-    });
-    slave.addState({
-        master: masterStates[i],
-        slave: slaveStates[i]
-    });
+
+for (let i in states) {
+    gameMechanics.addState(states[i]);
 }
 
 
 const init = function (gameMechanic) {
-    const sharedObj = new SharedObject(new sharedObjectTest(), ['x']);
-    gameMechanic.addSharedObject(sharedObj);
-    sharedObj.active = true;
+    //const sharedObj = new SharedObject(new sharedObjectTest(), ['x']);
+    //gameMechanic.addSharedObject(sharedObj);
+    //sharedObj._active = true;
 
+    const sphere = new R.Sphere();
+    sphere.position.set(0, 1.6, -1);
+    const sharedSphere = new SharedObject(sphere, ['position.x', 'position.y', 'position.z']).active(true).lerp(true);
+    gameMechanic.addSharedObject(sharedSphere);
+
+    R.Scene.add(sphere);
+    window.sphere = sphere;
 };
 
 const sendData = (data) => {
-    setTimeout(() => {
-        console.log(data);
-        slave.onData(data);
-    }, 100);
+    SS.broadcastToAll('RodinGameEvent', data);
 };
+gameMechanics.setDataSender(sendData);
 
-master.setDataSender(sendData);
+SS.onMessage('RodinGameEvent', (data) => {
+    if (data.socketId == SS.Socket.id)
+        return;
+    console.log('data recieved', data);
+    gameMechanics.onData(data);
+});
 
-master.start(init, 0);
-slave.start(init, 0);
+
+gameMechanics.start(init, 0);
 
 document.onclick = function () {
-    master.next();
+    gameMechanics.next();
 };

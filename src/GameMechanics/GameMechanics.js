@@ -26,6 +26,10 @@ export default class GameMechanics {
             // handle Slave case somehow, when we get socket service
 
             if (!this.isMaster) {
+                //call update for all shared objects to lerp
+                for (let i in this.sharedObjects) {
+                    this.sharedObjects[i].update();
+                }
                 return;
             }
 
@@ -166,7 +170,7 @@ export default class GameMechanics {
 
         if (data.type === CONSTS.SHARED_OBJECTS) {
             for (let i in data.payload) {
-                this.sharedObjects[i].applyProperties(data.payload[i]);
+                this.sharedObjects[i].setProperties(data.payload[i]);
             }
         }
     }

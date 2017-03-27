@@ -65,11 +65,7 @@ gulp.task('clean', () => {
 });
 
 gulp.task('connect', () => {
-	connect.server({
-		root: './',
-		port: 9090,
-		livereload: true
-	});
+
 });
 
 gulp.task('default', (done) => {

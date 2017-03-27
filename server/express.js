@@ -23,7 +23,9 @@ app.engine( ".html", ( filename, request, done ) => {
         .catch( done );
 } );
 app.use('/public', express.static('public'));
+app.use('/systemjs', express.static('systemjs'));
 app.use('/build',  express.static('build'));
+app.use('/lib',  express.static('lib'));
 app.use('/', routes);
 
 // catch 404 and forward to error handler
