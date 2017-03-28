@@ -116,24 +116,24 @@ export class ParticleSystem extends R.Sculpt {
             }
 
             if (!isNaN(this.params.color.value)) {
-                if(!particle.__color__) {
+                if (!particle.__color__) {
                     particle.__color__ = new THREE.Color(this.params.color.value);
                 }
                 // If value is a string
-            } else if(typeof(this.params.color.value) === "string"){
-                if(!particle.__color__) {
+            } else if (typeof(this.params.color.value) === "string") {
+                if (!particle.__color__) {
                     particle.__color__ = new THREE.Color(this.params.color.value);
                 }
                 // If value is an array
             } else if (Array.isArray(this.params.color.value)) {
-                if(!particle.__color__) {
+                if (!particle.__color__) {
                     particle.__color__ = new THREE.Color(
-                        this.params.color.value[Math.floor(Math.random()*this.params.color.value.length)]
+                        this.params.color.value[Math.floor(Math.random() * this.params.color.value.length)]
                     );
                 }
                 // If value is an object
             } else if (typeof(this.params.color.value) === 'object') {
-                if(!particle.__color__) {
+                if (!particle.__color__) {
                     let starColor = new THREE.Color(this.params.color.value.from);
                     let lastColor = new THREE.Color(this.params.color.value.to);
 
@@ -145,10 +145,8 @@ export class ParticleSystem extends R.Sculpt {
                 }
                 // If value is a function
             } else {
-                if(!particle.__color__) {
-                    let coef = R.Time.now - particle.bornTime;
-                    particle.__color__ = new THREE.Color(this.params.color.value(coef, particle))
-                }
+                let coef = R.Time.now - particle.bornTime;
+                particle.__color__ = new THREE.Color(this.params.color.value(coef, particle))
 
             }
             particle._threeObject.material.color = particle.__color__;
