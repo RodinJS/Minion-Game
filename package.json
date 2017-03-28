@@ -6,7 +6,7 @@
   "scripts": {
     "start": "./node_modules/.bin/gulp",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "server":"gulp clientjs;  node server/index.js"
+    "server": "gulp clientjs;  node server/index.js"
   },
   "keywords": [
     "rodin"
@@ -38,6 +38,7 @@
     "body-parser": "^1.17.1",
     "compression": "^1.6.2",
     "cookie-parser": "^1.4.3",
+    "cors": "^2.8.1",
     "express": "^4.15.2",
     "gulp": "^3.9.1",
     "gulp-load-plugins": "^1.5.0",

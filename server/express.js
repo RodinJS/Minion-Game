@@ -7,6 +7,7 @@ const fs      = Promise.promisifyAll( require( "fs" ) );
 const routes = require('./router');
 const methodOverride = require('method-override');
 const APIError = require('./APIError');
+const cors = require('cors');
 const app = express();
 
 
@@ -14,6 +15,7 @@ app.use(bodyParser.json({limit: '20mb'}));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(compress());
+app.use(cors());
 app.use(methodOverride());
 
 app.set( "view engine", "html" );
