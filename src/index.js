@@ -8,7 +8,6 @@ import {QueryString} from './util/url.js';
 
 import states from './states/index.js';
 
-
 const queryParameters = QueryString();
 if (!queryParameters.device) {
     queryParameters.device = 'cardboard';
@@ -18,21 +17,19 @@ console.log(currentDevice);
 
 const SS = new RodinSocket();
 SS.connect({});
-SS.getConnectedUsersList();
-
-SS.onMessage('getConnectedUsersList', (data) => {
-    console.log(data);
-});
 
 
 let gameMechanics = new GameMechanics();
+let startingState = 0;
 
 gameMechanics.addDevice({name: 'taron', isMaster: true});
 gameMechanics.addDevice({name: 'cardboard', isMaster: false});
 gameMechanics.addDevice({name: 'laptop', isMaster: false});
 
 gameMechanics.setCurrentDevice(currentDevice);
-
+if (gameMechanics.isMaster) {
+    SS.setData({isMaster: true});
+}
 
 for (let i in states) {
     gameMechanics.addState(states[i]);
@@ -53,7 +50,6 @@ const init = function (gameMechanic) {
     gameMechanic.addSharedObject(sharedSphere);
 
 
-
     R.Scene.add(sphere);
     R.Scene.add(box);
     window.sphere = sphere;
@@ -67,12 +63,35 @@ gameMechanics.setDataSender(sendData);
 SS.onMessage('RodinGameEvent', (data) => {
     if (data.socketId == SS.Socket.id)
         return;
-    console.log('data recieved', data);
+    if (!gameMechanics._isRunning)
+        return;
+    //console.log('data recieved', data);
     gameMechanics.onData(data);
 });
 
 
-gameMechanics.start(init, 0);
+gameMechanics.onStateChange((gameMechanics) => {
+    if (gameMechanics.isMaster) {
+        SS.setData({currentState: gameMechanics.state, isMaster: true});
+    }
+});
+
+
+// startingState will contains the state we should start at:
+// is we are the master it will be 0
+// if we are not it will be whatever state the master is currently
+SS.getConnectedUsersList();
+SS.onMessage('getConnectedUsersList', (data) => {
+    for (let i in data) {
+        if (data[i].isMaster === true) {
+            startingState = data[i].currentState;
+            console.log('setting current starting state to ', startingState);
+            break;
+        }
+    }
+    gameMechanics.start(init, startingState);
+});
+
 
 document.onclick = function () {
     gameMechanics.next();

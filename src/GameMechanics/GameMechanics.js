@@ -23,6 +23,8 @@ export default class GameMechanics {
 
         this._init = null;
 
+        this._onStateChangeListeners = [];
+
         R.messenger.on(R.CONST.RENDER_START, (e) => {
             // handle Slave case somehow, when we get socket service
 
@@ -128,7 +130,11 @@ export default class GameMechanics {
 
             this.dataSender({type: CONSTS.STATE_CHANGE, state: this._currentState});
         }
+        for (let i in this._onStateChangeListeners) {
+            this._onStateChangeListeners[i].bind(this)(this);
+        }
     }
+
 
     /**
      *
@@ -182,6 +188,11 @@ export default class GameMechanics {
      */
     addSharedObject(obj) {
         this.sharedObjects.push(obj)
+    }
+
+    onStateChange(fcn) {
+        this._onStateChangeListeners.push(fcn);
+        return this;
     }
 
 }
