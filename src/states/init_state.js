@@ -10,15 +10,15 @@ export const state_init = {
  * TARON
  */
 
-state_init.taron.on('start', (evt) => {
+state_init.taron.on('start', (evt, globals, locals) => {
 
 });
 
-state_init.taron.on('finish', (evt) => {
+state_init.taron.on('finish', (evt, globals, locals) => {
 
 });
 
-state_init.taron.on('fastForward', (evt) => {
+state_init.taron.on('fastForward', (evt, globals, locals) => {
 
 });
 
@@ -26,15 +26,15 @@ state_init.taron.on('fastForward', (evt) => {
  * CARDBOARD
  */
 
-state_init.cardboard.on('start', (evt) => {
+state_init.cardboard.on('start', (evt, globals, locals) => {
 
 });
 
-state_init.cardboard.on('finish', (evt) => {
+state_init.cardboard.on('finish', (evt, globals, locals) => {
 
 });
 
-state_init.cardboard.on('fastForward', (evt) => {
+state_init.cardboard.on('fastForward', (evt, globals, locals) => {
 
 });
 
@@ -42,14 +42,14 @@ state_init.cardboard.on('fastForward', (evt) => {
  * LAPTOP
  */
 
-state_init.laptop.on('start', (evt) => {
+state_init.laptop.on('start', (evt, globals, locals) => {
 
 });
 
-state_init.laptop.on('finish', (evt) => {
+state_init.laptop.on('finish', (evt, globals, locals) => {
 
 });
 
-state_init.laptop.on('fastForward', (evt) => {
+state_init.laptop.on('fastForward', (evt, globals, locals) => {
 
 });

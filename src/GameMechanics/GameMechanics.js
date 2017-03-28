@@ -113,6 +113,11 @@ export default class GameMechanics {
     }
 
     set state(val) {
+
+        if (this.state === val) {
+            return;
+        }
+
         // Call finish of the current state
         // Before we change the state
         if (this._currentState !== null)
