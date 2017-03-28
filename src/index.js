@@ -37,22 +37,22 @@ for (let i in states) {
 
 
 const init = function (gameMechanic) {
-    const sphere = new R.Sphere();
-    sphere.position.set(0, 1.6, -1);
-    gameMechanic.globals.sphere = sphere;
-
-    const box = new R.Box();
-    box.position.set(0.5, 1.6, -1);
-    gameMechanic.globals.box = box;
-
-
-    const sharedSphere = new SharedObject(sphere, ['position.x', 'position.y', 'position.z']).active(true).lerp(true).updateInterval(100);
-    gameMechanic.addSharedObject(sharedSphere);
-
-
-    R.Scene.add(sphere);
-    R.Scene.add(box);
-    window.sphere = sphere;
+    // const sphere = new R.Sphere();
+    // sphere.position.set(0, 1.6, -1);
+    // gameMechanic.globals.sphere = sphere;
+    //
+    // const box = new R.Box();
+    // box.position.set(0.5, 1.6, -1);
+    // gameMechanic.globals.box = box;
+    //
+    //
+    // const sharedSphere = new SharedObject(sphere, ['position.x', 'position.y', 'position.z']).active(true).lerp(true).updateInterval(100);
+    // gameMechanic.addSharedObject(sharedSphere);
+    //
+    //
+    // R.Scene.add(sphere);
+    // R.Scene.add(box);
+    // window.sphere = sphere;
 };
 
 const sendData = (data) => {
