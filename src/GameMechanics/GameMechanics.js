@@ -133,6 +133,8 @@ export default class GameMechanics {
         for (let i in this._onStateChangeListeners) {
             this._onStateChangeListeners[i].bind(this)(this);
         }
+
+        console.log(`State changed to ${this._currentState}`);
     }
 
 
