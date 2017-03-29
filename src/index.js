@@ -93,8 +93,8 @@ SS.onMessage('getConnectedUsersList', (data) => {
 });
 
 
-document.onclick = function () {
-    gameMechanics.next();
-};
+// document.onclick = function () {
+//     gameMechanics.next();
+// };
 
 window.gameMechanics = gameMechanics;

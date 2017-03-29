@@ -169,6 +169,11 @@ export default class GameMechanics {
         this.state = this.state + 1;
     }
 
+    prev() {
+        if (this.state > 0)
+            this.state = this.state - 1;
+    }
+
     setDataSender(fcn) {
         this.dataSender = fcn;
     }
