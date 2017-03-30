@@ -14,16 +14,43 @@ const showBall = (evt) => {
     R.Scene.add(ball);
 };
 
+const addListenerOnUpdateToCheckIfBallTaken = (evt) => {
+    const ball = evt.globals.ball;
+
+    /**
+     * This function is separated to change later
+     */
+    const mustTakeBall = () => {
+        return R.GamePad.getButtonDown(R.Buttons.oculusTouchLeftTrigger) || R.GamePad.getButtonDown(R.Buttons.oculusTouchRightTrigger);
+    };
+
+    /**
+     * Calling this function on ball update
+     */
+    const tryTakeBall = () => {
+        if(mustTakeBall()) {
+            console.log('asd');
+
+            /**
+             * We need these for next state
+             * To Check if second hand is zooming ball
+             */
+            evt.globals.ballGamePad = R.GamePad.oculusTouchRight;
+            evt.globals.secondGamePad = evt.globals.ballGamePad.hand === 'left' ? R.GamePad.oculusTouchRight : R.GamePad.oculusTouchLeft;
+            ball.removeEventListener(R.CONST.UPDATE, tryTakeBall);
+            evt.gameMechanics.next();
+        }
+    };
+
+    ball.on(R.CONST.UPDATE, tryTakeBall);
+};
+
 /**
  * Hide Presentation controls (only for taron)
  */
 const hidePresentationControls = (evt) => {
     const presentationControls = evt.globals.presentationControls;
     R.Scene.remove(presentationControls);
-
-    evt.globals.ball.on(R.CONST.UPDATE, function () {
-        this.position.x += R.Time.delta * 0.001;
-    });
 };
 
 export const state_slide_ball = {
@@ -40,6 +67,7 @@ state_slide_ball.taron.on('start', (evt) => {
     showSlideOnMainScreen(evt, 3);
     showBall(evt);
     hidePresentationControls(evt);
+    addListenerOnUpdateToCheckIfBallTaken(evt);
 });
 
 state_slide_ball.taron.on('finish', (evt) => {
@@ -50,6 +78,7 @@ state_slide_ball.taron.on('fastForward', (evt) => {
     showSlideOnMainScreen(evt, 3);
     showBall(evt);
     hidePresentationControls(evt);
+    addListenerOnUpdateToCheckIfBallTaken(evt);
 });
 
 /**
