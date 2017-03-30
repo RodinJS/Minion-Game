@@ -3,8 +3,8 @@ import {gameMechanicsLoader} from './gameMechanicsLoader.js';
 
 R.start();
 
-import GameMechanics from './GameMechanics/GameMechanics.js'
-import SharedObject from  './GameMechanics/SharedObject.js';
+import GameMechanics from './GameMechanics/GameMechanics.js';
+import {shareObjects} from './shareObject.js';
 import {QueryString} from './util/url.js';
 
 import states from './states/index.js';
@@ -36,24 +36,13 @@ for (let i in states) {
     gameMechanics.addState(states[i]);
 }
 
-
-const init = function (gameMechanic) {
-    // const sphere = new R.Sphere();
-    // sphere.position.set(0, 1.6, -1);
-    // gameMechanic.globals.sphere = sphere;
-    //
-    // const box = new R.Box();
-    // box.position.set(0.5, 1.6, -1);
-    // gameMechanic.globals.box = box;
-    //
-    //
-    // const sharedSphere = new SharedObject(sphere, ['position.x', 'position.y', 'position.z']).active(true).lerp(true).updateInterval(100);
-    // gameMechanic.addSharedObject(sharedSphere);
-    //
-    //
-    // R.Scene.add(sphere);
-    // R.Scene.add(box);
-    // window.sphere = sphere;
+/**
+ * Init function for gameMechanics
+ * this is called when gameMechanics starts working
+ * @param gameMechanic
+ */
+const init = function (gameMechanics) {
+    shareObjects(gameMechanics);
 };
 
 const sendData = (data) => {

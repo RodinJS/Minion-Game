@@ -4,7 +4,7 @@ import {lerp} from '../util/lerp.js';
 function enforce() {
 }
 
-export default class SharedObject {
+export class SharedObject {
     constructor(object, properties = ['position.x', 'position.y', 'position.z']) {
         this.object = object;
         this.properties = properties;

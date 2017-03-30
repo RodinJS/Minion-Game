@@ -37,12 +37,25 @@ const loadPresentationSlides = (gameMechanics) => {
     const presentationSlides = [
         '/public/resource/images/slides/7580037833793f7eb6dee40c1a41d3ed.jpg',
         '/public/resource/images/slides/16fb70b76be78e675e3acaeff6a65953.jpg',
-        '/public/resource/images/slides/7dcbc0d5263ece7fa15cfd16f6cb4735.jpg'
+        '/public/resource/images/slides/7dcbc0d5263ece7fa15cfd16f6cb4735.jpg',
+        '/public/resource/images/slides/41359fed28d845f781afa2d6c101cf98.jpg'
     ].map(R.Loader.loadTexture);
 
     gameMechanics.globals.presentationSlides = presentationSlides;
 };
 
+/**
+ * load ball model
+ */
+const loadBallModel = (gameMechanics) => {
+    const ball = new R.Sphere(new THREE.MeshBasicMaterial({color: 0x996633, wireframe: true}));
+    queuedElements.push(ball);
+    ball.on(R.CONST.READY, function () {
+        removeFromQueue(this);
+    });
+
+    gameMechanics.globals.ball = ball;
+};
 
 /**
  * Class for loading all models, images and ee before start
@@ -60,7 +73,7 @@ class GameMechanicsLoader extends R.EventEmitter {
     taron() {
         loadRoomModel(this.gameMechanics);
         loadPresentationSlides(this.gameMechanics);
-        // initPresentationControls(this.gameMechanics);
+        loadBallModel(this.gameMechanics);
     }
 
     /**
@@ -70,6 +83,7 @@ class GameMechanicsLoader extends R.EventEmitter {
     cardboard() {
         loadRoomModel(this.gameMechanics);
         loadPresentationSlides(this.gameMechanics);
+        loadBallModel(this.gameMechanics);
     }
 
     /**
@@ -79,6 +93,7 @@ class GameMechanicsLoader extends R.EventEmitter {
     laptop() {
         loadRoomModel(this.gameMechanics);
         loadPresentationSlides(this.gameMechanics);
+        loadBallModel(this.gameMechanics);
     }
 
     /**
