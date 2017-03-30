@@ -95,7 +95,7 @@ export default class GameMechanics {
     }
 
     get stateName() {
-        return this.state[this.state].name;
+        return this.states[this._currentDevice][this.state].name;
     }
 
     /**

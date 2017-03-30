@@ -12,21 +12,18 @@ const removeFromQueue = (elem) => {
 };
 
 const emitReadyIfGameMechanicsReady = () => {
-      if(queuedElements.length === 0) {
-          gameMechanicsLoader.emit(R.CONST.READY, new R.RodinEvent(null));
-      }
+    if (queuedElements.length === 0) {
+        gameMechanicsLoader.emit(R.CONST.READY, new R.RodinEvent(null));
+    }
 };
 
 /**
- * Init room
+ * Load room model and assign to gameMechanics.globals
  */
-const initRoom = (gameMechanics) => {
+const loadRoomModel = (gameMechanics) => {
     const room = new R.Sculpt('/public/resource/models/room/Deck.obj');
     queuedElements.push(room);
-
     room.on(R.CONST.READY, function () {
-        //this.rotation.y = Math.PI;
-        //R.Scene.add(this);
         removeFromQueue(this);
     });
 
@@ -34,82 +31,22 @@ const initRoom = (gameMechanics) => {
 };
 
 /**
- * initializes the main screen
- * @param gameMechanics
+ * load presentation slides
  */
-const initMainScreen = (gameMechanics) => {
-    const screen = new R.Sculpt(new THREE.Mesh(new THREE.PlaneGeometry(1.61, 1), new THREE.MeshBasicMaterial({
-        side: THREE.DoubleSide
-    })));
-    queuedElements.push(screen);
-    screen.position.set(0, 1.6, -2);
-    //R.Scene.add(screen);
-
-    screen.on(R.CONST.READY, function () {
-        removeFromQueue(this);
-    });
-
-    // loading screens
-
+const loadPresentationSlides = (gameMechanics) => {
     const presentationSlides = [
         '/public/resource/images/slides/7580037833793f7eb6dee40c1a41d3ed.jpg',
         '/public/resource/images/slides/16fb70b76be78e675e3acaeff6a65953.jpg',
         '/public/resource/images/slides/7dcbc0d5263ece7fa15cfd16f6cb4735.jpg'
     ].map(R.Loader.loadTexture);
 
-
     gameMechanics.globals.presentationSlides = presentationSlides;
-    gameMechanics.globals.screen = screen;
 };
+
 
 /**
- * Initializes presenters controls
- * @param gameMechanics
+ * Class for loading all models, images and ee before start
  */
-const initPresentationControls = (gameMechanics) => {
-    const presentationControls = new R.Sculpt();
-
-    const screen = new R.Sculpt(new THREE.Mesh(new THREE.PlaneGeometry(1.61 / 5, 1 / 5), new THREE.MeshBasicMaterial({
-        side: THREE.DoubleSide
-    })));
-    screen.position.set(0, -0.25, -1);
-    presentationControls.add(screen);
-    presentationControls.screen = screen;
-
-    const prevButton = new R.Text({
-        text: 'Prev',
-        color: 0xffffff
-    });
-    prevButton.position.set(-0.30, -0.25, -1);
-    presentationControls.add(prevButton);
-    presentationControls.prevButton = prevButton;
-
-    prevButton.on(R.CONST.GAMEPAD_BUTTON_DOWN, () => {
-        gameMechanics.prev();
-    });
-
-    const nextButton = new R.Text({
-        text: 'Next',
-        color: 0xffffff
-    });
-    nextButton.position.set(0.30, -0.25, -1);
-    presentationControls.add(nextButton);
-    presentationControls.nextButton = nextButton;
-
-    nextButton.on('gamepadbuttondown', () => {
-        gameMechanics.next();
-    });
-
-    // this is awful
-    //R.Scene.activeCamera.add(presentationControls);
-    R.Scene.add(presentationControls);
-    R.Scene.postRender(() => {
-        presentationControls.matrix = R.Scene.activeCamera.matrix.clone();
-    });
-
-    gameMechanics.globals.presentationControls = presentationControls;
-};
-
 class GameMechanicsLoader extends R.EventEmitter {
     constructor(gameMechanics) {
         super();
@@ -121,9 +58,9 @@ class GameMechanicsLoader extends R.EventEmitter {
      */
 
     taron() {
-        initRoom(this.gameMechanics);
-        initMainScreen(this.gameMechanics);
-        initPresentationControls(this.gameMechanics);
+        loadRoomModel(this.gameMechanics);
+        loadPresentationSlides(this.gameMechanics);
+        // initPresentationControls(this.gameMechanics);
     }
 
     /**
@@ -131,8 +68,8 @@ class GameMechanicsLoader extends R.EventEmitter {
      */
 
     cardboard() {
-        initRoom(this.gameMechanics);
-        initMainScreen(this.gameMechanics);
+        loadRoomModel(this.gameMechanics);
+        loadPresentationSlides(this.gameMechanics);
     }
 
     /**
@@ -140,12 +77,15 @@ class GameMechanicsLoader extends R.EventEmitter {
      */
 
     laptop() {
-        initRoom(this.gameMechanics);
-        initMainScreen(this.gameMechanics);
+        loadRoomModel(this.gameMechanics);
+        loadPresentationSlides(this.gameMechanics);
     }
 
+    /**
+     * Start loading all elements before gameMechanic starts
+     */
     load() {
-        if(!this.gameMechanics) {
+        if (!this.gameMechanics) {
             throw new Error('gameMechanics is not specified');
         }
 
