@@ -134,7 +134,7 @@ var RodinSocket = function () {
                 return this.listenerBuffer[eventName] = cb;
             }
             this.Socket.on(eventName, cb);
-            debug('individual message - ', data, false);
+            //debug('individual message - ', data, false);
         }
     }, {
         key: 'broadcastToAll',

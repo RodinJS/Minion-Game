@@ -1,4 +1,5 @@
 import * as R from 'rodin/core';
+import {gameMechanicsLoader} from './gameMechanicsLoader.js';
 
 R.start();
 
@@ -76,22 +77,25 @@ gameMechanics.onStateChange((gameMechanics) => {
     }
 });
 
-
-// startingState will contains the state we should start at:
-// is we are the master it will be 0
-// if we are not it will be whatever state the master is currently
-SS.getConnectedUsersList();
-SS.onMessage('getConnectedUsersList', (data) => {
-    for (let i in data) {
-        if (data[i].isMaster === true) {
-            startingState = data[i].currentState;
-            console.log('setting current starting state to ', startingState);
-            break;
+gameMechanicsLoader.gameMechanics = gameMechanics;
+gameMechanicsLoader.on(R.CONST.READY, () => {
+    // startingState will contains the state we should start at:
+    // is we are the master it will be 0
+    // if we are not it will be whatever state the master is currently
+    SS.onMessage('getConnectedUsersList', (data) => {
+        for (let i in data) {
+            if (data[i].isMaster === true) {
+                startingState = data[i].currentState;
+                console.log('setting current starting state to ', startingState);
+                break;
+            }
         }
-    }
-    gameMechanics.start(init, startingState);
+        gameMechanics.start(init, startingState);
+    });
+    SS.getConnectedUsersList();
 });
 
+gameMechanicsLoader.load();
 
 // document.onclick = function () {
 //     gameMechanics.next();

@@ -118,7 +118,7 @@ class RodinSocket {
             return this.listenerBuffer[eventName] = cb;
         }
         this.Socket.on(eventName, cb);
-        debug('individual message - ', data, false);
+        //debug('individual message - ', data, false);
     }
 
     static onError(data) {
