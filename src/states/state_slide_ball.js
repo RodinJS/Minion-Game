@@ -7,6 +7,8 @@ import * as R from 'rodin/core';
  */
 const showBall = (evt) => {
     const ball = evt.globals.ball;
+
+    R.Scene.add(ball);
     ball.position = evt.globals.presentationScreen.position.clone();
 
     evt.globals.sharedBall.active(true);

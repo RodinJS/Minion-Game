@@ -56,8 +56,6 @@ const loadBallModel = (gameMechanics) => {
 
     gameMechanics.globals.ball = ball;
 
-    R.Scene.add(ball);
-    ball.position.set(0, 1.4, -1);
     ball.on(R.CONST.GAMEPAD_BUTTON_DOWN, (evt) => {
         evt.target.btnDown(evt);
     });
