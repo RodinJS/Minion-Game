@@ -1,4 +1,5 @@
 import State from '../GameMechanics/State.js';
+import {makeScalable} from '../random/ScalableObject.js';
 import * as R from 'rodin/core';
 
 /**
@@ -8,6 +9,10 @@ import * as R from 'rodin/core';
 const initRoom = (evt) => {
     evt.globals.room.rotation.y = Math.PI;
     R.Scene.add(evt.globals.room);
+};
+
+const makeBallScalable = (evt) => {
+    makeScalable(evt.globals.ball);
 };
 
 /**
@@ -97,6 +102,7 @@ state_init.taron.on('start', (evt) => {
     initRoom(evt);
     initPresentationScreen(evt);
     initPresentationControls(evt);
+    makeBallScalable(evt);
 });
 
 state_init.taron.on('finish', (evt) => {
@@ -107,6 +113,7 @@ state_init.taron.on('fastForward', (evt) => {
     initRoom(evt);
     initPresentationScreen(evt);
     initPresentationControls(evt);
+    makeBallScalable(evt);
 });
 
 /**

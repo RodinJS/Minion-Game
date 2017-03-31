@@ -14,7 +14,6 @@ import {state_slide_2} from './state_slide_2.js';
  * Ball states
  */
 import {state_slide_ball} from './state_slide_ball.js';
-import {state_ball_taken} from './state_ball_taken.js';
 
 export default [
     state_init,
@@ -23,6 +22,5 @@ export default [
     state_slide_1,
     state_slide_2,
 
-    state_slide_ball,
-    state_ball_taken
+    state_slide_ball
 ];

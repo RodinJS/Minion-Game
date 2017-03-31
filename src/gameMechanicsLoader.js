@@ -48,24 +48,13 @@ const loadPresentationSlides = (gameMechanics) => {
  * load ball model
  */
 const loadBallModel = (gameMechanics) => {
-    const ball = new ScalableObject(new R.Sphere(new THREE.MeshBasicMaterial({color: 0x996633, wireframe: true})));
+    const ball = new R.Sphere(new THREE.MeshBasicMaterial({color: 0x996633, wireframe: true}));
     queuedElements.push(ball);
     ball.on(R.CONST.READY, function () {
         removeFromQueue(this);
     });
 
     gameMechanics.globals.ball = ball;
-
-    ball.on(R.CONST.GAMEPAD_BUTTON_DOWN, (evt) => {
-        evt.target.btnDown(evt);
-    });
-    ball.on(R.CONST.GAMEPAD_BUTTON_UP, (evt) => {
-        evt.target.btnUp(evt);
-    });
-    ball.on(R.CONST.UPDATE, (evt) => {
-        evt.target.updateFunc(evt);
-    });
-
 };
 
 /**
