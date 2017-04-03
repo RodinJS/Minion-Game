@@ -1,5 +1,6 @@
 import State from '../GameMechanics/State.js';
 import {showSlideOnMainScreen} from '../random/changeSlide.js';
+import {collision} from '../random/collision.js';
 import * as R from 'rodin/core';
 
 /**
@@ -7,10 +8,9 @@ import * as R from 'rodin/core';
  */
 const showBall = (evt) => {
     const ball = evt.globals.ball;
+
     ball.position = evt.globals.presentationScreen.position.clone();
-
     evt.globals.sharedBall.active(true);
-
     R.Scene.add(ball);
 };
 
@@ -20,10 +20,24 @@ const showBall = (evt) => {
 const hidePresentationControls = (evt) => {
     const presentationControls = evt.globals.presentationControls;
     R.Scene.remove(presentationControls);
+};
 
-    evt.globals.ball.on(R.CONST.UPDATE, function () {
-        this.position.x += R.Time.delta * 0.001;
-    });
+/**
+ * Init throwing wall
+ */
+const initThrowingWall = (evt) => {
+    const throwingWall = new R.Sculpt(new THREE.Mesh(new THREE.PlaneGeometry(2, 1, 5, 5), new THREE.MeshBasicMaterial({wireframe: true, side: THREE.DoubleSide})));
+    throwingWall.position.set(0, 2, 1.5);
+    R.Scene.add(throwingWall);
+
+    const throwWallUpdate = () => {
+        if(collision.sphere2Plane(evt.globals.ball, throwingWall)) {
+            console.log('throwing ball');
+            throwingWall.removeEventListener(R.CONST.UPDATE, throwingWall);
+        }
+    };
+
+    throwingWall.on(R.CONST.UPDATE, throwWallUpdate);
 };
 
 export const state_slide_ball = {
@@ -40,6 +54,7 @@ state_slide_ball.taron.on('start', (evt) => {
     showSlideOnMainScreen(evt, 3);
     showBall(evt);
     hidePresentationControls(evt);
+    initThrowingWall(evt);
 });
 
 state_slide_ball.taron.on('finish', (evt) => {
@@ -50,6 +65,7 @@ state_slide_ball.taron.on('fastForward', (evt) => {
     showSlideOnMainScreen(evt, 3);
     showBall(evt);
     hidePresentationControls(evt);
+    initThrowingWall(evt);
 });
 
 /**

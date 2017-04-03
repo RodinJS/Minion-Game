@@ -85,7 +85,7 @@ export class SharedObject {
 
     update() {
         if (this._isLerp && this._lerpTarget) {
-            this.lerpProperties(enforce, this._lerpTarget, R.Time.delta / 30);
+            this.lerpProperties(enforce, this._lerpTarget, R.Time.delta / 100);
         }
     }
 }
