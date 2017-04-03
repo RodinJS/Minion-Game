@@ -105,12 +105,6 @@ export const makeScalable = (sculpt) => {
     sculpt.initScaleObj = 1;
     sculpt.gripVectors = {firstHand: null, secondHand: null};
 
-    sculpt.scaleFunctions = {btnDown, btnUp, updateFunc};
-
-    sculpt.on(R.CONST.GAMEPAD_BUTTON_DOWN, btnDown);
-    sculpt.on(R.CONST.GAMEPAD_BUTTON_UP, btnUp);
-    sculpt.on(R.CONST.UPDATE, updateFunc);
-
     const btnDown = (evt) => {
         if (!sculpt.gripVectors.firstHand) {
             sculpt.parent = evt.gamepad.sculpt;
@@ -176,7 +170,13 @@ export const makeScalable = (sculpt) => {
         const scale = new THREE.Vector3(0, 0, 0).subVectors(sculpt.gripHelper1.globalPosition, sculpt.gripHelper2.globalPosition).length() / sculpt.initScaleDist;
         sculpt.helper.scale.set(scale * sculpt.initScaleObj, scale * sculpt.initScaleObj, scale * sculpt.initScaleObj);
         sculpt.helper._threeObject.lookAt(sculpt.gripHelper1.globalPosition);
-    }
+    };
+
+    sculpt.scaleFunctions = {btnDown, btnUp, updateFunc};
+
+    sculpt.on(R.CONST.GAMEPAD_BUTTON_DOWN, btnDown);
+    sculpt.on(R.CONST.GAMEPAD_BUTTON_UP, btnUp);
+    sculpt.on(R.CONST.UPDATE, updateFunc);
 };
 
 export const makeUnscaleable = (sculpt) => {
