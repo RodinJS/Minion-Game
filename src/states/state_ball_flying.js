@@ -1,8 +1,10 @@
 import State from '../GameMechanics/State.js';
+import {makeUnscaleable} from '../random/ScalableObject.js';
 import * as R from 'rodin/core';
 
 const startBallFlying = (evt) => {
     const ball = evt.globals.ball;
+    makeUnscaleable(ball);
     R.Scene.add(ball);
     const ballFinalPosition = new R.utils.Vector3(0, 5, 5);
 
