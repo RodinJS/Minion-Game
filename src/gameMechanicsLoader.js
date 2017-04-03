@@ -1,7 +1,6 @@
 import * as R from 'rodin/core';
 import { loadJD } from './util/loadJD.js'
 import {ScalableObject} from './random/ScalableObject.js';
-import {loadJD} from './util/loadJD.js';
 const queuedElements = [];
 
 const removeFromQueue = (elem) => {
