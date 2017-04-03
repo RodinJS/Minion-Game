@@ -25,6 +25,14 @@ const startBallFlying = (evt) => {
     ball.addEventListener(R.CONST.UPDATE, lerpBall);
 };
 
+/**
+ * Ball flying fast forward
+ */
+const ballFlyingFastForward = (evt) => {
+    const ball = evt.globals.ball;
+    ball.position.set(0, 5, 5);
+};
+
 export const state_ball_flying = {
     taron: new State('state_ball_flying'),
     cardboard: new State('state_ball_flying'),
@@ -52,7 +60,7 @@ state_ball_flying.taron.on('fastForward', (evt) => {
  */
 
 state_ball_flying.cardboard.on('start', (evt) => {
-
+    ballFlyingFastForward(evt);
 });
 
 state_ball_flying.cardboard.on('finish', (evt) => {
@@ -60,7 +68,7 @@ state_ball_flying.cardboard.on('finish', (evt) => {
 });
 
 state_ball_flying.cardboard.on('fastForward', (evt) => {
-
+    ballFlyingFastForward(evt);
 });
 
 /**
@@ -68,7 +76,7 @@ state_ball_flying.cardboard.on('fastForward', (evt) => {
  */
 
 state_ball_flying.laptop.on('start', (evt) => {
-
+    ballFlyingFastForward(evt);
 });
 
 state_ball_flying.laptop.on('finish', (evt) => {
@@ -76,5 +84,5 @@ state_ball_flying.laptop.on('finish', (evt) => {
 });
 
 state_ball_flying.laptop.on('fastForward', (evt) => {
-
+    ballFlyingFastForward(evt);
 });

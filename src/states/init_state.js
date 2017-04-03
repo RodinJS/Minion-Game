@@ -7,9 +7,6 @@ import * as R from 'rodin/core';
  * Set rotation position and EE
  */
 const initRoom = (evt) => {
-	// evt.globals.room.rotation.y = -Math.PI / 2;
-	// evt.globals.room.position.z = -22;
-
 	R.Scene.add(evt.globals.room);
 };
 
@@ -44,6 +41,7 @@ const initLowMinions = evt => {
 		minionSculpt.add(min)
 	}
 };
+
 const initHighMinions = (evt) => {
 	const minionSculpt = evt.globals.minionsSculpt;
 	let minion = evt.globals.minion;
