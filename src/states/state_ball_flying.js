@@ -15,7 +15,7 @@ const startBallFlying = (evt) => {
     const lerpBall = () => {
         if(ball.position.distanceTo(ballFinalPosition) < .1) {
             ball.removeEventListener(R.CONST.UPDATE, lerpBall);
-            levitate(ball, Infinity, new R.utils.Vector3(1.5, .5, 1.5));
+            levitate(ball, Infinity, new R.utils.Vector3(.5, .5, .5));
             evt.gameMechanics.next();
             return;
         }

@@ -9,13 +9,13 @@ const levitateUpdate = function (evt) {
         this.levitateDestination = R.utils.vector3.addNoise(this.levitateInitialPosition, this.levitateNoise);
     }
 
-    this.position.lerp(this.levitateDestination, .05);
+    this.position.lerp(this.levitateDestination, .005);
 };
 
 export const levitate = (sculpt, duration, noise) => {
     sculpt.levitateDuration = duration;
     sculpt.levitateNoise = noise;
-    sculpt.levitateInitialPosition = sculpt.position.copy();
+    sculpt.levitateInitialPosition = sculpt.position.clone();
 
     const levitateUpdateFunc = levitateUpdate.bind(sculpt);
     const update = (evt) => {
