@@ -25,7 +25,7 @@ const initPresentationScreen = (evt) => {
 		side: THREE.DoubleSide
 	})));
 	presentationScreen.position.set(0, 1.65, -2);
-	presentationScreen.rotation.y = Math.PI / 2;
+	// presentationScreen.rotation.y = Math.PI / 2;
 	R.Scene.add(presentationScreen);
 
 	gameMechanics.globals.presentationScreen = presentationScreen;
