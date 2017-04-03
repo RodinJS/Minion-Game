@@ -1,7 +1,11 @@
 import State from '../GameMechanics/State.js';
 import {makeUnscaleable} from '../random/ScalableObject.js';
+import {levitate} from '../random/levitate.js';
 import * as R from 'rodin/core';
 
+/**
+ * Start flying ball (taron only)
+ */
 const startBallFlying = (evt) => {
     const ball = evt.globals.ball;
     makeUnscaleable(ball);
@@ -11,6 +15,7 @@ const startBallFlying = (evt) => {
     const lerpBall = () => {
         if(ball.position.distanceTo(ballFinalPosition) < .1) {
             ball.removeEventListener(R.CONST.UPDATE, lerpBall);
+            levitate(ball, Infinity, new R.utils.Vector3(1.5, .5, 1.5));
             evt.gameMechanics.next();
             return;
         }
