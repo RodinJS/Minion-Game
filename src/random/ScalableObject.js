@@ -105,17 +105,11 @@ export const makeScalable = (sculpt) => {
     sculpt.initScaleObj = 1;
     sculpt.gripVectors = {firstHand: null, secondHand: null};
 
-    sculpt.on(R.CONST.GAMEPAD_BUTTON_DOWN, (evt) => {
-        btnDown(evt);
-    });
+    sculpt.scaleFunctions = {btnDown, btnUp, updateFunc};
 
-    sculpt.on(R.CONST.GAMEPAD_BUTTON_UP, (evt) => {
-        btnUp(evt);
-    });
-
-    sculpt.on(R.CONST.UPDATE, (evt) => {
-        updateFunc(evt);
-    });
+    sculpt.on(R.CONST.GAMEPAD_BUTTON_DOWN, btnDown);
+    sculpt.on(R.CONST.GAMEPAD_BUTTON_UP, btnUp);
+    sculpt.on(R.CONST.UPDATE, updateFunc);
 
     const btnDown = (evt) => {
         if (!sculpt.gripVectors.firstHand) {
@@ -183,4 +177,10 @@ export const makeScalable = (sculpt) => {
         sculpt.helper.scale.set(scale * sculpt.initScaleObj, scale * sculpt.initScaleObj, scale * sculpt.initScaleObj);
         sculpt.helper._threeObject.lookAt(sculpt.gripHelper1.globalPosition);
     }
+};
+
+export const makeUnscaleable = (sculpt) => {
+    sculpt.removeEventListener(R.CONST.GAMEPAD_BUTTON_DOWN, sculpt.scaleFunctions.btnDown);
+    sculpt.removeEventListener(R.CONST.GAMEPAD_BUTTON_UP, sculpt.scaleFunctions.btnUp);
+    sculpt.removeEventListener(R.CONST.UPDATE, sculpt.scaleFunctions.updateFunc);
 };

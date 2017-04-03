@@ -17,4 +17,20 @@ export const shareObjects = (gameMechanics) => {
     gameMechanics.addSharedObject(sharedBall);
 
     gameMechanics.globals.sharedBall = sharedBall;
+
+    /**
+     * shared gun model position and rotation
+     */
+    const sharedGun = new SharedObject(gameMechanics.globals.gun, [
+        'globalPosition.x',
+        'globalPosition.y',
+        'globalPosition.z',
+
+        'globalRotation.x',
+        'globalRotation.y',
+        'globalRotation.z',
+    ]).active(false).lerp(true).updateInterval(100);
+    gameMechanics.addSharedObject(sharedGun);
+
+    gameMechanics.globals.sharedGun = sharedGun;
 };

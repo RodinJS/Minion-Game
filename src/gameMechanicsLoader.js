@@ -1,6 +1,7 @@
 import * as R from 'rodin/core';
 import { loadJD } from './util/loadJD.js'
 import {ScalableObject} from './random/ScalableObject.js';
+import {loadJD} from './util/loadJD.js';
 const queuedElements = [];
 
 const removeFromQueue = (elem) => {
@@ -79,58 +80,74 @@ const loadBallModel = (gameMechanics) => {
 };
 
 /**
+ * load gun model
+ */
+const loadGunModel = (gameMechanics) => {
+    const gun = loadJD('/public/resource/models/gru_gun/gun.JD');
+    queuedElements.push(gun);
+    gun.on(R.CONST.READY, function () {
+        removeFromQueue(this);
+    });
+
+    gameMechanics.globals.gun = gun;
+};
+
+/**
  * Class for loading all models, images and ee before start
  */
 class GameMechanicsLoader extends R.EventEmitter {
-	constructor(gameMechanics) {
-		super();
-		this.gameMechanics = gameMechanics;
-	}
+    constructor(gameMechanics) {
+        super();
+        this.gameMechanics = gameMechanics;
+    }
 
-	/**
-	 * TARON
-	 */
+    /**
+     * TARON
+     */
 
-	taron() {
-		loadRoomModel(this.gameMechanics);
-		loadPresentationSlides(this.gameMechanics);
-		loadBallModel(this.gameMechanics);
-	}
+    taron() {
+        loadRoomModel(this.gameMechanics);
+        loadPresentationSlides(this.gameMechanics);
+        loadBallModel(this.gameMechanics);
+        loadGunModel(this.gameMechanics);
+    }
 
-	/**
-	 * CARDBOARD
-	 */
+    /**
+     * CARDBOARD
+     */
 
-	cardboard() {
-		loadRoomModel(this.gameMechanics);
-		loadPresentationSlides(this.gameMechanics);
-		loadBallModel(this.gameMechanics);
-		loadMinionModel(this.gameMechanics);
-		loadLowMinionModel(this.gameMechanics);
-	}
+    cardboard() {
+        loadRoomModel(this.gameMechanics);
+        loadPresentationSlides(this.gameMechanics);
+        loadBallModel(this.gameMechanics);
+        loadGunModel(this.gameMechanics);
+      	loadMinionModel(this.gameMechanics);
+		    loadLowMinionModel(this.gameMechanics);
+    }
 
-	/**
-	 * LAPTOP
-	 */
+    /**
+     * LAPTOP
+     */
 
-	laptop() {
-		loadRoomModel(this.gameMechanics);
-		loadPresentationSlides(this.gameMechanics);
-		loadBallModel(this.gameMechanics);
-		loadMinionModel(this.gameMechanics);
-		loadLowMinionModel(this.gameMechanics);
-	}
+    laptop() {
+        loadRoomModel(this.gameMechanics);
+        loadPresentationSlides(this.gameMechanics);
+        loadBallModel(this.gameMechanics);
+        loadGunModel(this.gameMechanics);
+      	loadMinionModel(this.gameMechanics);
+		    loadLowMinionModel(this.gameMechanics);
+    }
 
-	/**
-	 * Start loading all elements before gameMechanic starts
-	 */
-	load() {
-		if (!this.gameMechanics) {
-			throw new Error('gameMechanics is not specified');
-		}
+    /**
+     * Start loading all elements before gameMechanic starts
+     */
+    load() {
+        if (!this.gameMechanics) {
+            throw new Error('gameMechanics is not specified');
+        }
 
-		this[this.gameMechanics._currentDevice]();
-	}
+        this[this.gameMechanics._currentDevice]();
+    }
 }
 
 export const gameMechanicsLoader = new GameMechanicsLoader();
