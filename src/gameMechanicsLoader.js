@@ -1,5 +1,6 @@
 import * as R from 'rodin/core';
 import {ScalableObject} from './random/ScalableObject.js';
+import {loadJD} from './util/loadJD.js';
 const queuedElements = [];
 
 const removeFromQueue = (elem) => {
@@ -58,6 +59,19 @@ const loadBallModel = (gameMechanics) => {
 };
 
 /**
+ * load gun model
+ */
+const loadGunModel = (gameMechanics) => {
+    const gun = loadJD('/public/resource/models/gru_gun/gun.JD');
+    queuedElements.push(gun);
+    gun.on(R.CONST.READY, function () {
+        removeFromQueue(this);
+    });
+
+    gameMechanics.globals.gun = gun;
+};
+
+/**
  * Class for loading all models, images and ee before start
  */
 class GameMechanicsLoader extends R.EventEmitter {
@@ -74,6 +88,7 @@ class GameMechanicsLoader extends R.EventEmitter {
         loadRoomModel(this.gameMechanics);
         loadPresentationSlides(this.gameMechanics);
         loadBallModel(this.gameMechanics);
+        loadGunModel(this.gameMechanics);
     }
 
     /**
@@ -84,6 +99,7 @@ class GameMechanicsLoader extends R.EventEmitter {
         loadRoomModel(this.gameMechanics);
         loadPresentationSlides(this.gameMechanics);
         loadBallModel(this.gameMechanics);
+        loadGunModel(this.gameMechanics);
     }
 
     /**
@@ -94,6 +110,7 @@ class GameMechanicsLoader extends R.EventEmitter {
         loadRoomModel(this.gameMechanics);
         loadPresentationSlides(this.gameMechanics);
         loadBallModel(this.gameMechanics);
+        loadGunModel(this.gameMechanics);
     }
 
     /**

@@ -89,9 +89,9 @@ const initPresentationControls = (evt) => {
 };
 
 export const state_init = {
-    taron: new State('state_init'),
-    cardboard: new State('state_init'),
-    laptop: new State('state_init'),
+    taron: new State('state_gun_shot_0'),
+    cardboard: new State('state_gun_shot_0'),
+    laptop: new State('state_gun_shot_0'),
 };
 
 /**
