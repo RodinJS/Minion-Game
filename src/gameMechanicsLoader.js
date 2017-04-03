@@ -50,7 +50,6 @@ const loadLowMinionModel = (gameMechanics) => {
 	].map(i => loadJD(i));
 
 	gameMechanics.globals.lowMinion = minions;
-	console.log(gameMechanics)
 };
 /**
  * load presentation slides
@@ -118,6 +117,8 @@ class GameMechanicsLoader extends R.EventEmitter {
 		loadRoomModel(this.gameMechanics);
 		loadPresentationSlides(this.gameMechanics);
 		loadBallModel(this.gameMechanics);
+		loadMinionModel(this.gameMechanics);
+		loadLowMinionModel(this.gameMechanics);
 	}
 
 	/**

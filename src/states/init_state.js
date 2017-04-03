@@ -7,8 +7,8 @@ import * as R from 'rodin/core';
  * Set rotation position and EE
  */
 const initRoom = (evt) => {
-	evt.globals.room.rotation.y = -Math.PI / 2;
-	evt.globals.room.position.z = -22;
+	// evt.globals.room.rotation.y = -Math.PI / 2;
+	// evt.globals.room.position.z = -22;
 
 	R.Scene.add(evt.globals.room);
 };
@@ -25,12 +25,14 @@ const initPresentationScreen = (evt) => {
 		side: THREE.DoubleSide
 	})));
 	presentationScreen.position.set(0, 1.65, -2);
+	presentationScreen.rotation.y = Math.PI / 2;
 	R.Scene.add(presentationScreen);
 
 	gameMechanics.globals.presentationScreen = presentationScreen;
 };
 
 const initLowMinions = evt => {
+	let minionSculpt = evt.globals.minionsSculpt;
 	let minion = evt.globals.lowMinion;
 	let r = 2.65;
 	let step = Math.PI / 3.855;
@@ -39,10 +41,11 @@ const initLowMinions = evt => {
 		min.position.x = r * Math.cos(step * i);
 		min.position.z = r * Math.sin(step * i);
 		min.rotation.y = 135;
-		R.Scene.add(min)
+		minionSculpt.add(min)
 	}
 };
-const initMinions = (evt) => {
+const initHighMinions = (evt) => {
+	const minionSculpt = evt.globals.minionsSculpt;
 	let minion = evt.globals.minion;
 	let r = 1.5;
 	let step = Math.PI / 3;
@@ -51,8 +54,19 @@ const initMinions = (evt) => {
 		min.position.x = r * Math.cos(step * i);
 		min.position.z = r * Math.sin(step * i);
 		min.rotation.y = 135;
-		R.Scene.add(min)
+		minionSculpt.add(min);
 	}
+};
+
+const initMinions = (evt) => {
+	const minionsSculpt = new R.Sculpt();
+	R.Scene.add(minionsSculpt);
+	minionsSculpt.position.x = 8;
+	minionsSculpt.rotation.y = Math.PI / 2;
+	evt.globals.minionsSculpt = minionsSculpt;
+
+	initLowMinions(evt);
+	initHighMinions(evt);
 };
 /**
  * Create presentation controls (only for taron)
@@ -114,6 +128,22 @@ const initPresentationControls = (evt) => {
 	evt.globals.presentationControls = presentationControls;
 };
 
+const cardboardCameraPosition = evt => {
+	const cameraSculpt = new R.Sculpt();
+	R.Scene.add(cameraSculpt);
+	cameraSculpt._threeObject.add(R.Scene.activeCamera);
+	cameraSculpt.position.x = 8;
+	cameraSculpt.rotation.y = Math.PI / 2
+};
+
+const laptopCameraPosition = evt => {
+	const cameraSculpt = new R.Sculpt();
+	R.Scene.add(cameraSculpt);
+	cameraSculpt._threeObject.add(R.Scene.activeCamera);
+	cameraSculpt.position.x = 15;
+	cameraSculpt.position.y = 1;
+	cameraSculpt.rotation.y = Math.PI / 2
+};
 export const state_init = {
 	taron: new State('state_init'),
 	cardboard: new State('state_init'),
@@ -147,10 +177,10 @@ state_init.taron.on('fastForward', (evt) => {
  */
 
 state_init.cardboard.on('start', (evt) => {
+	cardboardCameraPosition(evt);
 	initRoom(evt);
 	initPresentationScreen(evt);
 	initMinions(evt);
-	initLowMinions(evt);
 });
 
 state_init.cardboard.on('finish', (evt) => {
@@ -167,8 +197,10 @@ state_init.cardboard.on('fastForward', (evt) => {
  */
 
 state_init.laptop.on('start', (evt) => {
+	laptopCameraPosition(evt);
 	initRoom(evt);
 	initPresentationScreen(evt);
+	initMinions(evt);
 });
 
 state_init.laptop.on('finish', (evt) => {
