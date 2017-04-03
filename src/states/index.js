@@ -15,6 +15,12 @@ import {state_slide_2} from './state_slide_2.js';
  */
 import {state_slide_ball} from './state_slide_ball.js';
 
+/**
+ * Gun shot states
+ */
+import {state_take_gun} from './state_take_gun.js';
+import {state_gun_shot_0} from './state_gun_shot_0.js';
+
 export default [
     state_init,
 
@@ -22,5 +28,8 @@ export default [
     state_slide_1,
     state_slide_2,
 
-    state_slide_ball
+    state_slide_ball,
+
+    state_take_gun,
+    state_gun_shot_0
 ];
