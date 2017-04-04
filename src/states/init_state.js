@@ -69,7 +69,7 @@ const initLowMinions = evt => {
 
 const initHighMinions = (evt) => {
 	const minionSculpt = evt.globals.minionsSculpt;
-	let minions = evt.globals.minion;
+	let minions = evt.globals.minions;
 	setMinionsPosition(minionSculpt, minions[0], 0.83, -1.76);
 	setMinionsPosition(minionSculpt, minions[0], -.8, -1.28);
 	setMinionsPosition(minionSculpt, minions[0], 0.67, 1.74);
