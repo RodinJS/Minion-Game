@@ -1,7 +1,10 @@
 import State from '../GameMechanics/State.js';
 import * as R from 'rodin/core';
-import {ParticleSystem} from '../particleSystem/ParticleSystem.js';
+import {Firework} from '../particleSystem/Firework.js';
 
+/**
+ * Shrink ball
+ */
 const shrinkBaall = (evt) => {
     const ball = evt.globals.ball;
 
@@ -18,41 +21,25 @@ const shrinkBaall = (evt) => {
     ball.animation.start('shrink');
 };
 
+/**
+ * Init firework
+ */
 const initFirework = (evt) => {
-    const firework = new ParticleSystem({
-        startCount: {value: 50, randomness: 0},
-        numberPerSecond: {value: 500000, randomness: 0},
-        maxParticles: {value: 50, randomness: 0},
-        particleSize: {value: new THREE.Vector3(0.1, 0.1, 0.1), randomness: new THREE.Vector3(0.01, 0.01, 0.01)},
-        startPosition: {randomness: new THREE.Vector3()},
-        velocity: {
-            type: 'add',
-            path: (c, p) => {
-                if(!p.direction) {
-                    p.direction = R.utils.vector3.addNoise(new THREE.Vector3(0, 0, 0), new THREE.Vector3(3, 2, 3));
-                }
-
-                p.direction.y -= 9.8 * R.Time.delta * .0001;
-                return new THREE.Vector3().copy(p.direction).multiplyScalar(R.Time.delta * .001);
-            }
-        },
-        color: {
-            value: [0x336699, 0x669933, 0x996633, 0x993366]
-        },
-        lifetime: {value: 2000, randomness: 0}
-    });
-
+    const firework = new Firework();
     firework.position.set(0, 5, 5);
     R.Scene.add(firework);
     evt.globals.firework = firework;
 };
 
+/**
+ * Transform ball to firework
+ */
 const ball2firework = (evt) => {
     const ball = evt.globals.ball;
 
     shrinkBaall(evt);
     ball.on(R.CONST.ANIMATION_COMPLETE, (e) => {
-        if(e.animation === 'shrink') {
+        if (e.animation === 'shrink') {
             initFirework(evt);
         }
     });
@@ -69,7 +56,9 @@ export const state_firework = {
  */
 
 state_firework.taron.on('start', (evt) => {
-    ball2firework(evt);
+    setTimeout(() => {
+        ball2firework(evt);
+    }, 5000);
 });
 
 state_firework.taron.on('finish', (evt) => {
@@ -85,10 +74,7 @@ state_firework.taron.on('fastForward', (evt) => {
  */
 
 state_firework.cardboard.on('start', (evt) => {
-    // todo: fix this
-    setTimeout(() => {
-        ball2firework(evt);
-    }, 5000);
+    ball2firework(evt);
 });
 
 state_firework.cardboard.on('finish', (evt) => {

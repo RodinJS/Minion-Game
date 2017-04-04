@@ -38,6 +38,7 @@ const initThrowingWall = (evt) => {
     };
 
     throwingWall.on(R.CONST.UPDATE, throwWallUpdate);
+    evt.globals.throwingWall = throwingWall;
 };
 
 export const state_slide_ball = {

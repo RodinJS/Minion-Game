@@ -43,29 +43,9 @@ const enforce = function () {
  */
 export class ParticleSystem extends R.Sculpt {
     constructor(params) {
-        // params = object.deepAssign({
-        //     startCount: {value: 0, randomness: 0},
-        //     numberPerSecond: {value: 10, randomness: 0},
-        //     maxParticles: {value: 100, randomness: 0},
-        //     particleSize: {value: new THREE.Vector3(0.05, 0.05, 0.05), randomness: new THREE.Vector3(0.01, 0.01, 0.01)},
-        //     startPosition: {randomness: new THREE.Vector3()},
-        //     velocity: {
-        //         type: 'add',
-        //         path: (c, p) => {
-        //             if(!p.direction) {
-        //                 p.direction = vector3.addNoise(new THREE.Vector3(0, .5, 0), params.velocity.randomness);
-        //             }
-        //
-        //             return new THREE.Vector3().copy(p.direction).multiplyScalar(Time.delta * .001);
-        //         },
-        //         randomness: new THREE.Vector3(.2, 0, .2)
-        //     },
-        //     lifetime: {value: 3000, randomness: 100}
-        // }, params);
-
         if (params && !params.particlesMaterial) {
             params.particlesMaterial = new THREE.SpriteMaterial({
-                map: R.Loader.loadTexture('https://cdn.rodin.io/resources/img/particleSystem/particle_default_map.png'),
+                map: R.Loader.loadTexture('https://cdn.rodin.io/resources/img/particleSystem/particle_default_map.png')
             });
         }
 
@@ -169,5 +149,12 @@ export class ParticleSystem extends R.Sculpt {
 
         this.particles.push(particle);
         this.add(particle);
+    }
+
+    destroy() {
+        R.Scene.remove(this);
+        for(let i = 0; i < this.particles.length; i ++) {
+            this.destroyParticle(this.particles[i]);
+        }
     }
 }
