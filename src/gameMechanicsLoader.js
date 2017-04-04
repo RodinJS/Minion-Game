@@ -32,6 +32,10 @@ const loadRoomModel = (gameMechanics) => {
 	gameMechanics.globals.room = room;
 };
 
+/**
+ *
+ * Load high poly minions model
+ */
 const loadMinionModel = (gameMechanics) => {
 	const minions = [
 		'/public/resource/models/minion/minion_01.JD',
@@ -42,6 +46,11 @@ const loadMinionModel = (gameMechanics) => {
 	gameMechanics.globals.minion = minions
 
 };
+
+/**
+ *
+ * Load low poly minions model
+ */
 const loadLowMinionModel = (gameMechanics) => {
 	const minions = [
 		'/public/resource/models/minion/minion_01_low.JD',
@@ -51,6 +60,7 @@ const loadLowMinionModel = (gameMechanics) => {
 
 	gameMechanics.globals.lowMinion = minions;
 };
+
 /**
  * load presentation slides
  */
@@ -109,6 +119,8 @@ class GameMechanicsLoader extends R.EventEmitter {
         loadPresentationSlides(this.gameMechanics);
         loadBallModel(this.gameMechanics);
         loadGunModel(this.gameMechanics);
+	    loadMinionModel(this.gameMechanics);
+	    loadLowMinionModel(this.gameMechanics);
     }
 
     /**

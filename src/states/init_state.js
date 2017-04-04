@@ -28,6 +28,17 @@ const initPresentationScreen = (evt) => {
 	gameMechanics.globals.presentationScreen = presentationScreen;
 };
 
+/**
+ *
+ * @param sculpt
+ * minions sculpt object
+ * @param minion
+ * selected minion object
+ * @param x
+ * position x
+ * @param z
+ * position z
+ */
 const setMinionsPosition = (sculpt, minion, x, z) => {
 	let newMinion = minion.clone();
 	newMinion.rotation.y = 135;
@@ -54,15 +65,6 @@ const initLowMinions = evt => {
 	setMinionsPosition(minionSculpt, minions[2], -2, 2.82);
 	setMinionsPosition(minionSculpt, minions[2], 1.5, 3);
 	setMinionsPosition(minionSculpt, minions[2], 3.07, 1.48);
-	// let r = 4;
-	// let step = Math.PI / 4;
-	// for (let i = 0; i < 8; i++) {
-	// 	let min = minion[Math.floor(Math.random() * 3)].clone();
-	// 	min.position.x = r * Math.cos(step * i);
-	// 	min.position.z = r * Math.sin(step * i);
-	// 	min.rotation.y = 135;
-	// 	minionSculpt.add(min)
-	// }
 };
 
 const initHighMinions = (evt) => {
@@ -77,16 +79,13 @@ const initHighMinions = (evt) => {
 	setMinionsPosition(minionSculpt, minions[2], 1.94, -0.19);
 	setMinionsPosition(minionSculpt, minions[2], 1.84, -1.75);
 	setMinionsPosition(minionSculpt, minions[2], -0.5, 0.8);
-	// let r = 2;
-	// let step = Math.PI / 2;
-	// for (let i = 0; i < 4; i++) {
-	// 	let min = minion[Math.floor(Math.random() * 3)].clone();
-	// 	min.position.x = r * Math.cos(step * i);
-	// 	min.position.z = r * Math.sin(step * i);
-	// 	min.rotation.y = 135;
-	// 	minionSculpt.add(min);
-	// }
 };
+
+/**
+ *
+ * Init all types of minions
+ * Set minions sculpt position
+ */
 
 const initMinions = (evt) => {
 	const minionsSculpt = new R.Sculpt();
@@ -168,9 +167,8 @@ const laptopCameraPosition = evt => {
 	const cameraSculpt = new R.Sculpt();
 	R.Scene.add(cameraSculpt);
 	cameraSculpt._threeObject.add(R.Scene.activeCamera);
-	cameraSculpt.position.x = 15;
+	cameraSculpt.position.z = 13;
 	cameraSculpt.position.y = 1;
-	cameraSculpt.rotation.y = Math.PI / 2
 };
 export const state_init = {
 	taron: new State('state_init'),
@@ -187,6 +185,7 @@ state_init.taron.on('start', (evt) => {
     initPresentationScreen(evt);
     initPresentationControls(evt);
     makeBallScalable(evt);
+	initMinions(evt);
 });
 
 state_init.taron.on('finish', (evt) => {
@@ -197,7 +196,8 @@ state_init.taron.on('fastForward', (evt) => {
     initRoom(evt);
     initPresentationScreen(evt);
     initPresentationControls(evt);
-    makeBallScalable(evt);
+	initMinions(evt);
+	makeBallScalable(evt);
 });
 
 /**
@@ -217,6 +217,7 @@ state_init.cardboard.on('finish', (evt) => {
 
 state_init.cardboard.on('fastForward', (evt) => {
 	initRoom(evt);
+	initMinions(evt);
 	initPresentationScreen(evt);
 });
 
@@ -237,5 +238,6 @@ state_init.laptop.on('finish', (evt) => {
 
 state_init.laptop.on('fastForward', (evt) => {
 	initRoom(evt);
+	initMinions(evt);
 	initPresentationScreen(evt);
 });
