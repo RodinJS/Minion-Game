@@ -43,7 +43,7 @@ const loadMinionModel = (gameMechanics) => {
 		'/public/resource/models/minion/minion_03.JD',
 	].map(i => loadJD(i));
 
-	gameMechanics.globals.minion = minions
+	gameMechanics.globals.minions = minions
 
 };
 
