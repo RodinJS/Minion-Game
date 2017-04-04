@@ -28,7 +28,9 @@ export const loadJD = (url) => {
         sculpt.jdSculpt = new RODIN.Sculpt(mesh);
         sculpt.add(sculpt.jdSculpt);
         sculpt.jdReady = true;
-        sculpt.emit('jdReady', new RODIN.RodinEvent(sculpt.jdSculpt));
+        setTimeout(() => {
+            sculpt.emit('jdReady', new RODIN.RodinEvent(sculpt.jdSculpt));
+        }, 0);
     });
 
     sculpt.on(RODIN.CONST.UPDATE, () => {

@@ -5,6 +5,7 @@ const queuedElements = [];
 
 const removeFromQueue = (elem) => {
 	const index = queuedElements.indexOf(elem);
+	console.log(index);
 	if (index === -1)
 		return false;
 	queuedElements.splice(index, 1);
@@ -37,28 +38,46 @@ const loadRoomModel = (gameMechanics) => {
  * Load high poly minions model
  */
 const loadMinionModel = (gameMechanics) => {
-	const minions = [
-		'/public/resource/models/minion/minion_01.JD',
-		'/public/resource/models/minion/minion_02.JD',
-		'/public/resource/models/minion/minion_03.JD',
-	].map(i => loadJD(i));
+	gameMechanics.globals.highMinions = [];
+	const minionsCount = 9;
 
-	gameMechanics.globals.minions = minions
+	const minionsUrls = [
+		'/public/resource/models/animatedMinions/minion_01_anim.JD',
+		// '/public/resource/models/minion/minion_02.JD',
+		// '/public/resource/models/minion/minion_03.JD'
+	];
 
+	for(let i = 0; i < minionsCount; i ++) {
+		const minion = loadJD(minionsUrls[Math.floor(Math.random()*minionsUrls.length)]);
+		queuedElements.push(minion);
+		minion.on('jdReady', () => {
+			gameMechanics.globals.highMinions.push(minion);
+			removeFromQueue(minion);
+        });
+	}
 };
 
 /**
- *
  * Load low poly minions model
  */
 const loadLowMinionModel = (gameMechanics) => {
-	const minions = [
-		'/public/resource/models/minion/minion_01_low.JD',
-		'/public/resource/models/minion/minion_02_low.JD',
-		'/public/resource/models/minion/minion_03_low.JD',
-	].map(i => loadJD(i));
+    gameMechanics.globals.lowMinions = [];
+    const minionsCount = 16;
 
-	gameMechanics.globals.lowMinion = minions;
+    const minionsUrls = [
+        '/public/resource/models/minion/minion_01_low.JD',
+        '/public/resource/models/minion/minion_02_low.JD',
+        '/public/resource/models/minion/minion_03_low.JD'
+    ];
+
+    for(let i = 0; i < minionsCount; i ++) {
+        const minion = loadJD(minionsUrls[Math.floor(Math.random()*minionsUrls.length)]);
+        queuedElements.push(minion);
+        minion.on('jdReady', () => {
+            gameMechanics.globals.lowMinions.push(minion);
+            removeFromQueue(minion);
+        });
+    }
 };
 
 /**
