@@ -121,7 +121,7 @@ class GameMechanicsLoader extends R.EventEmitter {
         loadBallModel(this.gameMechanics);
         loadGunModel(this.gameMechanics);
       	loadMinionModel(this.gameMechanics);
-		    loadLowMinionModel(this.gameMechanics);
+	    loadLowMinionModel(this.gameMechanics);
     }
 
     /**
@@ -134,7 +134,7 @@ class GameMechanicsLoader extends R.EventEmitter {
         loadBallModel(this.gameMechanics);
         loadGunModel(this.gameMechanics);
       	loadMinionModel(this.gameMechanics);
-		    loadLowMinionModel(this.gameMechanics);
+	    loadLowMinionModel(this.gameMechanics);
     }
 
     /**
