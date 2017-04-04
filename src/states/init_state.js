@@ -216,6 +216,7 @@ state_init.cardboard.on('finish', (evt) => {
 });
 
 state_init.cardboard.on('fastForward', (evt) => {
+	cardboardCameraPosition(evt);
 	initRoom(evt);
 	initMinions(evt);
 	initPresentationScreen(evt);
@@ -237,6 +238,7 @@ state_init.laptop.on('finish', (evt) => {
 });
 
 state_init.laptop.on('fastForward', (evt) => {
+	laptopCameraPosition(evt);
 	initRoom(evt);
 	initMinions(evt);
 	initPresentationScreen(evt);
