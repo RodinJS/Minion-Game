@@ -1,17 +1,18 @@
 import State from '../GameMechanics/State.js';
-/*import {shot} from '../random/shot.js';*/
+import {GunShot} from '../particleSystem/GunShot.js';
 import * as R from 'rodin/core';
 
-const shotFinalPos = new R.utils.Vector3(10, 10, 10);
+/**
+ * Shot
+ */
+const shot = (evt) => {
+    const gunShot = new GunShot(evt.globals.gun.globalPosition, null, evt.globals.flyingMinions[0].globalPosition);
+    R.Scene.add(gunShot);
 
-const addTriggerGunEvent = (evt) => {
-    gunTriggerEvent.evt = evt;
-    R.GamePad.viveRight.on(R.CONST.GAMEPAD_BUTTON_DOWN, gunTriggerEvent);
-};
-
-const gunTriggerEvent = (e) => {
-    R.GamePad.viveRight.removeEventListener(R.CONST.GAMEPAD_BUTTON_DOWN, gunTriggerEvent);
-    gunTriggerEvent.evt.gameMechanics.next();
+    gunShot.on('haselem', (e) => {
+        evt.globals.flyingMinions[0].animation.start('throw');
+        evt.gameMechanics.next();
+    });
 };
 
 export const state_gun_shot_0 = {
@@ -25,18 +26,13 @@ export const state_gun_shot_0 = {
  */
 
 state_gun_shot_0.taron.on('start', (evt) => {
-    shot(evt, shotFinalPos, () => {
-        // trcnenq minionin
-        addTriggerGunEvent(evt);
-    });
+    shot(evt);
 });
 
 state_gun_shot_0.taron.on('finish', (evt) => {
-
 });
 
 state_gun_shot_0.taron.on('fastForward', (evt) => {
-    // minion@ otum dnel!
 });
 
 /**
@@ -44,9 +40,7 @@ state_gun_shot_0.taron.on('fastForward', (evt) => {
  */
 
 state_gun_shot_0.cardboard.on('start', (evt) => {
-    shot(evt, shotFinalPos, () => {
-        // trcnenq minionin
-    });
+    shot(evt);
 });
 
 state_gun_shot_0.cardboard.on('finish', (evt) => {
@@ -54,7 +48,6 @@ state_gun_shot_0.cardboard.on('finish', (evt) => {
 });
 
 state_gun_shot_0.cardboard.on('fastForward', (evt) => {
-// minion@ otum dnel!
 });
 
 /**
@@ -62,15 +55,11 @@ state_gun_shot_0.cardboard.on('fastForward', (evt) => {
  */
 
 state_gun_shot_0.laptop.on('start', (evt) => {
-    shot(evt, shotFinalPos, () => {
-        // trcnenq minionin
-    });
+    shot(evt);
 });
 
 state_gun_shot_0.laptop.on('finish', (evt) => {
-
 });
 
 state_gun_shot_0.laptop.on('fastForward', (evt) => {
-// minion@ otum dnel!
 });

@@ -79,7 +79,7 @@ gameMechanicsLoader.on(R.CONST.READY, () => {
                 break;
             }
         }
-        gameMechanics.start(init, /*startingState*/ 8);
+        gameMechanics.start(init, startingState);
     });
     SS.getConnectedUsersList();
 });

@@ -139,7 +139,7 @@ export default class GameMechanics {
             this._onStateChangeListeners[i].bind(this)(this);
         }
 
-        console.log(`State changed to ${this._currentState}`);
+        console.log(`State changed to ${this.stateName}`);
     }
 
 

@@ -69,32 +69,48 @@ const animateMinion = (minion) => {
 const initLowMinions = evt => {
     let minionSculpt = evt.globals.minionsSculpt;
     const positions = [
-        [-0.04, -2.57],
+        [-0.04, -2.57, true],
         [-2.5, 0.86],
         [-0.83, 2.68],
         [3, 0.5],
         [2.54, -1.03],
-        [-2.35, 1.75],
+        [-2.35, 1.75, true],
         [-1.27, -2.68],
         [-0.73, -3.45],
-        [0.66, -2.9],
+        [0.66, -2.9, true],
         [2.29, 2.24],
         [-2.35, -2.62],
         [-2.74, -1.7],
-        [-3.08, 0.07],
+        [-3.08, 0.07, true],
         [-2, 2.82],
         [1.5, 3],
-        [3.07, 1.48]
+        [3.07, 1.48, true]
     ];
 
+    window.R = R;
+    const throwAnimation = new R.AnimationClip('throw', {
+        position: {
+            y: 3
+        }
+    });
+    throwAnimation.duration(1000).easing(R.TWEEN.Easing.Back.Out);
+
+    evt.globals.flyingMinions = [];
     for (let i = 0; i < evt.globals.lowMinions.length; i++) {
         const minion = evt.globals.lowMinions[i];
         const position = positions[i % positions.length];
         minion.position.set(position[0], -1.1, position[1]);
+
+        if(position[2]) {
+            minion.animation.add(throwAnimation);
+            evt.globals.flyingMinions.push(minion);
+        }
+
         minion.rotation.y = Math.PI;
         minionSculpt.add(minion);
         animateMinion(minion);
     }
+
 };
 
 const initHighMinions = (evt) => {

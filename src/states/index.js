@@ -20,6 +20,7 @@ import {state_ball_flying} from './state_ball_flying.js';
  * Gun shot states
  */
 import {state_take_gun} from './state_take_gun.js';
+import {state_gun_shot_init} from './state_gun_shot_init.js';
 import {state_gun_shot_0} from './state_gun_shot_0.js';
 
 /**
@@ -38,6 +39,7 @@ export default [
     state_ball_flying,
 
     state_take_gun,
+    state_gun_shot_init,
     state_gun_shot_0,
 
     state_firework
