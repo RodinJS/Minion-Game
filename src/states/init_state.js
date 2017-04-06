@@ -90,7 +90,7 @@ const initLowMinions = evt => {
     for (let i = 0; i < evt.globals.lowMinions.length; i++) {
         const minion = evt.globals.lowMinions[i];
         const position = positions[i % positions.length];
-        minion.position.set(position[0], 0, position[1]);
+        minion.position.set(position[0], -1.1, position[1]);
         minion.rotation.y = Math.PI;
         minionSculpt.add(minion);
         animateMinion(minion);
@@ -115,7 +115,7 @@ const initHighMinions = (evt) => {
     for (let i = 0; i < evt.globals.highMinions.length; i++) {
         const minion = evt.globals.highMinions[i];
         const position = positions[i % positions.length];
-        minion.position.set(position[0], 0, position[1]);
+        minion.position.set(position[0], -1.1, position[1]);
         minion.rotation.y = Math.PI;
         minionSculpt.add(minion);
         animateMinion(minion);
@@ -131,7 +131,7 @@ const initHighMinions = (evt) => {
 const initMinions = (evt) => {
     const minionsSculpt = new R.Sculpt();
     R.Scene.add(minionsSculpt);
-    minionsSculpt.position.z = 8.6;
+    minionsSculpt.position.z = 12;
     evt.globals.minionsSculpt = minionsSculpt;
 
     initLowMinions(evt);
@@ -201,7 +201,8 @@ const cardboardCameraPosition = evt => {
     const cameraSculpt = new R.Sculpt();
     R.Scene.add(cameraSculpt);
     cameraSculpt._threeObject.add(R.Scene.activeCamera);
-    cameraSculpt.position.z = 8;
+    cameraSculpt.position.z = 12;
+    cameraSculpt.position.y = -1.1;
 };
 
 const laptopCameraPosition = evt => {

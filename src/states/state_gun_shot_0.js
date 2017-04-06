@@ -1,5 +1,5 @@
 import State from '../GameMechanics/State.js';
-import {shot} from '../random/shot.js';
+/*import {shot} from '../random/shot.js';*/
 import * as R from 'rodin/core';
 
 const shotFinalPos = new R.utils.Vector3(10, 10, 10);
