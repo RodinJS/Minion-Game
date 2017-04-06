@@ -43,8 +43,8 @@ const loadMinionModel = (gameMechanics) => {
 
 	const minionsUrls = [
 		'/public/resource/models/animatedMinions/minion_01_anim.JD',
-		// '/public/resource/models/minion/minion_02.JD',
-		// '/public/resource/models/minion/minion_03.JD'
+		'/public/resource/models/animatedMinions/minion_02_anim.JD',
+		'/public/resource/models/animatedMinions/minion_03_anim.JD'
 	];
 
 	for(let i = 0; i < minionsCount; i ++) {
@@ -65,9 +65,9 @@ const loadLowMinionModel = (gameMechanics) => {
     const minionsCount = 16;
 
     const minionsUrls = [
-        '/public/resource/models/minion/minion_01_low.JD',
-        '/public/resource/models/minion/minion_02_low.JD',
-        '/public/resource/models/minion/minion_03_low.JD'
+        '/public/resource/models/animatedMinions/minion_01_low_anim.JD',
+        '/public/resource/models/animatedMinions/minion_02_low_anim.JD',
+        '/public/resource/models/animatedMinions/minion_03_low_anim.JD'
     ];
 
     for(let i = 0; i < minionsCount; i ++) {

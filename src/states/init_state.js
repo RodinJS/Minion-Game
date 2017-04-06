@@ -29,8 +29,23 @@ const initPresentationScreen = (evt) => {
 };
 
 const animateMinion = (minion) => {
-    const anim = minion.animations[1]; // [Math.floor(Math.random()*minion.animations.length)];
-    anim.play();
+    minion.currentAnimationStartTime = 0;
+
+    minion.on(R.CONST.UPDATE, () => {
+        let curTime = 0;
+        if (minion.animations[minion.currentAnimation]) {
+            curTime = minion.animations[minion.currentAnimation].time;
+        }
+
+        if (R.Time.now - minion.currentAnimationStartTime > curTime * 1000) {
+            minion.animations[minion.currentAnimation] &&
+            minion.animations[minion.currentAnimation].stop();
+            minion.currentAnimation = Math.floor(Math.random() * minion.animations.length);
+            const anim = minion.animations[minion.currentAnimation];
+            minion.currentAnimationStartTime = R.Time.now;
+            anim.play();
+        }
+    });
 };
 
 /**
@@ -70,7 +85,9 @@ const initLowMinions = evt => {
         const minion = evt.globals.lowMinions[i];
         const position = positions[i % positions.length];
         minion.position.set(position[0], 0, position[1]);
+        minion.rotation.y = Math.PI;
         minionSculpt.add(minion);
+        animateMinion(minion);
     }
 };
 
@@ -89,11 +106,11 @@ const initHighMinions = (evt) => {
         [-0.5, 0.8],
     ];
 
-    console.log(evt.globals.highMinions[0]);
     for (let i = 0; i < evt.globals.highMinions.length; i++) {
         const minion = evt.globals.highMinions[i];
         const position = positions[i % positions.length];
         minion.position.set(position[0], 0, position[1]);
+        minion.rotation.y = Math.PI;
         minionSculpt.add(minion);
         animateMinion(minion);
     }

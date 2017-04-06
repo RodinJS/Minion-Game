@@ -16,7 +16,7 @@ export const loadJD = (url) => {
             let mixer = new THREE.AnimationMixer(mesh);
             mixers.push(mixer);
             for(let i = 0; i < mesh.geometry.animations.length; i ++) {
-                animations.push(mixer.clipAction(mesh.geometry.animations[0]));
+                animations.push(mixer.clipAction(mesh.geometry.animations[i]));
             }
         }
 
@@ -35,7 +35,7 @@ export const loadJD = (url) => {
 
     sculpt.on(RODIN.CONST.UPDATE, () => {
         for (let i = 0; i < mixers.length; ++i)
-            mixers[i].update(RODIN.Time.delta / 1000);
+            mixers[i].update(1.2 * RODIN.Time.delta / 1000);
     });
 
     return sculpt;
