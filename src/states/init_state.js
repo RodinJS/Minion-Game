@@ -1,5 +1,6 @@
 import State from '../GameMechanics/State.js';
 import {makeScalable} from '../random/ScalableObject.js';
+import {GunShot} from '../particleSystem/GunShot.js';
 import * as R from 'rodin/core';
 
 /**
@@ -8,6 +9,11 @@ import * as R from 'rodin/core';
  */
 const initRoom = (evt) => {
     R.Scene.add(evt.globals.room);
+
+    const gs = new GunShot(new THREE.Vector3(-1, 1.6, 0), null, new THREE.Vector3(0, 5, 5));
+    setTimeout(() => {
+        R.Scene.add(gs);
+    }, 5000);
 };
 
 const makeBallScalable = (evt) => {
