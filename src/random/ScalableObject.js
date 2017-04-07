@@ -31,7 +31,7 @@ export const makeScalable = (sculpt) => {
             sculpt.gripHelper1.parent = evt.gamepad.sculpt;
 
         }
-        else if (!sculpt.gripVectors.secondHand){
+        else if (!sculpt.gripVectors.secondHand) {
             sculpt.gripVectors.secondHand = new THREE.Vector3(evt.point.x, evt.point.y, evt.point.z);
 
             if (!sculpt.gripHelper2) {
@@ -63,13 +63,60 @@ export const makeScalable = (sculpt) => {
     };
 
     const btnUp = (evt) => {
-        sculpt.initScaleObj = sculpt.scale.x;
-        sculpt.gripVectors.firstHand = null;
-        sculpt.gripVectors.secondHand = null;
-        if (sculpt.gripHelper1 && sculpt.gripHelper1.parent) sculpt.gripHelper1.parent = null;
-        if (sculpt.gripHelper2 && sculpt.gripHelper2.parent) sculpt.gripHelper2.parent = null;
-        if (sculpt.helper && sculpt.helper.parent) sculpt.helper.parent = null;
-        sculpt.parent = R.Scene.active;
+
+        if (sculpt.gripVectors && sculpt.gripVectors.firstHand && sculpt.gripVectors.secondHand) {
+            sculpt.gripVectors.firstHand = null;
+            sculpt.gripVectors.secondHand = null;
+            let bounceAnim = new R.AnimationClip("bounceAnim", {
+                scale: {
+                    x: {from: sculpt.initScaleObj, to: sculpt.helper.scale.z},
+                    y: {from: sculpt.initScaleObj, to: sculpt.helper.scale.z},
+                    z: {from: sculpt.helper.scale.z, to: sculpt.helper.scale.z}
+                }
+            });
+            bounceAnim.duration(500);
+            bounceAnim.easing(function (k) {
+                if (k === 0) {
+                    return 0;
+                }
+                if (k === 1) {
+                    return 1;
+                }
+                return Math.pow(2, -10 * k) * Math.sin((k - 0.1) * 5 * Math.PI) + 1;
+            });
+
+            sculpt.helper.animation.add(bounceAnim);
+            sculpt.helper.animation.start("bounceAnim");
+            sculpt.helper.on(R.CONST.ANIMATION_COMPLETE, (evt)=> {
+                sculpt.helper.scale.set(sculpt.helper.scale.z, sculpt.helper.scale.z, sculpt.helper.scale.z);
+                sculpt.initScaleObj = sculpt.helper.scale.z;
+                sculpt.parent = R.Scene.active;
+                sculpt.scale.set(sculpt.helper.scale.z, sculpt.helper.scale.z, sculpt.helper.scale.z);
+
+                if (sculpt.gripHelper1 && sculpt.gripHelper1.parent) sculpt.gripHelper1.parent = null;
+                if (sculpt.gripHelper2 && sculpt.gripHelper2.parent) sculpt.gripHelper2.parent = null;
+                if (sculpt.helper && sculpt.helper.parent) sculpt.helper.parent = null;
+
+                if (sculpt.helper.animation.getClip("bounceAnim")) sculpt.helper.animation.remove("bounceAnim");
+            });
+        }
+        else{
+            if (sculpt.gripVectors.firstHand) {
+                if(!sculpt.gripVectors.secondHand){
+                    sculpt.parent = R.Scene.active;
+                    sculpt.gripVectors.firstHand = null;
+                    if(sculpt.gripHelper1){
+                        sculpt.gripHelper1.parent = null;
+                    }
+                }
+
+                sculpt.gripVectors.firstHand = null;
+                sculpt.gripVectors.secondHand = null;
+
+            }
+
+        }
+
     };
 
     const updateFunc = (evt) => {
@@ -77,7 +124,7 @@ export const makeScalable = (sculpt) => {
         let posVec = new THREE.Vector3(0, 0, 0).addVectors(sculpt.gripHelper1.globalPosition, sculpt.gripHelper2.globalPosition);
         sculpt.helper.position.set(posVec.x / 2, posVec.y / 2, posVec.z / 2);
         const scale = new THREE.Vector3(0, 0, 0).subVectors(sculpt.gripHelper1.globalPosition, sculpt.gripHelper2.globalPosition).length() / sculpt.initScaleDist;
-        sculpt.helper.scale.set(scale * sculpt.initScaleObj, scale * sculpt.initScaleObj, scale * sculpt.initScaleObj);
+        sculpt.helper.scale.z = scale * sculpt.initScaleObj;
         sculpt.helper._threeObject.lookAt(sculpt.gripHelper1.globalPosition);
     };
 
