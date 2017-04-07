@@ -25,7 +25,7 @@ const shrinkBaall = (evt) => {
  * Init firework
  */
 const initFirework = (evt) => {
-    const firework = new Firework(1);
+    const firework = new Firework(1.5, [[2, -1, 1500], [-2, 1, 1600], [2, 1, 3000], [-2, -1.5, 3200]]);
     firework.position.set(0, 5, 5);
     R.Scene.add(firework);
     evt.globals.firework = firework;
@@ -73,7 +73,9 @@ state_firework.taron.on('fastForward', (evt) => {
  */
 
 state_firework.cardboard.on('start', (evt) => {
-    ball2firework(evt);
+    setTimeout(() => {
+        ball2firework(evt);
+    }, 5000);
 });
 
 state_firework.cardboard.on('finish', (evt) => {

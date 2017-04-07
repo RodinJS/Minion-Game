@@ -1,4 +1,5 @@
 import State from '../GameMechanics/State.js';
+import {highlightMinion} from '../random/highlight.js';
 import * as R from 'rodin/core';
 
 /**
@@ -49,6 +50,7 @@ export const state_gun_shot_init = {
 state_gun_shot_init.taron.on('start', (evt) => {
     addGun2Gamepad(evt);
     addListenerForFirstShot(evt);
+    highlightMinion(evt.globals.flyingMinions[0]);
 });
 
 state_gun_shot_init.taron.on('finish', (evt) => {

@@ -34,12 +34,12 @@ const initPresentationScreen = (evt) => {
  */
 const initGru = (evt) => {
     const gru = evt.globals.gru;
-    //gru.position.y = 0.2;
+    // gru.position.y = 0.2;
     gru.scale.set(0.8, 0.8, 0.8);
-    R.Scene.add(gru);
+    // R.Scene.add(gru);
     gru.animations[0].play();
 
-    //R.Scene.add(new R.Box(0.1, 3.2));
+    // R.Scene.add(new R.Box(0.1, 3.2));
 };
 
 const syncGruMotion = (evt) => {
@@ -168,10 +168,24 @@ const initHighMinions = (evt) => {
         [-1.5, 0.3]
     ];
 
+    const throwAnimation = new R.AnimationClip('throw', {
+        position: {
+            y: 3
+        }
+    });
+    throwAnimation.duration(1000).easing(R.TWEEN.Easing.Back.Out);
+
+    evt.globals.flyingMinions = [];
     for (let i = 0; i < evt.globals.highMinions.length; i++) {
         const minion = evt.globals.highMinions[i];
         const position = positions[i % positions.length];
         minion.position.set(position[0], -1.1, position[1]);
+
+        if (position[2]) {
+            minion.animation.add(throwAnimation);
+            evt.globals.flyingMinions.push(minion);
+        }
+
         minion.rotation.y = Math.PI;
         minion.scale.set(1.35, 1.35, 1.35);
         minionSculpt.add(minion);
