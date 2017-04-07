@@ -1,19 +1,13 @@
 import State from '../GameMechanics/State.js';
 import {makeScalable} from '../random/ScalableObject.js';
-import {GunShot} from '../particleSystem/GunShot.js';
 import * as R from 'rodin/core';
-
+import {getAngle} from '../util/angle.js';
 /**
  * Init room
  * Set rotation position and EE
  */
 const initRoom = (evt) => {
     R.Scene.add(evt.globals.room);
-
-    const gs = new GunShot(new THREE.Vector3(-1, 1.6, 0), null, new THREE.Vector3(0, 5, 5));
-    setTimeout(() => {
-        R.Scene.add(gs);
-    }, 5000);
 };
 
 const makeBallScalable = (evt) => {
@@ -32,6 +26,67 @@ const initPresentationScreen = (evt) => {
     R.Scene.add(presentationScreen);
 
     gameMechanics.globals.presentationScreen = presentationScreen;
+};
+
+/**
+ *
+ * Init Gru model and play 'floating' animation
+ */
+const initGru = (evt) => {
+    const gru = evt.globals.gru;
+    //gru.position.y = 0.2;
+    gru.scale.set(0.8, 0.8, 0.8);
+    R.Scene.add(gru);
+    gru.animations[0].play();
+
+    //R.Scene.add(new R.Box(0.1, 3.2));
+};
+
+const syncGruMotion = (evt) => {
+    const rBox = new R.Box(0.3);
+    const lBox = new R.Box(0.3);
+
+    // evt.globals.rBox = rBox;
+    // evt.globals.lBox = lBox;
+
+    R.Scene.add(rBox, lBox);
+
+    const sculptBones = evt.globals.gru.bones.map(i => new R.Sculpt(i));
+
+    evt.globals.gru.on(R.CONST.UPDATE, () => {
+        const pos = R.Scene.activeCamera.position.clone();
+        pos.y = 0.2;
+        //pos.z -= -.4;
+        const worldDirection = R.Scene.activeCamera.getWorldDirection();
+        const yRotation = new THREE.Vector2(worldDirection.x, worldDirection.z).normalize();
+        let yAngle = -getAngle(new THREE.Vector2(0, 0), yRotation);
+
+        yAngle = (yAngle - Math.PI * 2) / 2 + Math.PI * 2;
+        yAngle -= Math.PI / 2 - Math.PI / 4;
+
+        evt.globals.gru.rotation.y = yAngle;
+
+        evt.globals.gru.position = pos;
+
+        rBox.position = sculptBones[8].globalPosition;
+        lBox.position = sculptBones[14].globalPosition;
+
+        sculptBones[8].quaternion.setFromUnitVectors(
+            sculptBones[8].globalPosition.clone().normalize(),
+            R.GamePad.viveLeft.sculpt.position.clone().normalize()
+        );
+
+        //evt.globals.gru.bones[8].rotation.z = Math.PI / 2;
+
+        // evt.globals.gru.bones[9].position.set(
+        //     R.GamePad.viveLeft.sculpt.position.x,
+        //     -R.GamePad.viveLeft.sculpt.position.y,
+        //     -R.GamePad.viveLeft.sculpt.position.z);
+        // evt.globals.gru.bones[15].position.set(
+        //     R.GamePad.viveRight.sculpt.position.x,
+        //     -R.GamePad.viveRight.sculpt.position.y,
+        //     -R.GamePad.viveRight.sculpt.position.z);
+    });
 };
 
 const animateMinion = (minion) => {
@@ -69,63 +124,48 @@ const animateMinion = (minion) => {
 const initLowMinions = evt => {
     let minionSculpt = evt.globals.minionsSculpt;
     const positions = [
-        [-0.04, -2.57, true],
-        [-2.5, 0.86],
-        [-0.83, 2.68],
-        [3, 0.5],
-        [2.54, -1.03],
-        [-2.35, 1.75, true],
-        [-1.27, -2.68],
-        [-0.73, -3.45],
-        [0.66, -2.9, true],
-        [2.29, 2.24],
-        [-2.35, -2.62],
-        [-2.74, -1.7],
-        [-3.08, 0.07, true],
+        [-0.03, -2.8],
+        [-1.1, -3.6],
+        [-0.3, 3.5],
+        [-2.4, -2.6],
         [-2, 2.82],
-        [1.5, 3],
-        [3.07, 1.48, true]
+        [-3.3, 1.8],
+        [-2.6, 0.6],
+        [-4, -2.5],
+        [-4.2, -1],
+        [-4, 0.07],
+        [1.5, -3.3],
+        [1.5, 3.3],
+        [2.4, 2.24],
+        [3, -2.2],
+        [3.7, -1.2],
+        [3.5, 0.5]
     ];
 
-    window.R = R;
-    const throwAnimation = new R.AnimationClip('throw', {
-        position: {
-            y: 3
-        }
-    });
-    throwAnimation.duration(1000).easing(R.TWEEN.Easing.Back.Out);
-
-    evt.globals.flyingMinions = [];
     for (let i = 0; i < evt.globals.lowMinions.length; i++) {
         const minion = evt.globals.lowMinions[i];
         const position = positions[i % positions.length];
         minion.position.set(position[0], -1.1, position[1]);
-
-        if(position[2]) {
-            minion.animation.add(throwAnimation);
-            evt.globals.flyingMinions.push(minion);
-        }
-
         minion.rotation.y = Math.PI;
+        minion.scale.set(1.35, 1.35, 1.35);
         minionSculpt.add(minion);
         animateMinion(minion);
     }
-
 };
 
 const initHighMinions = (evt) => {
     const minionSculpt = evt.globals.minionsSculpt;
 
     const positions = [
-        [0.83, -1.76],
-        [-.8, -1.28],
-        [0.67, 1.74],
-        [-2, -0.75],
-        [1.7, 0.95],
-        [-1.28, 1.84],
-        [1.94, -0.19],
-        [1.84, -1.75],
-        [-0.5, 0.8],
+        [1.2, -1.8],
+        [-0.9, -1.5],
+        [-2.6, -0.8],
+        [-2, 1.6],
+        [-0.5, 1.4],
+        [0.85, 1.8],
+        [2, 0.9],
+        [2.2, -0.4],
+        [-1.5, 0.3]
     ];
 
     for (let i = 0; i < evt.globals.highMinions.length; i++) {
@@ -133,6 +173,7 @@ const initHighMinions = (evt) => {
         const position = positions[i % positions.length];
         minion.position.set(position[0], -1.1, position[1]);
         minion.rotation.y = Math.PI;
+        minion.scale.set(1.35, 1.35, 1.35);
         minionSculpt.add(minion);
         animateMinion(minion);
     }
@@ -147,7 +188,7 @@ const initHighMinions = (evt) => {
 const initMinions = (evt) => {
     const minionsSculpt = new R.Sculpt();
     R.Scene.add(minionsSculpt);
-    minionsSculpt.position.z = 12;
+    minionsSculpt.position.z = 15;
     evt.globals.minionsSculpt = minionsSculpt;
 
     initLowMinions(evt);
@@ -217,7 +258,7 @@ const cardboardCameraPosition = evt => {
     const cameraSculpt = new R.Sculpt();
     R.Scene.add(cameraSculpt);
     cameraSculpt._threeObject.add(R.Scene.activeCamera);
-    cameraSculpt.position.z = 12;
+    cameraSculpt.position.z = 15;
     cameraSculpt.position.y = -1.1;
 };
 
@@ -240,6 +281,8 @@ export const state_init = {
 
 state_init.taron.on('start', (evt) => {
     initRoom(evt);
+    initGru(evt);
+    syncGruMotion(evt);
     initPresentationScreen(evt);
     initPresentationControls(evt);
     makeBallScalable(evt);
@@ -252,6 +295,8 @@ state_init.taron.on('finish', (evt) => {
 
 state_init.taron.on('fastForward', (evt) => {
     initRoom(evt);
+    initGru(evt);
+    syncGruMotion(evt);
     initPresentationScreen(evt);
     initPresentationControls(evt);
     initMinions(evt);
@@ -265,6 +310,7 @@ state_init.taron.on('fastForward', (evt) => {
 state_init.cardboard.on('start', (evt) => {
     cardboardCameraPosition(evt);
     initRoom(evt);
+    initGru(evt);
     initPresentationScreen(evt);
     initMinions(evt);
 });
@@ -276,6 +322,7 @@ state_init.cardboard.on('finish', (evt) => {
 state_init.cardboard.on('fastForward', (evt) => {
     cardboardCameraPosition(evt);
     initRoom(evt);
+    initGru(evt);
     initMinions(evt);
     initPresentationScreen(evt);
 });
@@ -287,6 +334,7 @@ state_init.cardboard.on('fastForward', (evt) => {
 state_init.laptop.on('start', (evt) => {
     laptopCameraPosition(evt);
     initRoom(evt);
+    initGru(evt);
     initPresentationScreen(evt);
     initMinions(evt);
 });
@@ -298,6 +346,7 @@ state_init.laptop.on('finish', (evt) => {
 state_init.laptop.on('fastForward', (evt) => {
     laptopCameraPosition(evt);
     initRoom(evt);
+    initGru(evt);
     initMinions(evt);
     initPresentationScreen(evt);
 });
