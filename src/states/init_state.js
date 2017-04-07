@@ -93,7 +93,7 @@ const initLowMinions = evt => {
             y: 3
         }
     });
-    throwAnimation.duration(1000).easing(R.TWEEN.Easing.Back.Out);
+    // throwAnimation.duration(1000).easing(R.TWEEN.Easing.Back.Out);
 
     evt.globals.flyingMinions = [];
     for (let i = 0; i < evt.globals.lowMinions.length; i++) {

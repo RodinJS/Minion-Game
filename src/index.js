@@ -1,6 +1,5 @@
 import * as R from 'rodin/core';
 import {gameMechanicsLoader} from './gameMechanicsLoader.js';
-
 R.start();
 
 import GameMechanics from './GameMechanics/GameMechanics.js';
