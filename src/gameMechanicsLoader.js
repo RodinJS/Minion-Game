@@ -79,6 +79,15 @@ const loadLowMinionModel = (gameMechanics) => {
         });
     }
 };
+const loadVeryLowMinionModel = (gameMechanics) => {
+	const url = '/public/resource/models/minion/minoin_low_very_low.JD';
+	const minion = loadJD(url);
+	queuedElements.push(minion);
+	minion.on('jdReady', () => {
+		gameMechanics.globals.veryLowMinions = minion;
+		removeFromQueue(minion);
+	});
+};
 
 /**
  * load presentation slides
@@ -154,6 +163,7 @@ class GameMechanicsLoader extends R.EventEmitter {
         loadBallModel(this.gameMechanics);
         loadGruModel(this.gameMechanics);
         loadGunModel(this.gameMechanics);
+	    loadVeryLowMinionModel(this.gameMechanics);
         loadMinionModel(this.gameMechanics);
         loadLowMinionModel(this.gameMechanics);
     }
@@ -168,7 +178,8 @@ class GameMechanicsLoader extends R.EventEmitter {
         loadBallModel(this.gameMechanics);
         loadGruModel(this.gameMechanics);
         loadGunModel(this.gameMechanics);
-        loadMinionModel(this.gameMechanics);
+	    loadVeryLowMinionModel(this.gameMechanics);
+	    loadMinionModel(this.gameMechanics);
         loadLowMinionModel(this.gameMechanics);
     }
 
@@ -182,7 +193,8 @@ class GameMechanicsLoader extends R.EventEmitter {
         loadBallModel(this.gameMechanics);
         loadGruModel(this.gameMechanics);
         loadGunModel(this.gameMechanics);
-        loadMinionModel(this.gameMechanics);
+	    loadVeryLowMinionModel(this.gameMechanics);
+	    loadMinionModel(this.gameMechanics);
         loadLowMinionModel(this.gameMechanics);
     }
 
