@@ -21,6 +21,12 @@ const addTriggerGunEvent = (evt) => {
     gamepad.on(R.CONST.UPDATE, addGunToOculus);
 };
 
+const takeGunForward = (evt) => {
+    const gamepad = R.GamePad.oculusTouchRight;
+    evt.globals.gunGamepad = gamepad;
+    evt.globals.throwingWall.parent = null;
+};
+
 export const state_take_gun = {
     taron: new State('state_take_gun'),
     cardboard: new State('state_take_gun'),
@@ -39,6 +45,7 @@ state_take_gun.taron.on('finish', (evt) => {
 });
 
 state_take_gun.taron.on('fastForward', (evt) => {
+    takeGunForward(evt);
 });
 
 /**
