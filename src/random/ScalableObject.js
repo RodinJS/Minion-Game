@@ -124,7 +124,7 @@ export const makeScalable = (sculpt) => {
         let posVec = new THREE.Vector3(0, 0, 0).addVectors(sculpt.gripHelper1.globalPosition, sculpt.gripHelper2.globalPosition);
         sculpt.helper.position.set(posVec.x / 2, posVec.y / 2, posVec.z / 2);
         const scale = new THREE.Vector3(0, 0, 0).subVectors(sculpt.gripHelper1.globalPosition, sculpt.gripHelper2.globalPosition).length() / sculpt.initScaleDist;
-        sculpt.helper.scale.z = scale * sculpt.initScaleObj;
+        sculpt.helper.scale.z = Math.min(scale * sculpt.initScaleObj, evt.target.maxScale || 5);
         sculpt.helper._threeObject.lookAt(sculpt.gripHelper1.globalPosition);
     };
 

@@ -1,5 +1,6 @@
 import State from '../GameMechanics/State.js';
 import {GunShot} from '../particleSystem/GunShot.js';
+import {highlightMinion} from '../random/highlight.js';
 import * as R from 'rodin/core';
 
 /**
@@ -11,8 +12,23 @@ const shot = (evt) => {
 
     gunShot.on('haselem', (e) => {
         evt.globals.flyingMinions[0].animation.start('throw');
-        evt.gameMechanics.next();
+        highlightMinion(evt.globals.flyingMinions[1]);
+        addListenerForNextShot(evt);
     });
+};
+
+/**
+ * Add listener for first shot
+ */
+const addListenerForNextShot = (evt) => {
+    const gun = evt.globals.gun;
+    const listener = (e) => {
+        // todo: fix this to vive
+        gun.eventHandler.removeEventListener(R.CONST.GAMEPAD_BUTTON_DOWN, listener);
+        evt.gameMechanics.next();
+    };
+
+    gun.eventHandler.on(R.CONST.GAMEPAD_BUTTON_DOWN, listener);
 };
 
 export const state_gun_shot_0 = {
@@ -40,11 +56,9 @@ state_gun_shot_0.taron.on('fastForward', (evt) => {
  */
 
 state_gun_shot_0.cardboard.on('start', (evt) => {
-    shot(evt);
 });
 
 state_gun_shot_0.cardboard.on('finish', (evt) => {
-
 });
 
 state_gun_shot_0.cardboard.on('fastForward', (evt) => {
@@ -55,7 +69,6 @@ state_gun_shot_0.cardboard.on('fastForward', (evt) => {
  */
 
 state_gun_shot_0.laptop.on('start', (evt) => {
-    shot(evt);
 });
 
 state_gun_shot_0.laptop.on('finish', (evt) => {

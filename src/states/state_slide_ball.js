@@ -32,7 +32,7 @@ const initThrowingWall = (evt) => {
 
     const throwWallUpdate = () => {
         if(collision.sphere2Plane(evt.globals.ball, throwingWall)) {
-            throwingWall.removeEventListener(R.CONST.UPDATE, throwingWall);
+            throwingWall.removeEventListener(R.CONST.UPDATE, throwWallUpdate);
             evt.gameMechanics.next();
         }
     };
