@@ -23,6 +23,7 @@ const startBallFlying = (evt) => {
             z: this.maxScale || 2,
         }
     });
+    ballAnim.duration(700);
 
     ball.animation.add(ballAnim);
     ball.animation.start('ball');

@@ -7,7 +7,6 @@ import {Firework} from '../particleSystem/Firework.js';
  */
 const shrinkBaall = (evt) => {
     const ball = evt.globals.ball;
-    evt.globals.sharedBall.active(false);
 
     const shrinkAnimation = new R.AnimationClip('shrink', {
         scale: {
@@ -40,6 +39,7 @@ const ball2firework = (evt) => {
     shrinkBaall(evt);
     ball.on(R.CONST.ANIMATION_COMPLETE, (e) => {
         if (e.animation === 'shrink') {
+            ball.parent = null;
             initFirework(evt);
         }
     });
@@ -56,6 +56,7 @@ export const state_firework = {
  */
 
 state_firework.taron.on('start', (evt) => {
+    evt.globals.sharedBall.active(false);
     ball2firework(evt);
 });
 
@@ -63,6 +64,7 @@ state_firework.taron.on('finish', (evt) => {
 });
 
 state_firework.taron.on('fastForward', (evt) => {
+    evt.globals.sharedBall.active(false);
     ball2firework(evt);
 });
 
