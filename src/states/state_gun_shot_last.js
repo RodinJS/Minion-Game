@@ -6,21 +6,21 @@ import * as R from 'rodin/core';
  * Shot
  */
 const shot = (evt) => {
-    const gunShot = new GunShot(evt.globals.gun.globalPosition, null, evt.globals.flyingMinions[1].globalPosition);
+    const gunShot = new GunShot(evt.globals.gun.globalPosition, null, evt.globals.flyingMinions[3].globalPosition);
     R.Scene.add(gunShot);
 
     gunShot.on('haselem', (e) => {
-        evt.globals.flyingMinions[1].animation.start('throw');
+        evt.globals.flyingMinions[3].animation.start('throw');
         evt.gameMechanics.next();
     });
 };
 
 const shotNonTaron = (evt) => {
-    const gunShot = new GunShot(evt.globals.gun.globalPosition, null, evt.globals.flyingMinions[1].globalPosition);
+    const gunShot = new GunShot(evt.globals.gun.globalPosition, null, evt.globals.flyingMinions[3].globalPosition);
     R.Scene.add(gunShot);
 
     gunShot.on('haselem', (e) => {
-        evt.globals.flyingMinions[1].animation.start('throw');
+        evt.globals.flyingMinions[3].animation.start('throw');
     });
 };
 
