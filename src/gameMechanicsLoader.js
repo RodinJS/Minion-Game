@@ -38,7 +38,7 @@ const loadRoomModel = (gameMechanics) => {
  */
 const loadMinionModel = (gameMechanics) => {
     gameMechanics.globals.highMinions = [];
-    const minionsCount = 9;
+    const minionsCount = 6;
 
     const minionsUrls = [
         '/public/resource/models/minions/minion_01_anim.JD',
@@ -71,7 +71,7 @@ const loadVeryLowMinionModel = (gameMechanics) => {
  */
 const loadLowMinionModel = (gameMechanics) => {
     gameMechanics.globals.lowMinions = [];
-    const minionsCount = 16;
+    const minionsCount = 11;
 
     const minionsUrls = [
         '/public/resource/models/minions/minion_01_low_anim.JD',
