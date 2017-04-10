@@ -22,7 +22,7 @@ const initPresentationScreen = (evt) => {
     const presentationScreen = new R.Sculpt(new THREE.Mesh(new THREE.PlaneGeometry(9, 3), new THREE.MeshBasicMaterial({
         side: THREE.DoubleSide
     })));
-    presentationScreen.position.set(0, 3.6, -0.15);
+    presentationScreen.position.set(0, 3.6, -2);
     R.Scene.add(presentationScreen);
 
     gameMechanics.globals.presentationScreen = presentationScreen;
@@ -34,7 +34,6 @@ const initPresentationScreen = (evt) => {
  */
 const initGru = (evt) => {
     const gru = evt.globals.gru;
-    gru.position.y = 0.2;
     gru.scale.set(0.8, 0.8, 0.8);
     R.Scene.add(gru);
     gru.animations[0].play();
@@ -101,17 +100,15 @@ const animateMinion = (minion) => {
 const initVeryLowMinions = evt => {
 	let minionSculpt = evt.globals.minionsSculpt;
 	let minion = evt.globals.veryLowMinions;
-	let r = 5;
+	let r = 5.6;
 	// let r = [2, 2.2, 2.3 , 2.4];
-	let step = Math.PI / 16;
-	for (let i = 0; i < 16; i++) {
+	let step = Math.PI / 14;
+	for (let i = 0; i < 15; i++) {
 		let min = minion.clone();
-		min.position.x = r * Math.cos(step * i);
+		min.position.x = r * Math.cos(step * i) + (Math.random() * .4 + .4);
 		min.position.y = -1.6;
-		// min.position.x = Math.round(Math.random() * 4) - 2;
-		min.position.z = r * Math.sin(step * i);
+		min.position.z = r * Math.sin(step * i) + (Math.random() * .4 + .4);
 		min.scale.set(1.35, 1.35, 1.35);
-		// min.position.z = Math.round(Math.random() * 6) - 3;
 		minionSculpt.add(min)
 	}
 };
@@ -121,9 +118,9 @@ const initLowMinions = evt => {
 	const positions = [
 		[-0.03, -2.8, true],
 		[-1.1, -3.6, true],
-		[-0.3, 3.5, true],
+		[-0, 3.5, true],
 		[-2.4, -2.6, true],
-		[-2, 2.82, true],
+		[-1.8, 2.82, true],
 		[-3.3, 1.8],
 		[-2.6, 0.6],
 		[-4, -2.5],
@@ -143,7 +140,7 @@ const initLowMinions = evt => {
             y: 3
         }
     });
-    throwAnimation.duration(1000).easing(R.TWEEN.Easing.Back.Out);
+    // throwAnimation.duration(1000).easing(R.TWEEN.Easing.Back.Out);
 
     evt.globals.flyingMinions = [];
     for (let i = 0; i < evt.globals.lowMinions.length; i++) {
@@ -181,7 +178,7 @@ const initHighMinions = (evt) => {
     for (let i = 0; i < evt.globals.highMinions.length; i++) {
         const minion = evt.globals.highMinions[i];
         const position = positions[i % positions.length];
-        minion.position.set(position[0], -1.1, position[1]);
+        minion.position.set(position[0], -1.6, position[1]);
         minion.rotation.y = Math.PI;
         minion.scale.set(1.35, 1.35, 1.35);
         minionSculpt.add(minion);
