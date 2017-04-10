@@ -73,6 +73,7 @@ gameMechanicsLoader.on(R.CONST.READY, () => {
 	// is we are the master it will be 0
 	// if we are not it will be whatever state the master is currently
 	SS.onMessage('getConnectedUsersList', (data) => {
+		loadingRodin();
 		for (let i in data) {
 			if (data[i].isMaster === true) {
 				startingState = data[i].currentState;
@@ -80,15 +81,21 @@ gameMechanicsLoader.on(R.CONST.READY, () => {
 				break;
 			}
 		}
-		gameMechanics.start(init, startingState);
+		if (calibrate) {
+			calibrate.addEventListener('click', function (e) {
+				R.Scene.active._controls.resetPose();
+				document.getElementById('calibrate').style.display = "none";
+				gameMechanics.start(init, startingState);
+			});
+		} else {
+			gameMechanics.start(init, startingState);
+		}
+
 	});
 	SS.getConnectedUsersList();
 });
 
-// calibrate.addEventListener('click', function (e) {
-	gameMechanicsLoader.load();
-	// document.getElementById('calibrate').remove(e);
-// });
+gameMechanicsLoader.load();
 
 // document.onclick = function () {
 //     gameMechanics.next();
