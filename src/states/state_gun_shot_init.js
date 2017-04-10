@@ -50,7 +50,7 @@ export const state_gun_shot_init = {
 state_gun_shot_init.taron.on('start', (evt) => {
     addGun2Gamepad(evt);
     addListenerForFirstShot(evt);
-    highlightMinion(evt.globals.flyingMinions[0]);
+    highlightMinion(evt.globals.flyingMinions[0], evt);
 });
 
 state_gun_shot_init.taron.on('finish', (evt) => {

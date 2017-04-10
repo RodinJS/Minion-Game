@@ -6,26 +6,50 @@
     <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0, shrink-to-fit=no">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes" />
+    <link rel="stylesheet" href="/public/styles/loader.css">
+    <link rel="stylesheet" href="/public/styles/content.css">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-    <script src="public/deviceCheck.js"></script>
+    <script src="/public/js/deviceCheck.js"></script>
+    <style type="text/css">
+        body {
+            width: 100%;
+            height: 100%;
+            background-color: #000;
+            color: #fff;
+            margin: 0px;
+            padding: 0;
+            overflow: hidden;
+        }
+    </style>
 </head>
 <body>
-<style type="text/css">
-    body {
-        width: 100%;
-        height: 100%;
-        background-color: #000;
-        color: #fff;
-        margin: 0px;
-        padding: 0;
-        overflow: hidden;
+<div class="loader" id="loaderContent" style="display: none;">
+    <img src="/public/images/loader-rodin-logo.png" alt="">
+    <p class="text-loading">Loading ...</p>
+</div>
+<script>
+    var loader = document.getElementById("loaderContent");
+    function loadingRodin(inProgress = false) {
+        return inProgress ? loader.style.display = "block" : loader.style.display = "none"
     }
-</style>
+</script>
 <script type="text/javascript" src="https://cdn.rodin.io/v0.0.4/vendor/vendor.js"></script>
 <script type="text/javascript" src="systemjs/system.js"></script>
 <script type="text/javascript" src="systemjs/config.js"></script>
 <script src="/socket-server?debug=true&host=http://192.168.0.31:3010"></script>
 <script>System.import('build/index.js');</script>
+
+<script type="text/javascript" src="public/NoSleep.min.js"></script>
+<script>
+    const noSleep = new NoSleep();
+
+    function enableNoSleep() {
+        noSleep.enable();
+        document.removeEventListener('click', enableNoSleep, false);
+    }
+    document.addEventListener('click', enableNoSleep, false);
+</script>
+
 </body>
 </html>
 

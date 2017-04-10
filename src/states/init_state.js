@@ -136,15 +136,6 @@ const initVeryLowMinions = evt => {
             minion.children[0]._threeObject.material.materials[i].color.b = color[i].b;
         }
 
-        // const distance = R.Scene.activeCamera.sculpt.globalPosition.distanceTo(min.globalPosition);
-        // let index = Math.min(colors.length - 1, Math.floor(distance/2));
-        // let color = colors[index];
-        //
-        // for (let j=0; j<color.length; j++) {
-        //     minion.children[0]._threeObject.material.materials[j].color.r = color[j].r;
-        //     minion.children[0]._threeObject.material.materials[j].color.g = color[j].g;
-        //     minion.children[0]._threeObject.material.materials[j].color.b = color[j].b;
-        // }
         minionSculpt.add(min)
     }
 };
@@ -314,7 +305,7 @@ export const state_init = {
 
 state_init.taron.on('start', (evt) => {
     initRoom(evt);
-    initGru(evt);
+    // initGru(evt);
     syncGruMotion(evt);
     initPresentationScreen(evt);
     initPresentationControls(evt);
@@ -328,7 +319,7 @@ state_init.taron.on('finish', (evt) => {
 
 state_init.taron.on('fastForward', (evt) => {
     initRoom(evt);
-    initGru(evt);
+    // initGru(evt);
     syncGruMotion(evt);
     initPresentationScreen(evt);
     initPresentationControls(evt);

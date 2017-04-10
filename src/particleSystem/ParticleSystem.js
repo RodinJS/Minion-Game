@@ -60,11 +60,11 @@ export class ParticleSystem extends R.Sculpt {
         }
 
         this.on(R.CONST.UPDATE, () => {
-            this.update(enforce);
+            this.mupdate(enforce);
         });
     }
 
-    update() {
+    mupdate() {
         let addNewCount = Math.min(
                 R.utils.number.addNoise(this.params.numberPerSecond.value, this.params.numberPerSecond.randomness) / 1000 * R.Time.delta,
                 R.utils.number.addNoise(this.params.maxParticles.value, this.params.maxParticles.randomness) - this.particles.length
@@ -141,7 +141,7 @@ export class ParticleSystem extends R.Sculpt {
 
     createParticle() {
         let particle = new Particle(
-            this.params.particlesMaterial.clone(),
+            this.params.particlesMaterial,
             this.params.lifetime,
             this.params.particleSize,
             this.params.startPosition

@@ -28,7 +28,6 @@ const initFirework = (evt) => {
     const firework = new Firework(1.5, [[2, -1, 1500], [-2, 1, 1600], [2, 1, 3000], [-2, -1.5, 3200]]);
     firework.position.set(0, 5, 5);
     R.Scene.add(firework);
-    evt.globals.firework = firework;
 };
 
 /**
@@ -40,6 +39,7 @@ const ball2firework = (evt) => {
     shrinkBaall(evt);
     ball.on(R.CONST.ANIMATION_COMPLETE, (e) => {
         if (e.animation === 'shrink') {
+            ball.parent = null;
             initFirework(evt);
         }
     });
@@ -56,15 +56,15 @@ export const state_firework = {
  */
 
 state_firework.taron.on('start', (evt) => {
-    setTimeout(() => {
-        ball2firework(evt);
-    }, 10000);
+    evt.globals.sharedBall.active(false);
+    ball2firework(evt);
 });
 
 state_firework.taron.on('finish', (evt) => {
 });
 
 state_firework.taron.on('fastForward', (evt) => {
+    evt.globals.sharedBall.active(false);
     ball2firework(evt);
 });
 
@@ -73,9 +73,7 @@ state_firework.taron.on('fastForward', (evt) => {
  */
 
 state_firework.cardboard.on('start', (evt) => {
-    setTimeout(() => {
-        ball2firework(evt);
-    }, 5000);
+    ball2firework(evt);
 });
 
 state_firework.cardboard.on('finish', (evt) => {

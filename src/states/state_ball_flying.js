@@ -10,19 +10,29 @@ const startBallFlying = (evt) => {
     const ball = evt.globals.ball;
     makeUnscaleable(ball);
     R.Scene.add(ball);
-    const ballFinalPosition = new R.utils.Vector3(0, 5, 5);
 
-    const lerpBall = () => {
-        if(ball.position.distanceTo(ballFinalPosition) < .1) {
-            ball.removeEventListener(R.CONST.UPDATE, lerpBall);
+    const ballAnim = new R.AnimationClip('ball', {
+        position: {
+            x: 0,
+            y: 5,
+            z: 5,
+        },
+        scale: {
+            x: this.maxScale || 2,
+            y: this.maxScale || 2,
+            z: this.maxScale || 2,
+        }
+    });
+    ballAnim.duration(700);
+
+    ball.animation.add(ballAnim);
+    ball.animation.start('ball');
+    ball.on(R.CONST.ANIMATION_COMPLETE, (e) => {
+        if(e.animation === 'ball') {
             levitate(ball, Infinity, new R.utils.Vector3(.5, .5, .5));
             evt.gameMechanics.next();
-            return;
         }
-        ball.position.lerp(ballFinalPosition, .1);
-    };
-
-    ball.addEventListener(R.CONST.UPDATE, lerpBall);
+    });
 };
 
 /**
