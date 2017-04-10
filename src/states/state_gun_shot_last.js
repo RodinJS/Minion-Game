@@ -15,6 +15,15 @@ const shot = (evt) => {
     });
 };
 
+const shotNonTaron = (evt) => {
+    const gunShot = new GunShot(evt.globals.gun.globalPosition, null, evt.globals.flyingMinions[1].globalPosition);
+    R.Scene.add(gunShot);
+
+    gunShot.on('haselem', (e) => {
+        evt.globals.flyingMinions[1].animation.start('throw');
+    });
+};
+
 export const state_gun_shot_last = {
     taron: new State('state_gun_shot_last'),
     cardboard: new State('state_gun_shot_last'),
@@ -40,7 +49,7 @@ state_gun_shot_last.taron.on('fastForward', (evt) => {
  */
 
 state_gun_shot_last.cardboard.on('start', (evt) => {
-    shot(evt);
+    shotNonTaron(evt);
 });
 
 state_gun_shot_last.cardboard.on('finish', (evt) => {
@@ -55,7 +64,7 @@ state_gun_shot_last.cardboard.on('fastForward', (evt) => {
  */
 
 state_gun_shot_last.laptop.on('start', (evt) => {
-    shot(evt);
+    shotNonTaron(evt);
 });
 
 state_gun_shot_last.laptop.on('finish', (evt) => {

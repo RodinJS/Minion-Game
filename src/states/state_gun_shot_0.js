@@ -17,6 +17,15 @@ const shot = (evt) => {
     });
 };
 
+const shotNonTaron = (evt) => {
+    const gunShot = new GunShot(evt.globals.gun.globalPosition, null, evt.globals.flyingMinions[0].globalPosition);
+    R.Scene.add(gunShot);
+
+    gunShot.on('haselem', (e) => {
+        evt.globals.flyingMinions[0].animation.start('throw');
+    });
+};
+
 /**
  * Add listener for first shot
  */
@@ -56,6 +65,7 @@ state_gun_shot_0.taron.on('fastForward', (evt) => {
  */
 
 state_gun_shot_0.cardboard.on('start', (evt) => {
+    shotNonTaron(evt);
 });
 
 state_gun_shot_0.cardboard.on('finish', (evt) => {
@@ -69,6 +79,7 @@ state_gun_shot_0.cardboard.on('fastForward', (evt) => {
  */
 
 state_gun_shot_0.laptop.on('start', (evt) => {
+    shotNonTaron(evt);
 });
 
 state_gun_shot_0.laptop.on('finish', (evt) => {
