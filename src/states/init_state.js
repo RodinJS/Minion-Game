@@ -7,7 +7,8 @@ import {getAngle} from '../util/angle.js';
  * Set rotation position and EE
  */
 const initRoom = (evt) => {
-    R.Scene.add(evt.globals.room);
+	evt.globals.room.position.y = -0.48;
+	R.Scene.add(evt.globals.room);
 };
 
 const makeBallScalable = (evt) => {
@@ -70,22 +71,11 @@ const syncGruMotion = (evt) => {
         // rBox.position = sculptBones[8].globalPosition;
         // lBox.position = sculptBones[14].globalPosition;
 
-        sculptBones[8].quaternion.setFromUnitVectors(
-            sculptBones[8].globalPosition.clone().normalize(),
-            R.GamePad.viveLeft.sculpt.position.clone().normalize()
-        );
-
-        //evt.globals.gru.bones[8].rotation.z = Math.PI / 2;
-
-        // evt.globals.gru.bones[9].position.set(
-        //     R.GamePad.viveLeft.sculpt.position.x,
-        //     -R.GamePad.viveLeft.sculpt.position.y,
-        //     -R.GamePad.viveLeft.sculpt.position.z);
-        // evt.globals.gru.bones[15].position.set(
-        //     R.GamePad.viveRight.sculpt.position.x,
-        //     -R.GamePad.viveRight.sculpt.position.y,
-        //     -R.GamePad.viveRight.sculpt.position.z);
-    });
+		sculptBones[8].quaternion.setFromUnitVectors(
+			sculptBones[8].globalPosition.clone().normalize(),
+			R.GamePad.viveLeft.sculpt.position.clone().normalize()
+		);
+	});
 };
 
 const animateMinion = (minion) => {
@@ -108,64 +98,85 @@ const animateMinion = (minion) => {
     });
 };
 
-/**
- *
- * @param sculpt
- * minions sculpt object
- * @param minion
- * selected minion object
- * @param x
- * position x
- * @param z
- * position z
- */
+const initVeryLowMinions = evt => {
+	let minionSculpt = evt.globals.minionsSculpt;
+	let minion = evt.globals.veryLowMinions;
+	let r = 5;
+	// let r = [2, 2.2, 2.3 , 2.4];
+	let step = Math.PI / 16;
+	for (let i = 0; i < 16; i++) {
+		let min = minion.clone();
+		min.position.x = r * Math.cos(step * i);
+		min.position.y = -1.6;
+		// min.position.x = Math.round(Math.random() * 4) - 2;
+		min.position.z = r * Math.sin(step * i);
+		min.scale.set(1.35, 1.35, 1.35);
+		// min.position.z = Math.round(Math.random() * 6) - 3;
+		minionSculpt.add(min)
+	}
+};
 
 const initLowMinions = evt => {
-    let minionSculpt = evt.globals.minionsSculpt;
-    const positions = [
-        [-0.1, -2.8],
-        [-1.1, -3.6],
-        [-0.3, 3.5],
-        [-2.4, -2.6],
-        [-2, 2.82],
-        [-3.3, 1.8],
-        [-2.6, 0.6],
-        [-4, -2.5],
-        [-4.2, -1],
-        [-4, 0.07],
-        [1.5, -3.3],
-        [1.5, 3.3],
-        [2.4, 2.24],
-        [3, -2.2],
-        [3.7, -1.2],
-        [3.5, 0.5]
-    ];
+	let minionSculpt = evt.globals.minionsSculpt;
+	const positions = [
+		[-0.03, -2.8, true],
+		[-1.1, -3.6, true],
+		[-0.3, 3.5, true],
+		[-2.4, -2.6, true],
+		[-2, 2.82, true],
+		[-3.3, 1.8],
+		[-2.6, 0.6],
+		[-4, -2.5],
+		[-4.2, -1],
+		[-4, 0.07],
+		[1.5, -3.3],
+		[1.5, 3.3],
+		[2.4, 2.24],
+		[3, -2.2],
+		[3.7, -1.2],
+		[3.5, 0.5]
+	];
 
+
+    const throwAnimation = new R.AnimationClip('throw', {
+        position: {
+            y: 3
+        }
+    });
+    throwAnimation.duration(1000).easing(R.TWEEN.Easing.Back.Out);
+
+    evt.globals.flyingMinions = [];
     for (let i = 0; i < evt.globals.lowMinions.length; i++) {
-        const minion = evt.globals.lowMinions[i];
-        const position = positions[i % positions.length];
-        minion.position.set(position[0], -1.1, position[1]);
+		const minion = evt.globals.lowMinions[i];
+		const position = positions[i % positions.length];
+		minion.position.set(position[0], -1.6, position[1]);
+
+        if (position[2]) {
+            minion.animation.add(throwAnimation);
+            evt.globals.flyingMinions.push(minion);
+        }
+
         minion.rotation.y = Math.PI;
-        minion.scale.set(1.35, 1.35, 1.35);
-        minionSculpt.add(minion);
-        animateMinion(minion);
-    }
+		minion.scale.set(1.35, 1.35, 1.35);
+		minionSculpt.add(minion);
+		animateMinion(minion);
+	}
 };
 
 const initHighMinions = (evt) => {
-    const minionSculpt = evt.globals.minionsSculpt;
+	const minionSculpt = evt.globals.minionsSculpt;
 
-    const positions = [
-        [1.2, -1.8],
-        [-0.9, -1.5],
-        [-2.6, -0.8],
-        [-2, 1.6],
-        [-0.5, 1.4],
-        [0.85, 1.8],
-        [2, 0.9],
-        [2.2, -0.4],
-        [-1.5, 0.3]
-    ];
+	const positions = [
+		[1.2, -1.8],
+		[-0.9, -1.5],
+		[-2.6, -0.8],
+		[-2, 1.6],
+		[-0.5, 1.4],
+		[0.85, 1.8],
+		[2, 0.9],
+		[2.2, -0.4],
+		[-1.5, 0.3]
+	];
 
     for (let i = 0; i < evt.globals.highMinions.length; i++) {
         const minion = evt.globals.highMinions[i];
@@ -185,61 +196,61 @@ const initHighMinions = (evt) => {
  */
 
 const initMinions = (evt) => {
-    const minionsSculpt = new R.Sculpt();
-    R.Scene.add(minionsSculpt);
-    minionsSculpt.position.z = 10;
-    evt.globals.minionsSculpt = minionsSculpt;
-
-    initLowMinions(evt);
-    initHighMinions(evt);
+	const minionsSculpt = new R.Sculpt();
+	R.Scene.add(minionsSculpt);
+	minionsSculpt.position.z = 8;
+	evt.globals.minionsSculpt = minionsSculpt;
+	initVeryLowMinions(evt);
+	initLowMinions(evt);
+	initHighMinions(evt);
 };
 /**
  * Create presentation controls (only for taron)
  */
 const initPresentationControls = (evt) => {
-    const presentationControls = new R.Sculpt();
+	const presentationControls = new R.Sculpt();
 
-    /**
-     * Presentation controls mini screen
-     * @type {*}
-     */
-    const screen = new R.Sculpt(new THREE.Mesh(new THREE.PlaneGeometry(1.61 / 5, 1 / 5), new THREE.MeshBasicMaterial({
-        side: THREE.DoubleSide
-    })));
-    screen.position.set(0, -0.25, -1);
-    presentationControls.add(screen);
-    presentationControls.screen = screen;
+	/**
+	 * Presentation controls mini screen
+	 * @type {*}
+	 */
+	const screen = new R.Sculpt(new THREE.Mesh(new THREE.PlaneGeometry(1.61 / 5, 1 / 5), new THREE.MeshBasicMaterial({
+		side: THREE.DoubleSide
+	})));
+	screen.position.set(0, -0.25, -1);
+	presentationControls.add(screen);
+	presentationControls.screen = screen;
 
-    /**
-     * Prev button
-     * @type {Text}
-     */
-    const prevButton = new R.Text({
-        text: 'Prev',
-        color: 0xffffff
-    });
+	/**
+	 * Prev button
+	 * @type {Text}
+	 */
+	const prevButton = new R.Text({
+		text: 'Prev',
+		color: 0xffffff
+	});
 
-    prevButton.position.set(-0.30, -0.25, -1);
-    presentationControls.add(prevButton);
-    presentationControls.prevButton = prevButton;
+	prevButton.position.set(-0.30, -0.25, -1);
+	presentationControls.add(prevButton);
+	presentationControls.prevButton = prevButton;
 
-    prevButton.on(R.CONST.GAMEPAD_BUTTON_DOWN, () => {
-        if (evt.gameMechanics.stateName !== 'state_slide_0')
-            evt.gameMechanics.prev();
-    });
+	prevButton.on(R.CONST.GAMEPAD_BUTTON_DOWN, () => {
+		if (evt.gameMechanics.stateName !== 'state_slide_0')
+			evt.gameMechanics.prev();
+	});
 
-    /**
-     * Next button
-     * @type {Text}
-     */
-    const nextButton = new R.Text({
-        text: 'Next',
-        color: 0xffffff
-    });
+	/**
+	 * Next button
+	 * @type {Text}
+	 */
+	const nextButton = new R.Text({
+		text: 'Next',
+		color: 0xffffff
+	});
 
-    nextButton.position.set(0.30, -0.25, -1);
-    presentationControls.add(nextButton);
-    presentationControls.nextButton = nextButton;
+	nextButton.position.set(0.30, -0.25, -1);
+	presentationControls.add(nextButton);
+	presentationControls.nextButton = nextButton;
 
     nextButton.on(R.CONST.GAMEPAD_BUTTON_DOWN, () => {
         evt.gameMechanics.next();
@@ -254,11 +265,11 @@ const initPresentationControls = (evt) => {
 };
 
 const cardboardCameraPosition = evt => {
-    const cameraSculpt = new R.Sculpt();
-    R.Scene.add(cameraSculpt);
-    cameraSculpt._threeObject.add(R.Scene.activeCamera);
-    cameraSculpt.position.z = 10;
-    cameraSculpt.position.y = -1.1;
+	const cameraSculpt = new R.Sculpt();
+	R.Scene.add(cameraSculpt);
+	cameraSculpt._threeObject.add(R.Scene.activeCamera);
+	cameraSculpt.position.z = 8;
+	cameraSculpt.position.y = -1.5;
 };
 
 const laptopCameraPosition = evt => {
