@@ -18,11 +18,10 @@ const makeBallScalable = (evt) => {
  * Create presentation Screen
  */
 const initPresentationScreen = (evt) => {
-    const presentationScreen = new R.Sculpt(new THREE.Mesh(new THREE.PlaneGeometry(1.61, 1), new THREE.MeshBasicMaterial({
+    const presentationScreen = new R.Sculpt(new THREE.Mesh(new THREE.PlaneGeometry(9, 3), new THREE.MeshBasicMaterial({
         side: THREE.DoubleSide
     })));
-    presentationScreen.position.set(0, 1.65, -2);
-    // presentationScreen.rotation.y = Math.PI / 2;
+    presentationScreen.position.set(0, 3.6, -0.15);
     R.Scene.add(presentationScreen);
 
     gameMechanics.globals.presentationScreen = presentationScreen;
@@ -34,7 +33,7 @@ const initPresentationScreen = (evt) => {
  */
 const initGru = (evt) => {
     const gru = evt.globals.gru;
-    //gru.position.y = 0.2;
+    gru.position.y = 0.2;
     gru.scale.set(0.8, 0.8, 0.8);
     R.Scene.add(gru);
     gru.animations[0].play();
@@ -56,20 +55,20 @@ const syncGruMotion = (evt) => {
     evt.globals.gru.on(R.CONST.UPDATE, () => {
         const pos = R.Scene.activeCamera.position.clone();
         pos.y = 0.2;
-        //pos.z -= -.4;
+        //pos.z -= -.8;
         const worldDirection = R.Scene.activeCamera.getWorldDirection();
         const yRotation = new THREE.Vector2(worldDirection.x, worldDirection.z).normalize();
         let yAngle = -getAngle(new THREE.Vector2(0, 0), yRotation);
 
-        yAngle = (yAngle - Math.PI * 2) / 2 + Math.PI * 2;
-        yAngle -= Math.PI / 2 - Math.PI / 4;
-
+        // yAngle = (yAngle - Math.PI * 2) / 2 + Math.PI * 2;
+        // yAngle -= Math.PI / 2 - Math.PI / 4;
+        yAngle -= Math.PI/2;
         evt.globals.gru.rotation.y = yAngle;
 
         evt.globals.gru.position = pos;
 
-        rBox.position = sculptBones[8].globalPosition;
-        lBox.position = sculptBones[14].globalPosition;
+        // rBox.position = sculptBones[8].globalPosition;
+        // lBox.position = sculptBones[14].globalPosition;
 
         sculptBones[8].quaternion.setFromUnitVectors(
             sculptBones[8].globalPosition.clone().normalize(),
@@ -258,7 +257,7 @@ const cardboardCameraPosition = evt => {
     const cameraSculpt = new R.Sculpt();
     R.Scene.add(cameraSculpt);
     cameraSculpt._threeObject.add(R.Scene.activeCamera);
-    cameraSculpt.position.z = 15;
+    cameraSculpt.position.z = 10;
     cameraSculpt.position.y = -1.1;
 };
 

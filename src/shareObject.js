@@ -52,14 +52,10 @@ export const shareObjects = (gameMechanics) => {
     //  * shared Gru model left hand position and rotation
     //  */
     // const sharedGruLeftHand = new SharedObject(gameMechanics.globals.gru.bones[8], [
-    //     'globalPosition.x',
-    //     'globalPosition.y',
-    //     'globalPosition.z',
-    //
-    //     'globalRotation.x',
-    //     'globalRotation.y',
-    //     'globalRotation.z',
-    // ]).active(true).lerp(true).updateInterval(100);
+    //     'rotation.x',
+    //     'rotation.y',
+    //     'rotation.z',
+    // ]).active(true).lerp(false).updateInterval(100);
     // gameMechanics.addSharedObject(sharedGruLeftHand);
     //
     // //gameMechanics.globals.sharedGruLeftHand = sharedGruLeftHand;

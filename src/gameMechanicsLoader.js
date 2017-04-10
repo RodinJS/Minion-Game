@@ -23,8 +23,7 @@ const emitReadyIfGameMechanicsReady = () => {
  * Load room model and assign to gameMechanics.globals
  */
 const loadRoomModel = (gameMechanics) => {
-    // const room = new R.Sculpt('/public/resource/models/room/Deck.obj');
-    const room = loadJD('/public/resource/models/stage/game_stage.JD');
+    const room = loadJD('/public/resource/models/stage/stage.JD');
     queuedElements.push(room);
     room.on(R.CONST.READY, function () {
         removeFromQueue(this);
