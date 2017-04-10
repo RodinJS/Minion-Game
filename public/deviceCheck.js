@@ -1,47 +1,40 @@
 const devices = {
 	"ios": {
-		"version": 5
+		"version": 10
 	},
 	"android": {
 		"version": 6
 	}
 };
-function checkIos() {
+function checkDeviceAndVersion() {
 	if (/iP(hone|od|ad)/.test(navigator.platform)) {
-		// supports iOS 2.0 and later: <http://bit.ly/TJjs1V>
-		var v = (navigator.appVersion).match(/OS (\d+)_(\d+)_?(\d+)?/);
-		// return [parseInt(v[1], 10), parseInt(v[2], 10), parseInt(v[3] || 0, 10)];
+		let match = (navigator.appVersion).match(/OS (\d+)_(\d+)_?(\d+)?/);
+		return match[1] >= devices.ios.version;
+	} else if (/android\s([0-9\.]*)/.test(navigator.userAgent.toLowerCase())) {
+		let ua = navigator.userAgent.toLowerCase();
+		let match = ua.match(/android\s([0-9\.]*)/);
+		return parseFloat(match[1]) >= devices.android.version;
 	}
 	return false;
 }
-
-function checkAndroid() {
-	let ua = navigator.userAgent.toLowerCase();
-	var match = ua.match(/android\s([0-9\.]*)/);
-	return match ? match[1] : false;
-}
-
-var calibrated = function (e) {
-	document.getElementById('calibrate').remove()
-}
 check = function () {
-	if(checkIos() || checkAndroid()) {
+	if (!checkDeviceAndVersion()) {
 		let element = document.createElement('div');
 		element.innerHTML = "Your Device is not supported.";
 		document.body.appendChild(element);
 		return window.stop();
 	} else {
 		let element = document.createElement('div');
-		element.setAttribute('id','calibrate');
 		let text = document.createElement('span');
-		text.innerText = 'Hold your phone towards the stage and tap to begin';
 		let button = document.createElement('button');
+		text.innerText = 'Hold your phone towards the stage and tap to begin';
+		button.setAttribute('id', 'correction');
 		button.innerText = 'Submit';
-		button.addEventListener('click', calibrated);
+		element.setAttribute('id', 'calibrate');
 		element.appendChild(text);
 		element.appendChild(button);
-		element.style.height  = "768px";
+		element.style.height = window.innerHeight;
 		document.body.appendChild(element)
 	}
 };
-// window.onload = check;
+window.onload = check;
