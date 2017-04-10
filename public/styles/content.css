@@ -13,7 +13,12 @@
         font-size: 21px;
     }
     #calibrate {
-        margin: 25px auto;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        z-index: 9999;
+        background: black;
+        padding-top: 25px;
         text-align: center;
         font-size: 21px;
     }
