@@ -37,4 +37,4 @@ check = function () {
 		document.body.appendChild(element)
 	}
 };
-window.onload = check;
+// window.onload = check;

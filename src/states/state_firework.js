@@ -58,7 +58,7 @@ export const state_firework = {
 state_firework.taron.on('start', (evt) => {
     setTimeout(() => {
         ball2firework(evt);
-    }, 5000);
+    }, 10000);
 });
 
 state_firework.taron.on('finish', (evt) => {

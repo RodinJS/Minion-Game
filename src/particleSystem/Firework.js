@@ -7,7 +7,7 @@ import * as R from 'rodin/core';
  */
 export class Firework extends ParticleSystem {
     constructor(size, recursive) {
-        const lifetime = 3500;
+        const lifetime = 4000;
         const params = {
             startCount: {value: 0, randomness: 0},
             numberPerSecond: {value: 500000, randomness: 0},
@@ -71,7 +71,6 @@ export class Firework extends ParticleSystem {
                     const tmp = new Firework(1.5);
                     tmp.position.set(second[0], second[1], 0).add(this.position);
                     R.Scene.add(tmp);
-
                 }
 
                 if (!this.thirdDone && c > thirth[2]) {
@@ -79,7 +78,6 @@ export class Firework extends ParticleSystem {
                     const tmp = new Firework(1.5);
                     tmp.position.set(thirth[0], thirth[1], 0).add(this.position);
                     R.Scene.add(tmp);
-
                 }
 
                 if (!this.fourthDone && c > fourth[2]) {
@@ -87,7 +85,6 @@ export class Firework extends ParticleSystem {
                     const tmp = new Firework(1.5);
                     tmp.position.set(fourth[0], fourth[1], 0).add(this.position);
                     R.Scene.add(tmp);
-
                 }
             });
 

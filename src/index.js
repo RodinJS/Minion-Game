@@ -80,15 +80,15 @@ gameMechanicsLoader.on(R.CONST.READY, () => {
 				break;
 			}
 		}
-		gameMechanics.start(init, 5);
+		gameMechanics.start(init, startingState);
 	});
 	SS.getConnectedUsersList();
 });
 
-calibrate.addEventListener('click', function (e) {
+// calibrate.addEventListener('click', function (e) {
 	gameMechanicsLoader.load();
-	document.getElementById('calibrate').remove(e);
-});
+	// document.getElementById('calibrate').remove(e);
+// });
 
 // document.onclick = function () {
 //     gameMechanics.next();
