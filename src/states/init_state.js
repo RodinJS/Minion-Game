@@ -123,7 +123,7 @@ const animateMinion = (minion) => {
 const initLowMinions = evt => {
     let minionSculpt = evt.globals.minionsSculpt;
     const positions = [
-        [-0.03, -2.8],
+        [-0.1, -2.8],
         [-1.1, -3.6],
         [-0.3, 3.5],
         [-2.4, -2.6],
@@ -187,7 +187,7 @@ const initHighMinions = (evt) => {
 const initMinions = (evt) => {
     const minionsSculpt = new R.Sculpt();
     R.Scene.add(minionsSculpt);
-    minionsSculpt.position.z = 15;
+    minionsSculpt.position.z = 10;
     evt.globals.minionsSculpt = minionsSculpt;
 
     initLowMinions(evt);
