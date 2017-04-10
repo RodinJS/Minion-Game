@@ -3,8 +3,8 @@ import * as R from 'rodin/core';
 
 export class GunShot extends R.Sphere {
     constructor(position, direction, target) {
-        const speed = 3;
-        const size = 0.05;
+        const speed = 10;
+        // const size = 0.05;
         // const args = {
         //     startCount: {value: 0, randomness: 0},
         //     numberPerSecond: {value: 50, randomness: 0},
@@ -31,6 +31,9 @@ export class GunShot extends R.Sphere {
         //
         // super(args);
 
+        position = position.clone();
+        target = target.clone();
+        target.add(new THREE.Vector3(0, 1, 0));
         super(.1);
         this.position.copy(position);
 
@@ -41,15 +44,18 @@ export class GunShot extends R.Sphere {
 
         const lerpPosition = () => {
             burnTime = burnTime || R.Time.currentFrameTimestamp;
-
             const t = (R.Time.currentFrameTimestamp - burnTime) / duration;
-            const currentTarget = this.position.lerpVectors(position, target, t);
-            this.globalQuaternion = this.globalQuaternion.setFromUnitVectors( currentTarget.clone().normalize(), position.clone().normalize());
+            // const currentTarget = this.position.lerpVectors(this.position, target, t);
+            // this.globalQuaternion = this.globalQuaternion.setFromUnitVectors( currentTarget.clone().normalize(), position.clone().normalize());
+            //
+            // this.position.lerp(currentTarget, .1);
 
-            this.position.lerp(currentTarget, .1);
+
+            // this.position.lerp(position, target, (R.Time.currentFrameTimestamp - burnTime) / duration);
+            this.position = this.position.lerpVectors(position, target, t);
             if(t > 1) {
                 this.emit('haselem', new R.RodinEvent(this));
-                // this.destroy();
+                this.parent = null;
                 this.removeEventListener(R.CONST.UPDATE, lerpPosition);
             }
         };
