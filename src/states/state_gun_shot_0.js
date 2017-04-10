@@ -12,7 +12,7 @@ const shot = (evt) => {
 
     gunShot.on('haselem', (e) => {
         evt.globals.flyingMinions[0].animation.start('throw');
-        highlightMinion(evt.globals.flyingMinions[1]);
+        highlightMinion(evt.globals.flyingMinions[1], evt);
         addListenerForNextShot(evt);
     });
 };

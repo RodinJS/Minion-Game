@@ -37,6 +37,18 @@
 <script type="text/javascript" src="systemjs/config.js"></script>
 <script src="/socket-server?debug=true&host=http://192.168.0.22:3010"></script>
 <script>System.import('build/index.js');</script>
+
+<script type="text/javascript" src="public/NoSleep.min.js"></script>
+<script>
+    const noSleep = new NoSleep();
+
+    function enableNoSleep() {
+        noSleep.enable();
+        document.removeEventListener('click', enableNoSleep, false);
+    }
+    document.addEventListener('click', enableNoSleep, false);
+</script>
+
 </body>
 </html>
 
