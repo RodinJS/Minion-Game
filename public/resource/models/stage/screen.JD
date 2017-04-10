@@ -1,0 +1,59 @@
+{
+    "meta": 
+    {
+        "version": 1.2,
+        "generator": "cgdev json exporter"
+    },
+    "model": 
+    {
+        "meshes": [
+            {
+                "meta": 
+                {
+                    "vertNum": 4,
+                    "faceNum": 2,
+                    "vertElementNum": 4
+                },
+                "name": "screen_",
+                "node": 1,
+                "verts": [-4.25,0,1.5,4.25,0,1.5,-4.25,0,-1.5,4.25,0,-1.5],
+                "vertElement": 
+                {
+                    "vertIndices": [2,0,3,1],
+                    "normals": [0,1,0,0,1,0,0,1,0,0,1,0],
+                    "uvs": [[0,1,0,0,1,1,1,0]]
+                },
+                "face": 
+                {
+                    "vertElementIndices": [0,1,2,3,2,1],
+                    "groups": [
+                        {
+                            "start": 0,
+                            "count": 6,
+                            "materialIndex": 0
+                        }
+                    ]
+                }
+            }
+        ]
+    },
+    "hierarchy": 
+    {
+        "nodes": [
+            {
+                "name": "SceneRoot",
+                "parent": -1,
+                "pos": [0,0,0],
+                "scl": [1,1,1],
+                "rot": [0,0,0,1]
+            },
+            {
+                "name": "screen_",
+                "parent": 0,
+                "pos": [0.0119126,3.37868,-0.14011],
+                "scl": [1,1,1],
+                "rot": [0.707107,0,0,0.707107]
+            }
+        ]
+    }
+}

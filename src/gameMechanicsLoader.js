@@ -23,8 +23,7 @@ const emitReadyIfGameMechanicsReady = () => {
  * Load room model and assign to gameMechanics.globals
  */
 const loadRoomModel = (gameMechanics) => {
-    // const room = new R.Sculpt('/public/resource/models/room/Deck.obj');
-    const room = loadJD('/public/resource/models/stage/game_stage.JD');
+    const room = loadJD('/public/resource/models/stage/stage.JD');
     queuedElements.push(room);
     room.on(R.CONST.READY, function () {
         removeFromQueue(this);
@@ -78,15 +77,6 @@ const loadLowMinionModel = (gameMechanics) => {
             removeFromQueue(minion);
         });
     }
-};
-const loadVeryLowMinionModel = (gameMechanics) => {
-	const url = '/public/resource/models/minion/minoin_low_very_low.JD';
-	const minion = loadJD(url);
-	queuedElements.push(minion);
-	minion.on('jdReady', () => {
-		gameMechanics.globals.veryLowMinions = minion;
-		removeFromQueue(minion);
-	});
 };
 
 /**
@@ -163,7 +153,6 @@ class GameMechanicsLoader extends R.EventEmitter {
         loadBallModel(this.gameMechanics);
         loadGruModel(this.gameMechanics);
         loadGunModel(this.gameMechanics);
-	    loadVeryLowMinionModel(this.gameMechanics);
         loadMinionModel(this.gameMechanics);
         loadLowMinionModel(this.gameMechanics);
     }
@@ -178,8 +167,7 @@ class GameMechanicsLoader extends R.EventEmitter {
         loadBallModel(this.gameMechanics);
         loadGruModel(this.gameMechanics);
         loadGunModel(this.gameMechanics);
-	    loadVeryLowMinionModel(this.gameMechanics);
-	    loadMinionModel(this.gameMechanics);
+        loadMinionModel(this.gameMechanics);
         loadLowMinionModel(this.gameMechanics);
     }
 
@@ -193,8 +181,7 @@ class GameMechanicsLoader extends R.EventEmitter {
         loadBallModel(this.gameMechanics);
         loadGruModel(this.gameMechanics);
         loadGunModel(this.gameMechanics);
-	    loadVeryLowMinionModel(this.gameMechanics);
-	    loadMinionModel(this.gameMechanics);
+        loadMinionModel(this.gameMechanics);
         loadLowMinionModel(this.gameMechanics);
     }
 
