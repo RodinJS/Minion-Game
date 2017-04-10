@@ -48,6 +48,7 @@ export class GunShot extends ParticleSystem {
             this.position.lerp(currentTarget, .1);
             if(t > 1) {
                 this.emit('haselem', new R.RodinEvent(this));
+                this.destroy();
                 this.removeEventListener(R.CONST.UPDATE, lerpPosition);
             }
         };

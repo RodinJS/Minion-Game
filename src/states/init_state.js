@@ -12,6 +12,7 @@ const initRoom = (evt) => {
 };
 
 const makeBallScalable = (evt) => {
+    evt.globals.ball.maxScale = 2;
     makeScalable(evt.globals.ball);
 };
 
@@ -114,15 +115,15 @@ const initVeryLowMinions = evt => {
     let step = Math.PI / 14;
     for (let i = 0; i < 15; i++) {
         let min = minion.clone();
-        const distance = R.Scene.activeCamera.sculpt.globalPosition.distanceTo(min.globalPosition);
-        let index = Math.min(colors.length - 1, Math.floor(distance));
-        let color = colors[index];
-
-        for (let j=0; j<color.length; j++) {
-            minion.children[0]._threeObject.material.materials[j].color.r = color[j].r;
-            minion.children[0]._threeObject.material.materials[j].color.g = color[j].g;
-            minion.children[0]._threeObject.material.materials[j].color.b = color[j].b;
-        }
+        // const distance = R.Scene.activeCamera.sculpt.globalPosition.distanceTo(min.globalPosition);
+        // let index = Math.min(colors.length - 1, Math.floor(distance));
+        // let color = colors[index];
+        //
+        // for (let j=0; j<color.length; j++) {
+        //     minion.children[0]._threeObject.material.materials[j].color.r = color[j].r;
+        //     minion.children[0]._threeObject.material.materials[j].color.g = color[j].g;
+        //     minion.children[0]._threeObject.material.materials[j].color.b = color[j].b;
+        // }
 
         min.position.x = r * Math.cos(step * i) + (Math.random() * .4 + .4);
         min.position.y = -1.6;
@@ -135,13 +136,13 @@ const initVeryLowMinions = evt => {
 const initLowMinions = evt => {
     let minionSculpt = evt.globals.minionsSculpt;
     const positions = [
-        [-0.03, -2.8, true],
-        [-1.1, -3.6, true],
-        [-0, 3.5, true],
-        [-2.4, -2.6, true],
+        [-0.03, -2.8],
+        [-1.1, -3.6],
+        [-0, 3.5],
+        [-2.4, -2.6],
         [-1.8, 2.82, true],
-        [-3.3, 1.8],
-        [-2.6, 0.6],
+        [-3.3, 1.8, true],
+        [-2.6, 0.6, true],
         [-4, -2.5],
         [-4.2, -1],
         [-4, 0.07],
@@ -159,7 +160,15 @@ const initLowMinions = evt => {
             y: 3
         }
     });
-    // throwAnimation.duration(1000).easing(R.TWEEN.Easing.Back.Out);
+    throwAnimation.duration(2000).easing((k) => {
+        if (k === 0) {
+            return 0;
+        }
+        if (k === 1) {
+            return 1;
+        }
+        return Math.pow(2, -10 * k) * Math.sin((k - 0.1) * 5 * Math.PI) + 1;
+    });
 
     evt.globals.flyingMinions = [];
     for (let i = 0; i < evt.globals.lowMinions.length; i++) {
@@ -309,7 +318,7 @@ export const state_init = {
 
 state_init.taron.on('start', (evt) => {
     initRoom(evt);
-    initGru(evt);
+    // initGru(evt);
     syncGruMotion(evt);
     initPresentationScreen(evt);
     initPresentationControls(evt);
@@ -323,7 +332,7 @@ state_init.taron.on('finish', (evt) => {
 
 state_init.taron.on('fastForward', (evt) => {
     initRoom(evt);
-    initGru(evt);
+    // initGru(evt);
     syncGruMotion(evt);
     initPresentationScreen(evt);
     initPresentationControls(evt);
