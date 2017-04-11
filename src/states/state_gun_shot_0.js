@@ -8,7 +8,7 @@ import {gunShotSound} from '../sounds/gameSounds.js';
  * Shot
  */
 const shot = (evt) => {
-    const gunShot = new GunShot(evt.globals.gun.globalPosition, null, evt.globals.flyingMinions[0].globalPosition);
+    const gunShot = new GunShot(evt.globals.gun, evt.globals.flyingMinions[0].globalPosition);
     R.Scene.add(gunShot);
 	gunShotSound.play();
     gunShot.on('haselem', (e) => {

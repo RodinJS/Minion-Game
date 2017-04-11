@@ -38,14 +38,25 @@ const initPresentationScreen = (evt) => {
  */
 const initGru = (evt) => {
     const gru = evt.globals.gru;
-    gru.scale.set(0.8, 0.8, 0.8);
+    //gru.scale.set(0.8, 0.8, 0.8);
     R.Scene.add(gru);
     gru.animations[0].play();
 
-    const gunShot = new GunShot(new THREE.Vector3(0, 0, 0), new THREE.Vector3(0, 1, 1), new THREE.Vector3(3, 0, -2));
+    const p0 = new THREE.Vector3(0, 0, 0);
+    const p1 = new THREE.Vector3(0, 1, 1);
+    const p2 = new THREE.Vector3(3, 0, 2);
+    const gunShot = new GunShot(p0, p1, p2);
+
     R.Scene.add(gunShot);
 
+    R.Scene.add(evt.globals.rightHand);
+    R.Scene.add(evt.globals.leftHand);
+
     //R.Scene.add(new R.Box(0.1, 3.2));
+};
+
+const hideGru = (evt) => {
+    evt.globals.gru.visible = false;
 };
 
 const syncGruMotion = (evt) => {
@@ -59,9 +70,16 @@ const syncGruMotion = (evt) => {
 
     const sculptBones = evt.globals.gru.bones.map(i => new R.Sculpt(i));
 
+    R.GamePad.viveLeft.sculpt.add(evt.globals.leftHand);
+    evt.globals.leftHand.position.x -= 0.2;
+    evt.globals.leftHand.position.z -= 0.2;
+    R.GamePad.viveRight.sculpt.add(evt.globals.rightHand);
+    evt.globals.rightHand.position.x += 0.2;
+    evt.globals.rightHand.position.z -= 0.2;
+
     evt.globals.gru.on(R.CONST.UPDATE, () => {
         const pos = R.Scene.activeCamera.position.clone();
-        pos.y = 0.2;
+        pos.y = 0.0;
         //pos.z -= -.8;
         const worldDirection = R.Scene.activeCamera.getWorldDirection();
         const yRotation = new THREE.Vector2(worldDirection.x, worldDirection.z).normalize();
@@ -118,11 +136,6 @@ const MinionsDistribution = (minion, radius, step) => {
 const initVeryLowMinions = evt => {
     let minionSculpt = evt.globals.minionsSculpt;
     let minion = evt.globals.veryLowMinions;
-    // const colors = [
-    //     [{r: 0.416, g: 0.353, b: 0.133}, {r: 0, g: 0, b: 0}, {r: 0.048, g: 0.222, b: 0.453}],
-    //     [{r: 0.337, g: 0.288, b: 0.011}, {r: 0, g: 0, b: 0}, {r: 0.020, g: 0.168, b: 0.337}],
-    //     [{r: 0.213, g: 0.182, b: 0.066}, {r: 0, g: 0, b: 0}, {r: 0.008, g: 0.071, b: 0.155}],
-    // ];
 
     for (let i = 0; i < 12; i++) {
         let min = minion.clone();
@@ -149,16 +162,21 @@ const initVeryLowMinions = evt => {
 
 const initLowMinions = evt => {
     let minionSculpt = evt.globals.minionsSculpt;
-    const flyingMinionIndex = [1,4,6,10];
+    const flyingMinionIndex = [9, 6,  11, 7];
 
 
     const throwAnimation = new R.AnimationClip('throw', {
         position: {
             y: 3
+        },
+        rotation: {
+            x: Math.PI/2 + 0.0234,
+            z: Math.PI,
+            y: -Math.PI
         }
     });
 
-    throwAnimation.duration(2000).easing((k) => {
+    throwAnimation.duration(10000).easing((k) => {
         if (k === 0) {
             return 0;
         }
@@ -179,14 +197,16 @@ const initLowMinions = evt => {
         minion.children[0]._threeObject.material.materials[0].color.g = color.g;
         minion.children[0]._threeObject.material.materials[0].color.b = color.b;
 
-        if (flyingMinionIndex.indexOf(i) !== -1) {
+        let minionIndex =flyingMinionIndex.indexOf(i);
+        if (minionIndex !== -1) {
             minion.animation.add(throwAnimation);
-            evt.globals.flyingMinions.push(minion);
+            evt.globals.flyingMinions[minionIndex] = (minion);
         }
 
         minionSculpt.add(minion);
         animateMinion(minion);
     }
+
 };
 
 const initHighMinions = (evt) => {
@@ -312,7 +332,8 @@ export const state_init = {
 
 state_init.taron.on('start', (evt) => {
     initRoom(evt);
-    // initGru(evt);
+    initGru(evt);
+    hideGru(evt);
     syncGruMotion(evt);
     initPresentationScreen(evt);
     initPresentationControls(evt);
@@ -326,7 +347,8 @@ state_init.taron.on('finish', (evt) => {
 
 state_init.taron.on('fastForward', (evt) => {
     initRoom(evt);
-    // initGru(evt);
+    initGru(evt);
+    hideGru(evt);
     syncGruMotion(evt);
     initPresentationScreen(evt);
     initPresentationControls(evt);
@@ -344,7 +366,6 @@ state_init.cardboard.on('start', (evt) => {
     initGru(evt);
     initPresentationScreen(evt);
     initMinions(evt);
-    R.GamePad.cardboard.gazePoint.Sculpt.visible = false;
 });
 
 state_init.cardboard.on('finish', (evt) => {
@@ -357,7 +378,6 @@ state_init.cardboard.on('fastForward', (evt) => {
     initGru(evt);
     initMinions(evt);
     initPresentationScreen(evt);
-    R.GamePad.cardboard.gazePoint.Sculpt.visible = false;
 });
 
 /**
