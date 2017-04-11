@@ -15,7 +15,6 @@ const initRoom = (evt) => {
 };
 
 const makeBallScalable = (evt) => {
-    evt.globals.ball.maxScale = 2;
     makeScalable(evt.globals.ball);
 };
 
@@ -101,61 +100,52 @@ const animateMinion = (minion) => {
     });
 };
 
+
+
+const MinionsDistribution = (minion, radius, step) => {
+    minion.position.x = radius * Math.cos(step) + (Math.random() * .5 + .2);
+    minion.position.y = -1.6;
+    minion.position.z = radius * Math.sin(step) + (Math.random() * .5 + .2);
+
+    minion.rotation.y = Math.PI;
+    minion.scale.set(1.35, 1.35, 1.35);
+};
+
 const initVeryLowMinions = evt => {
     let minionSculpt = evt.globals.minionsSculpt;
     let minion = evt.globals.veryLowMinions;
-    console.log(minion.children[0]._threeObject.material.materials[0].color);
-    minion.children[0]._threeObject.material.materials[0].color.r = 106 / 255;
-    minion.children[0]._threeObject.material.materials[0].color.g = 90 / 255;
-    minion.children[0]._threeObject.material.materials[0].color.b = 34 / 255;
-    const colors = [
-        [{r: 0.416, g: 0.353, b: 0.133}, {r: 0, g: 0, b: 0}, {r: 0.047, g: 0.168, b: 0.337}],
-        [{r: 0.416, g: 0.353, b: 0.133}, {r: 0, g: 0, b: 0}, {r: 0.047, g: 0.168, b: 0.337}],
-        [{r: 0.416, g: 0.353, b: 0.133}, {r: 0, g: 0, b: 0}, {r: 0.047, g: 0.168, b: 0.337}],
-    ];
+    // const colors = [
+    //     [{r: 0.416, g: 0.353, b: 0.133}, {r: 0, g: 0, b: 0}, {r: 0.048, g: 0.222, b: 0.453}],
+    //     [{r: 0.337, g: 0.288, b: 0.011}, {r: 0, g: 0, b: 0}, {r: 0.020, g: 0.168, b: 0.337}],
+    //     [{r: 0.213, g: 0.182, b: 0.066}, {r: 0, g: 0, b: 0}, {r: 0.008, g: 0.071, b: 0.155}],
+    // ];
 
-    let r = 5.6;
-    let step = Math.PI / 14;
-    for (let i = 0; i < 15; i++) {
+    for (let i = 0; i < 12; i++) {
         let min = minion.clone();
-        // const distance = R.Scene.activeCamera.sculpt.globalPosition.distanceTo(min.globalPosition);
-        // let index = Math.min(colors.length - 1, Math.floor(distance));
-        // let color = colors[index];
-        //
-        // for (let j=0; j<color.length; j++) {
-        //     minion.children[0]._threeObject.material.materials[j].color.r = color[j].r;
-        //     minion.children[0]._threeObject.material.materials[j].color.g = color[j].g;
-        //     minion.children[0]._threeObject.material.materials[j].color.b = color[j].b;
-        // }
 
-        min.position.x = r * Math.cos(step * i) + (Math.random() * .4 + .4);
-        min.position.y = -1.6;
-        min.position.z = r * Math.sin(step * i) + (Math.random() * .4 + .4);
-        min.scale.set(1.35, 1.35, 1.35);
+        MinionsDistribution(min, 6, Math.PI / 8 * i - Math.PI/5);
+
+        const colors = [
+            [{r: 0.416, g: 0.353, b: 0.133}, {r: 0, g: 0, b: 0}, {r: 0.048, g: 0.222, b: 0.453}],
+            [{r: 0.337, g: 0.288, b: 0.011}, {r: 0, g: 0, b: 0}, {r: 0.020, g: 0.168, b: 0.337}],
+            [{r: 0.213, g: 0.182, b: 0.066}, {r: 0, g: 0, b: 0}, {r: 0.008, g: 0.071, b: 0.155}],
+        ];
+
+        const color = colors[2];
+
+        for (let i = 0; i < minion.children[0]._threeObject.material.materials.length; i++){
+            minion.children[0]._threeObject.material.materials[i].color.r = color[i].r;
+            minion.children[0]._threeObject.material.materials[i].color.g = color[i].g;
+            minion.children[0]._threeObject.material.materials[i].color.b = color[i].b;
+        }
+
         minionSculpt.add(min)
     }
 };
 
 const initLowMinions = evt => {
     let minionSculpt = evt.globals.minionsSculpt;
-    const positions = [
-        [-0.03, -2.8],
-        [-1.1, -3.6],
-        [-0, 3.5],
-        [-2.4, -2.6],
-        [-1.8, 2.82, true],
-        [-3.3, 1.8, true],
-        [-2.6, 0.6, true],
-        [-4, -2.5],
-        [-4.2, -1],
-        [-4, 0.07],
-        [1.5, -3.3, true],
-        [1.5, 3.3],
-        [2.4, 2.24],
-        [3, -2.2],
-        [3.7, -1.2],
-        [3.5, 0.5]
-    ];
+    const flyingMinionIndex = [1,4,6,10];
 
 
     const throwAnimation = new R.AnimationClip('throw', {
@@ -163,6 +153,7 @@ const initLowMinions = evt => {
             y: 3
         }
     });
+
     throwAnimation.duration(2000).easing((k) => {
         if (k === 0) {
             return 0;
@@ -174,18 +165,21 @@ const initLowMinions = evt => {
     });
 
     evt.globals.flyingMinions = [];
+
     for (let i = 0; i < evt.globals.lowMinions.length; i++) {
         const minion = evt.globals.lowMinions[i];
-        const position = positions[i % positions.length];
-        minion.position.set(position[0], -1.6, position[1]);
+        MinionsDistribution(minion, 4, Math.PI / 6 * i);
 
-        if (position[2]) {
+        const color = {r: 0.5, g: 0.5, b: 0.5};
+        minion.children[0]._threeObject.material.materials[0].color.r = color.r;
+        minion.children[0]._threeObject.material.materials[0].color.g = color.g;
+        minion.children[0]._threeObject.material.materials[0].color.b = color.b;
+
+        if (flyingMinionIndex.indexOf(i) !== -1) {
             minion.animation.add(throwAnimation);
             evt.globals.flyingMinions.push(minion);
         }
 
-        minion.rotation.y = Math.PI;
-        minion.scale.set(1.35, 1.35, 1.35);
         minionSculpt.add(minion);
         animateMinion(minion);
     }
@@ -194,24 +188,17 @@ const initLowMinions = evt => {
 const initHighMinions = (evt) => {
     const minionSculpt = evt.globals.minionsSculpt;
 
-    const positions = [
-        [1.2, -1.8],
-        [-0.9, -1.5],
-        [-2.6, -0.8],
-        [-2, 1.6],
-        [-0.5, 1.4],
-        [0.85, 1.8],
-        [2, 0.9],
-        [2.2, -0.4],
-        [-1.5, 0.3]
-    ];
-
     for (let i = 0; i < evt.globals.highMinions.length; i++) {
         const minion = evt.globals.highMinions[i];
-        const position = positions[i % positions.length];
-        minion.position.set(position[0], -1.6, position[1]);
-        minion.rotation.y = Math.PI;
-        minion.scale.set(1.35, 1.35, 1.35);
+
+        MinionsDistribution(minion, 2, Math.PI / 3 * i);
+
+        const color = {r: 0.8, g: 0.8, b: 0.8};
+        minion.children[0]._threeObject.material.materials[0].color.r = color.r;
+        minion.children[0]._threeObject.material.materials[0].color.g = color.g;
+        minion.children[0]._threeObject.material.materials[0].color.b = color.b;
+
+
         minionSculpt.add(minion);
         animateMinion(minion);
     }
