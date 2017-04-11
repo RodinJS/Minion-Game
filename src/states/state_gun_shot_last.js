@@ -19,7 +19,7 @@ const shot = (evt) => {
 const shotNonTaron = (evt) => {
     const gunShot = new GunShot(evt.globals.gun.globalPosition, null, evt.globals.flyingMinions[3].globalPosition);
     R.Scene.add(gunShot);
-
+    gunShotSound.play();
     gunShot.on('haselem', (e) => {
         evt.globals.flyingMinions[3].animation.start('throw');
     });
