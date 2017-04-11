@@ -2,6 +2,7 @@ import State from '../GameMechanics/State.js';
 import {GunShot} from '../particleSystem/GunShot.js';
 import {highlightMinion} from '../random/highlight.js';
 import * as R from 'rodin/core';
+import {gunShotSound} from '../sounds/gameSounds.js';
 
 /**
  * Shot
@@ -9,7 +10,7 @@ import * as R from 'rodin/core';
 const shot = (evt) => {
     const gunShot = new GunShot(evt.globals.gun.globalPosition, null, evt.globals.flyingMinions[2].globalPosition);
     R.Scene.add(gunShot);
-
+	gunShotSound.play();
     gunShot.on('haselem', (e) => {
         evt.globals.flyingMinions[2].animation.start('throw');
         highlightMinion(evt.globals.flyingMinions[3], evt);
