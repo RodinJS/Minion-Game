@@ -3,6 +3,7 @@ import {makeScalable} from '../random/ScalableObject.js';
 import * as R from 'rodin/core';
 import {getAngle} from '../util/angle.js';
 import {gunShotSound} from '../sounds/gameSounds.js';
+import {GunShot} from '../particleSystem/GunShot.js';
 /**
  * Init room
  * Set rotation position and EE
@@ -40,6 +41,9 @@ const initGru = (evt) => {
     gru.scale.set(0.8, 0.8, 0.8);
     R.Scene.add(gru);
     gru.animations[0].play();
+
+    const gunShot = new GunShot(new THREE.Vector3(0, 0, 0), new THREE.Vector3(0, 1, 1), new THREE.Vector3(3, 0, -2));
+    R.Scene.add(gunShot);
 
     //R.Scene.add(new R.Box(0.1, 3.2));
 };
@@ -340,6 +344,7 @@ state_init.cardboard.on('start', (evt) => {
     initGru(evt);
     initPresentationScreen(evt);
     initMinions(evt);
+    R.GamePad.cardboard.gazePoint.Sculpt.visible = false;
 });
 
 state_init.cardboard.on('finish', (evt) => {
@@ -352,6 +357,7 @@ state_init.cardboard.on('fastForward', (evt) => {
     initGru(evt);
     initMinions(evt);
     initPresentationScreen(evt);
+    R.GamePad.cardboard.gazePoint.Sculpt.visible = false;
 });
 
 /**
