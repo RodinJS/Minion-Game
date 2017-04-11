@@ -1,3 +1,4 @@
+let z;
 const devices = {
 	"browser": {
 		"chrome": 51,
@@ -13,6 +14,10 @@ const devices = {
 		}
 	}
 };
+window.addEventListener('devicemotion', e => {
+	z = e.acceleration.z;
+});
+
 function isBrowserSupported() {
 	var ua = navigator.userAgent, tem,
 		M = ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
@@ -47,9 +52,11 @@ function isMobileSupported() {
 	}
 	return parseFloat(device.version) >= devices.device[device.name].version
 }
+
 function isSupported() {
 	return !!(isBrowserSupported() && isMobileSupported())
 }
+
 function checkMobile() {
 	var check = false;
 	(function (a) {
@@ -59,14 +66,15 @@ function checkMobile() {
 }
 
 check = function () {
+	console.log(z);
 	if (checkMobile()) {
-		if (!isSupported()) {
+		if (!isSupported() || !z) {
 			let element = document.createElement('div');
-			element.setAttribute('id','notSupported');
+			element.setAttribute('id', 'notSupported');
 			let border = document.createElement('div');
-			border.setAttribute('id','border');
+			border.setAttribute('id', 'border');
 			let text = document.createElement('span');
-			text.innerText ="Your Device is not supported.";
+			text.innerText = "Your Device is not supported.";
 			border.appendChild(text);
 			element.appendChild(border);
 			document.body.appendChild(element);
