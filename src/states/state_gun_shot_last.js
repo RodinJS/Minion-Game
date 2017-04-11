@@ -7,22 +7,36 @@ import {gunShotSound} from '../sounds/gameSounds.js';
  * Shot
  */
 const shot = (evt) => {
-    const gunShot = new GunShot(evt.globals.gun.globalPosition, null, evt.globals.flyingMinions[3].globalPosition);
+    const gunShot = new GunShot(evt.globals.gun, new THREE.Vector3(0, 1, 0).add(evt.globals.flyingMinions[3].globalPosition));
     R.Scene.add(gunShot);
 	gunShotSound.play();
     gunShot.on('haselem', (e) => {
         evt.globals.flyingMinions[3].animation.start('throw');
-        evt.gameMechanics.next();
+        addListenerForNextShot(evt);
     });
 };
 
 const shotNonTaron = (evt) => {
-    const gunShot = new GunShot(evt.globals.gun.globalPosition, null, evt.globals.flyingMinions[3].globalPosition);
+    const gunShot = new GunShot(evt.globals.gun, new THREE.Vector3(0, 1, 0).add(evt.globals.flyingMinions[3].globalPosition));
     R.Scene.add(gunShot);
     gunShotSound.play();
     gunShot.on('haselem', (e) => {
         evt.globals.flyingMinions[3].animation.start('throw');
     });
+};
+
+/**
+ * Add listener for first shot
+ */
+const addListenerForNextShot = (evt) => {
+    const gun = evt.globals.gun;
+    const listener = (e) => {
+        // todo: fix this to vive
+        gun.eventHandler.removeEventListener(R.CONST.GAMEPAD_BUTTON_DOWN, listener);
+        evt.gameMechanics.next();
+    };
+
+    gun.eventHandler.on(R.CONST.GAMEPAD_BUTTON_DOWN, listener);
 };
 
 export const state_gun_shot_last = {

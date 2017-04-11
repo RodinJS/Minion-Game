@@ -11,13 +11,11 @@ const lerpBezier = (p0, p1, p2, t) => {
 
 export class GunShot extends R.Sphere {
     constructor(gun, target) {
-        const position = gun.globalPosition;
+        const position = gun.globalPosition.clone();
         const direction = new THREE.Vector3(0, 0, -1).applyQuaternion(gun.globalQuaternion);
-        const speed = 1;
+        const speed = position.distanceTo(target);
 
-        position = position.clone();
         target = target.clone();
-        target.add(new THREE.Vector3(0, 1, 0));
 
         super(.1);
         this.position.copy(position);
@@ -28,7 +26,7 @@ export class GunShot extends R.Sphere {
         let burnTime = null;
 
         const p1 = position.clone();
-        const p2 = direction.clone().multiplyScalar(position.distanceTo(target) / 3).add(position);
+        const p2 = direction.clone().multiplyScalar(position.distanceTo(target) / 1.5).add(position);
         const p3 = target.clone();
 
         // console.log('1', p1);

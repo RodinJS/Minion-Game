@@ -42,13 +42,6 @@ const initGru = (evt) => {
     R.Scene.add(gru);
     gru.animations[0].play();
 
-    const p0 = new THREE.Vector3(0, 0, 0);
-    const p1 = new THREE.Vector3(0, 1, 1);
-    const p2 = new THREE.Vector3(3, 0, 2);
-    const gunShot = new GunShot(p0, p1, p2);
-
-    R.Scene.add(gunShot);
-
     R.Scene.add(evt.globals.rightHand);
     R.Scene.add(evt.globals.leftHand);
 
