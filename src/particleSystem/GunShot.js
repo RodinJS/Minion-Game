@@ -1,39 +1,22 @@
-import {ParticleSystem} from './ParticleSystem.js';
 import * as R from 'rodin/core';
 
-export class GunShot extends R.Sphere {
-    constructor(position, direction, target) {
-        const speed = 10;
-        // const size = 0.05;
-        // const args = {
-        //     startCount: {value: 0, randomness: 0},
-        //     numberPerSecond: {value: 50, randomness: 0},
-        //     maxParticles: {value: 100000, randomness: 0},
-        //     particleSize: {value: new THREE.Vector3(size, size, size), randomness: new THREE.Vector3(size, size, size)},
-        //     startPosition: {randomness: new THREE.Vector3()},
-        //     velocity: {
-        //         type: 'add',
-        //         path: (c, p) => {
-        //             p._threeObject.material.transparent = true;
-        //             let coeficent = 1 - c / p.lifetime;
-        //             let scale = size * coeficent;
-        //             p.scale.set(scale, scale, scale);
-        //             p._threeObject.material.opacity =  coeficent;
-        //
-        //             return new THREE.Vector3(0, 0, -3 * speed).multiplyScalar(R.Time.delta * .0001)
-        //         }
-        //     },
-        //     color: {
-        //         value: [0xd3e4ff, 0xd3e4ff]
-        //     },
-        //     lifetime: {value: 200, randomness: 0}
-        // };
-        //
-        // super(args);
+const lerpBezier = (p0, p1, p2, t) => {
+    const res = new THREE.Vector3(0, 0, 0);
+    res.add(p0.multiplyScalar(Math.pow(1 - t, 2)));
+    res.add(p1.multiplyScalar(2 * t * (1 - t)));
+    res.add(p2.multiplyScalar(Math.pow(t, 2)));
 
-        position = position.clone();
+    return res;
+};
+
+export class GunShot extends R.Sphere {
+    constructor(gun, target) {
+        const position = gun.globalPosition.clone();
+        const direction = new THREE.Vector3(0, 0, -1).applyQuaternion(gun.globalQuaternion);
+        const speed = position.distanceTo(target);
+
         target = target.clone();
-        target.add(new THREE.Vector3(0, 1, 0));
+
         super(.1);
         this.position.copy(position);
 
@@ -42,18 +25,31 @@ export class GunShot extends R.Sphere {
 
         let burnTime = null;
 
+        const p1 = position.clone();
+        const p2 = direction.clone().multiplyScalar(position.distanceTo(target) / 1.5).add(position);
+        const p3 = target.clone();
+
+        // console.log('1', p1);
+        // console.log('2', p2);
+        // console.log('3', p3);
+        //
+        // const b1 = new R.Box(.1);
+        // b1.position.copy(p1);
+        // R.Scene.add(b1);
+        //
+        // const b2 = new R.Box(.1);
+        // b2.position.copy(p2);
+        // R.Scene.add(b2);
+        //
+        // const b3 = new R.Box(.1);
+        // b3.position.copy(p3);
+        // R.Scene.add(b3);
+
         const lerpPosition = () => {
             burnTime = burnTime || R.Time.currentFrameTimestamp;
             const t = (R.Time.currentFrameTimestamp - burnTime) / duration;
-            // const currentTarget = this.position.lerpVectors(this.position, target, t);
-            // this.globalQuaternion = this.globalQuaternion.setFromUnitVectors( currentTarget.clone().normalize(), position.clone().normalize());
-            //
-            // this.position.lerp(currentTarget, .1);
-
-
-            // this.position.lerp(position, target, (R.Time.currentFrameTimestamp - burnTime) / duration);
-            this.position = this.position.lerpVectors(position, target, t);
-            if(t > 1) {
+            this.position = lerpBezier(p1.clone(), p2.clone(), p3.clone(), t);
+            if (t > 1) {
                 this.emit('haselem', new R.RodinEvent(this));
                 this.parent = null;
                 this.removeEventListener(R.CONST.UPDATE, lerpPosition);
