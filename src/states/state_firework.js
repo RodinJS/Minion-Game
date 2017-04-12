@@ -1,7 +1,7 @@
 import State from '../GameMechanics/State.js';
 import * as R from 'rodin/core';
 import {Firework} from '../particleSystem/Firework.js';
-import {gunShotSound} from '../sounds/gameSounds.js';
+import {fireWorkSound} from '../sounds/gameSounds.js';
 
 /**
  * Shrink ball
@@ -16,7 +16,7 @@ const shrinkBaall = (evt) => {
             z: .001
         }
     });
-    gunShotSound.play();
+	fireWorkSound.play();
     shrinkAnimation.duration(200);
 
     ball.animation.add(shrinkAnimation);
@@ -37,7 +37,7 @@ const initFirework = (evt) => {
  */
 const ball2firework = (evt) => {
     const ball = evt.globals.ball;
-    gunShotSound.play();
+	fireWorkSound.play();
     shrinkBaall(evt);
     ball.on(R.CONST.ANIMATION_COMPLETE, (e) => {
         if (e.animation === 'shrink') {
