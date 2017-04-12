@@ -71,7 +71,7 @@ const loadVeryLowMinionModel = (gameMechanics) => {
  */
 const loadLowMinionModel = (gameMechanics) => {
     gameMechanics.globals.lowMinions = [];
-    const minionsCount = 11;
+    const minionsCount = 12;
 
     const minionsUrls = [
         '/public/resource/models/minions/minion_01_low_anim.JD',
@@ -122,13 +122,29 @@ const loadBallModel = (gameMechanics) => {
  * load Gru model
  */
 const loadGruModel = (gameMechanics) => {
-    const gru = loadJD('/public/resource/models/gru/gru.JD');
+    const gru = loadJD('/public/resource/models/gru_cut/gru.JD');
     queuedElements.push(gru);
     gru.on('jdReady', function () {
         removeFromQueue(gru);
     });
 
     gameMechanics.globals.gru = gru;
+
+    const rightHand = new R.Sculpt('/public/resource/models/gru_cut/hand_right.obj');
+    queuedElements.push(rightHand);
+    gru.on('ready', function () {
+        removeFromQueue(rightHand);
+    });
+
+    gameMechanics.globals.rightHand = rightHand;
+
+    const leftHand = new R.Sculpt('/public/resource/models/gru_cut/hand_left.obj');
+    queuedElements.push(leftHand);
+    gru.on('ready', function () {
+        removeFromQueue(leftHand);
+    });
+
+    gameMechanics.globals.leftHand = leftHand;
 };
 
 /**
