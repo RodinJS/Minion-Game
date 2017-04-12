@@ -1,4 +1,4 @@
-let z;
+let zAxis;
 const devices = {
 	"browser": {
 		"chrome": 51,
@@ -15,9 +15,11 @@ const devices = {
 	}
 };
 window.addEventListener('devicemotion', e => {
-	z = e.acceleration.z;
+	zAxis = e.acceleration.z;
 });
-
+function checkDeviceScreenSize() {
+	return screen.width <= 500 ||  screen.height <= 500
+}
 function isBrowserSupported() {
 	var ua = navigator.userAgent, tem,
 		M = ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
@@ -66,9 +68,8 @@ function checkMobile() {
 }
 
 check = function () {
-	console.log(z);
 	if (checkMobile()) {
-		if (!isSupported() || !z) {
+		if (!isSupported() || !zAxis || !checkDeviceScreenSize()) {
 			let element = document.createElement('div');
 			element.setAttribute('id', 'notSupported');
 			let border = document.createElement('div');
