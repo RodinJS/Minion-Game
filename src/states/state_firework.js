@@ -1,7 +1,7 @@
 import State from '../GameMechanics/State.js';
 import * as R from 'rodin/core';
 import {Firework} from '../particleSystem/Firework.js';
-import {fireWorkSound} from '../sounds/gameSounds.js';
+import {fireWorkSound, minionsWow} from '../sounds/gameSounds.js';
 
 /**
  * Shrink ball
@@ -30,6 +30,8 @@ const initFirework = (evt) => {
     const firework = new Firework(2, 0xfaffba, [[2, -1, 1500, 0xffbae6], [-2, 1, 1600, 0xbae9ff], [2, 1, 3000, 0xbaffbe], [-2, -1.5, 3200, 0xbcb5ff]]);
     firework.position.set(0, 7, 5);
     R.Scene.add(firework);
+    fireWorkSound.play();
+    minionsWow.play();
 };
 
 /**

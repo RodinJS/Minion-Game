@@ -2,7 +2,8 @@ import State from '../GameMechanics/State.js';
 import {GunShot} from '../particleSystem/GunShot.js';
 import {highlightMinion} from '../random/highlight.js';
 import * as R from 'rodin/core';
-import {gunShotSound, minionsReactionSound, minionsLaughin} from '../sounds/gameSounds.js';
+import {gunShotSound, minionsScream, minionsWow, minionLaughing} from '../sounds/gameSounds.js';
+
 
 /**
  * Shot
@@ -12,7 +13,9 @@ const shot = (evt) => {
     R.Scene.add(gunShot);
     gunShotSound.play();
     gunShot.on('haselem', (e) => {
-        minionsLaughin.play();
+        minionsScream.play();
+        minionsWow.play();
+        minionLaughing.play();
         evt.globals.flyingMinions[1].animation.start('throw');
         highlightMinion(evt.globals.flyingMinions[2], evt);
         addListenerForNextShot(evt);
@@ -25,7 +28,9 @@ const shotNonTaron = (evt) => {
     R.Scene.add(gunShot);
 
     gunShot.on('haselem', (e) => {
-        minionsLaughin.play();
+        minionsScream.play();
+        minionsWow.play();
+        minionLaughing.play();
         evt.globals.flyingMinions[1].animation.start('throw');
     });
 };

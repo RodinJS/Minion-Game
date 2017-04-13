@@ -2,8 +2,11 @@ import State from '../GameMechanics/State.js';
 import {makeScalable} from '../random/ScalableObject.js';
 import * as R from 'rodin/core';
 import {getAngle} from '../util/angle.js';
-import {gunShotSound, hoverBoardSound} from '../sounds/gameSounds.js';
+import {gunShotSound, hoverBoardSound, scaleSound} from '../sounds/gameSounds.js';
 import {GunShot} from '../particleSystem/GunShot.js';
+
+import {addOnChangeEvent, removeOnChangeEvent} from '../random/onChangeEvent.js';
+
 /**
  * Init room
  * Set rotation position and EE
@@ -332,6 +335,10 @@ state_init.taron.on('start', (evt) => {
     initPresentationControls(evt);
     makeBallScalable(evt);
     initMinions(evt);
+    addOnChangeEvent(evt.globals.ball, 'scale.z', ()=> {
+        // scaleSound.play();
+        removeOnChangeEvent(evt.globals.ball, 'scale.z');
+    });
 });
 
 state_init.taron.on('finish', (evt) => {
