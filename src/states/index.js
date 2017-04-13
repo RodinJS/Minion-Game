@@ -14,6 +14,7 @@ import {state_slide_2} from './state_slide_2.js';
  * Ball states
  */
 import {state_slide_ball} from './state_slide_ball.js';
+import {state_take_ball} from './state_take_ball.js';
 import {state_ball_flying} from './state_ball_flying.js';
 
 /**
@@ -40,6 +41,7 @@ export default [
     state_slide_2,
 
     state_slide_ball,
+    state_take_ball,
     state_ball_flying,
 
     state_take_gun,

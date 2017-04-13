@@ -16,7 +16,6 @@ const shrinkBaall = (evt) => {
             z: .001
         }
     });
-	fireWorkSound.play();
     shrinkAnimation.duration(200);
 
     ball.animation.add(shrinkAnimation);
@@ -30,8 +29,6 @@ const initFirework = (evt) => {
     const firework = new Firework(2, 0xfaffba, [[2, -1, 1500, 0xffbae6], [-2, 1, 1600, 0xbae9ff], [2, 1, 3000, 0xbaffbe], [-2, -1.5, 3200, 0xbcb5ff]]);
     firework.position.set(0, 7, 5);
     R.Scene.add(firework);
-    fireWorkSound.play();
-    minionsWow.play();
 };
 
 /**
@@ -39,12 +36,25 @@ const initFirework = (evt) => {
  */
 const ball2firework = (evt) => {
     const ball = evt.globals.ball;
-	fireWorkSound.play();
     shrinkBaall(evt);
     ball.on(R.CONST.ANIMATION_COMPLETE, (e) => {
         if (e.animation === 'shrink') {
             ball.parent = null;
             initFirework(evt);
+        }
+    });
+};
+
+const ball2FireworkLaptop = evt => {
+    const ball = evt.globals.ball;
+    shrinkBaall(evt);
+    fireWorkSound.play();
+    ball.on(R.CONST.ANIMATION_COMPLETE, (e) => {
+        if (e.animation === 'shrink') {
+            ball.parent = null;
+            initFirework(evt);
+            fireWorkSound.play();
+            minionsWow.play();
         }
     });
 };
@@ -93,7 +103,8 @@ state_firework.cardboard.on('fastForward', (evt) => {
  */
 
 state_firework.laptop.on('start', (evt) => {
-    ball2firework(evt);
+    ball2FireworkLaptop(evt);
+    // ball2firework(evt);
 });
 
 state_firework.laptop.on('finish', (evt) => {
@@ -101,5 +112,6 @@ state_firework.laptop.on('finish', (evt) => {
 });
 
 state_firework.laptop.on('fastForward', (evt) => {
-    ball2firework(evt);
+    ball2FireworkLaptop(evt);
+    // ball2firework(evt);
 });

@@ -17,23 +17,12 @@ export class GunShot extends R.Sculpt {
     constructor(gun, target) {
         const position = gun.globalPosition.clone();
         const direction = new THREE.Vector3(0, 0, -1).applyQuaternion(gun.globalQuaternion);
-        const speed = position.distanceTo(target);
+        const speed = position.distanceTo(target) * 6;
 
         target = target.clone();
 
-        const material = new THREE.LineBasicMaterial({
-            color: 0xffffff,
-            linewidth: 2
-        });
-
         const distortion = 4;
-        const geometry = new THREE.Geometry();
-
-        for (let i = 0; i < distortion; ++i) {
-            geometry.vertices.push(new THREE.Vector3());
-        }
-
-        super(new THREE.Line(geometry, material));
+        super();
 
         this.position.copy(position);
 
@@ -46,10 +35,14 @@ export class GunShot extends R.Sculpt {
         const p2 = direction.clone().multiplyScalar(position.distanceTo(target) / 1.5).add(position);
         const p3 = target.clone();
 
+        const material = new THREE.MeshBasicMaterial({
+            color: 0xffffff
+        });
+
         const cylinders = [
-            new R.Cylinder(.02, .01, 1),
-            new R.Cylinder(.01, .005, 1),
-            new R.Cylinder(.005, .001, 1)
+            new R.Cylinder(.02, .01, 1, material),
+            new R.Cylinder(.01, .005, 1, material),
+            new R.Cylinder(.005, .001, 1, material)
         ];
 
         cylinders[0]._threeObject.geometry.rotateX( Math.PI / 2 );
@@ -67,19 +60,16 @@ export class GunShot extends R.Sculpt {
         const lerpPosition = () => {
             burnTime = burnTime || R.Time.currentFrameTimestamp;
             const t = (R.Time.currentFrameTimestamp - burnTime) / duration;
-            // this.position = lerpBezier(p1.clone(), p2.clone(), p3.clone(), t);
 
             const trajectory = [];
 
-            const startT = Math.max(0, t - .5);
+            const startT = Math.max(0, t - .7);
             const step = (t - startT) / distortion;
             for (let i = t, vIndex = 0; i >= startT && vIndex < distortion; i -= step, vIndex++) {
                 const pos = lerpBezier(p1.clone(), p2.clone(), p3.clone(), i).sub(position);
                 trajectory.push(pos);
-                geometry.vertices[vIndex].copy(pos.clone());
             }
 
-            geometry.verticesNeedUpdate = true;
             cylinders[0].position = center(trajectory[1], trajectory[0]);
             cylinders[0]._threeObject.lookAt(trajectory[0]);
             cylinders[0].scale.z = trajectory[0].distanceTo(trajectory[1]);
@@ -95,7 +85,6 @@ export class GunShot extends R.Sculpt {
             if (t > 1) {
                 this.emit('haselem', new R.RodinEvent(this));
                 this.parent = null;
-                geometry.dispose();
                 material.dispose();
                 this.removeEventListener(R.CONST.UPDATE, lerpPosition);
             }

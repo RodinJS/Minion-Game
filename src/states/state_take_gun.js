@@ -14,7 +14,6 @@ const addTriggerGunEvent = (evt) => {
     const addGunToOculus = (e) => {
         // todo: fix this to vive
         if(R.Buttons.viveRightTrigger.pressed) {
-	        waterGunLoadingSound.play();
             gamepad.removeEventListener(R.CONST.UPDATE, addGunToOculus);
             evt.gameMechanics.next();
         }
@@ -68,6 +67,7 @@ state_take_gun.cardboard.on('fastForward', (evt) => {
  */
 
 state_take_gun.laptop.on('start', (evt) => {
+    // waterGunLoadingSound.play();
 });
 
 state_take_gun.laptop.on('finish', (evt) => {
