@@ -2,7 +2,7 @@ import State from '../GameMechanics/State.js';
 import {makeScalable} from '../random/ScalableObject.js';
 import * as R from 'rodin/core';
 import {getAngle} from '../util/angle.js';
-import {gunShotSound, hoverBoardSound, scaleSound} from '../sounds/gameSounds.js';
+import {scaleSound} from '../sounds/gameSounds.js';
 import {GunShot} from '../particleSystem/GunShot.js';
 
 import {addOnChangeEvent, removeOnChangeEvent} from '../random/onChangeEvent.js';
@@ -12,7 +12,6 @@ import {addOnChangeEvent, removeOnChangeEvent} from '../random/onChangeEvent.js'
  * Set rotation position and EE
  */
 const initRoom = (evt) => {
-	console.dir(gunShotSound);
     evt.globals.room.position.y = -0.48;
     R.Scene.add(evt.globals.room);
 };
@@ -396,4 +395,9 @@ state_init.laptop.on('fastForward', (evt) => {
     initGru(evt);
     initMinions(evt);
     initPresentationScreen(evt);
+    addOnChangeEvent(evt.globals.ball, 'scale.z', ()=> {
+        scaleSound.play();
+
+        removeOnChangeEvent(evt.globals.ball, 'scale.z');
+    });
 });

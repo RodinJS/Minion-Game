@@ -85,7 +85,7 @@ export const makeScalable = (sculpt) => {
                 }
                 return Math.pow(2, -10 * k) * Math.sin((k - 0.1) * 5 * Math.PI) + 1;
             });
-
+            balloonBounceSound.play();
             sculpt.helper.animation.add(bounceAnim);
             sculpt.helper.animation.start("bounceAnim");
             sculpt.helper.on(R.CONST.ANIMATION_COMPLETE, (evt)=> {

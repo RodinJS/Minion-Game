@@ -3,6 +3,7 @@ import {showSlideOnMainScreen} from '../random/changeSlide.js';
 import {collision} from '../random/collision.js';
 import * as R from 'rodin/core';
 import {makeScalable} from '../random/ScalableObject.js';
+import {balloonBounceSound} from '../sounds/gameSounds.js';
 
 /**
  * Init and show ball
@@ -51,7 +52,6 @@ const initBallAnimation = (evt) => {
     const hand = evt.globals.rightHand;
 
     const listener = () => {
-        console.log('asd');
         const anim = new R.AnimationClip('takeBall', {
             position: {
                 x: hand.globalPosition.x,
@@ -140,4 +140,5 @@ state_slide_ball.laptop.on('finish', (evt) => {
 state_slide_ball.laptop.on('fastForward', (evt) => {
     showSlideOnMainScreen(evt, 3);
     showBall(evt);
+    ballSound(evt);
 });
