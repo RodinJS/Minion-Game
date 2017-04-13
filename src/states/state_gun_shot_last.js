@@ -1,7 +1,7 @@
 import State from '../GameMechanics/State.js';
 import {GunShot} from '../particleSystem/GunShot.js';
 import * as R from 'rodin/core';
-import {gunShotSound} from '../sounds/gameSounds.js';
+import {gunShotSound, minionsReactionSound, minionsLaughin} from '../sounds/gameSounds.js';
 
 /**
  * Shot
@@ -10,6 +10,7 @@ const shot = (evt) => {
     const gunShot = new GunShot(evt.globals.gun, new THREE.Vector3(0, 1, 0).add(evt.globals.flyingMinions[3].globalPosition));
     R.Scene.add(gunShot);
 	gunShotSound.play();
+    minionsReactionSound.play();
     gunShot.on('haselem', (e) => {
         evt.globals.flyingMinions[3].animation.start('throw');
         addListenerForNextShot(evt);
@@ -21,6 +22,7 @@ const shotNonTaron = (evt) => {
     R.Scene.add(gunShot);
     gunShotSound.play();
     gunShot.on('haselem', (e) => {
+        minionsLaughin.play();
         evt.globals.flyingMinions[3].animation.start('throw');
     });
 };

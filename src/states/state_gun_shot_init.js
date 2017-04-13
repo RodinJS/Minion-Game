@@ -1,7 +1,7 @@
 import State from '../GameMechanics/State.js';
 import {highlightMinion} from '../random/highlight.js';
 import * as R from 'rodin/core';
-import {gunShotSound} from '../sounds/gameSounds.js';
+import {gunShotSound, waterGunLoadingSound} from '../sounds/gameSounds.js';
 
 /**
  * Taron mode
@@ -23,7 +23,7 @@ const addGun2Hand = (evt) => {
  */
 const addGun2Scene = (evt) => {
     R.Scene.add(evt.globals.gun);
-	gunShotSound.play();
+    waterGunLoadingSound.play();
     evt.globals.sharedGun.active(true);
 };
 
