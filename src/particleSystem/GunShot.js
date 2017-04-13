@@ -11,13 +11,13 @@ const lerpBezier = (p0, p1, p2, t) => {
 
 const center = (v1, v2) => {
     return new THREE.Vector3().copy(v1).add(v2).multiplyScalar(.5);
-}
+};
 
 export class GunShot extends R.Sculpt {
     constructor(gun, target) {
         const position = gun.globalPosition.clone();
         const direction = new THREE.Vector3(0, 0, -1).applyQuaternion(gun.globalQuaternion);
-        const speed = position.distanceTo(target) / 3;
+        const speed = position.distanceTo(target);
 
         target = target.clone();
 
@@ -47,15 +47,22 @@ export class GunShot extends R.Sculpt {
         const p3 = target.clone();
 
         const cylinders = [
-            new R.Cylinder(.02, .02, 1),
-            new R.Cylinder(.02, .02, 1),
-            new R.Cylinder(.02, .02, 1),
-            new R.Cylinder(.02, .02, 1)
+            new R.Cylinder(.02, .01, 1),
+            new R.Cylinder(.01, .005, 1),
+            new R.Cylinder(.005, .001, 1)
         ];
 
         cylinders[0]._threeObject.geometry.rotateX( Math.PI / 2 );
+        cylinders[1]._threeObject.geometry.rotateX( Math.PI / 2 );
+        cylinders[2]._threeObject.geometry.rotateX( Math.PI / 2 );
+
+        cylinders[0].scale.z = .001;
+        cylinders[1].scale.z = .001;
+        cylinders[2].scale.z = .001;
 
         this.add(cylinders[0]);
+        this.add(cylinders[1]);
+        this.add(cylinders[2]);
 
         const lerpPosition = () => {
             burnTime = burnTime || R.Time.currentFrameTimestamp;
@@ -76,6 +83,14 @@ export class GunShot extends R.Sculpt {
             cylinders[0].position = center(trajectory[1], trajectory[0]);
             cylinders[0]._threeObject.lookAt(trajectory[0]);
             cylinders[0].scale.z = trajectory[0].distanceTo(trajectory[1]);
+
+            cylinders[1].position = center(trajectory[2], trajectory[1]);
+            cylinders[1]._threeObject.lookAt(trajectory[1]);
+            cylinders[1].scale.z = trajectory[1].distanceTo(trajectory[2]);
+
+            cylinders[2].position = center(trajectory[3], trajectory[2]);
+            cylinders[2]._threeObject.lookAt(trajectory[2]);
+            cylinders[2].scale.z = trajectory[2].distanceTo(trajectory[3]);
 
             if (t > 1) {
                 this.emit('haselem', new R.RodinEvent(this));
