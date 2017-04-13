@@ -8,7 +8,7 @@ import {gunShotSound, minionsScream, minionsWow, minionLaughing} from '../sounds
  * Shot
  */
 const shot = (evt) => {
-    const gunShot = new GunShot(evt.globals.gun, new THREE.Vector3(0, 1, 0).add(evt.globals.flyingMinions[0].globalPosition));
+    const gunShot = new GunShot(evt.globals.gun, new THREE.Vector3(0, 1, 0).add(evt.globals.flyingMinions[0].globalPosition), evt.globals.shooting);
     R.Scene.add(gunShot);
     gunShot.on('haselem', (e) => {
         evt.globals.flyingMinions[0].animation.start('throw');
@@ -18,7 +18,7 @@ const shot = (evt) => {
 };
 
 const shotNonTaron = (evt) => {
-    const gunShot = new GunShot(evt.globals.gun, new THREE.Vector3(0, 1, 0).add(evt.globals.flyingMinions[0].globalPosition));
+    const gunShot = new GunShot(evt.globals.gun, new THREE.Vector3(0, 1, 0).add(evt.globals.flyingMinions[0].globalPosition), evt.globals.shooting);
     R.Scene.add(gunShot);
     gunShot.on('haselem', (e) => {
         evt.globals.flyingMinions[0].animation.start('throw');

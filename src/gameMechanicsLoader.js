@@ -161,6 +161,19 @@ const loadGunModel = (gameMechanics) => {
 };
 
 /**
+ * load gun model
+ */
+const loadShootingModel = (gameMechanics) => {
+    const shooting = loadJD('/public/resource/models/shooting_model/shooting.JD');
+    queuedElements.push(shooting);
+    shooting.on('jdReady', function () {
+        removeFromQueue(shooting);
+    });
+
+    gameMechanics.globals.shooting = shooting;
+};
+
+/**
  * Class for loading all models, images and ee before start
  */
 class GameMechanicsLoader extends R.EventEmitter {
@@ -179,6 +192,7 @@ class GameMechanicsLoader extends R.EventEmitter {
         loadBallModel(this.gameMechanics);
         loadGruModel(this.gameMechanics);
         loadGunModel(this.gameMechanics);
+        loadShootingModel(this.gameMechanics);
         loadVeryLowMinionModel(this.gameMechanics);
         loadMinionModel(this.gameMechanics);
         loadLowMinionModel(this.gameMechanics);
@@ -194,6 +208,7 @@ class GameMechanicsLoader extends R.EventEmitter {
         loadBallModel(this.gameMechanics);
         loadGruModel(this.gameMechanics);
         loadGunModel(this.gameMechanics);
+        loadShootingModel(this.gameMechanics);
         loadVeryLowMinionModel(this.gameMechanics);
         loadMinionModel(this.gameMechanics);
         loadLowMinionModel(this.gameMechanics);
@@ -209,6 +224,7 @@ class GameMechanicsLoader extends R.EventEmitter {
         loadBallModel(this.gameMechanics);
         loadGruModel(this.gameMechanics);
         loadGunModel(this.gameMechanics);
+        loadShootingModel(this.gameMechanics);
         loadVeryLowMinionModel(this.gameMechanics);
         loadMinionModel(this.gameMechanics);
         loadLowMinionModel(this.gameMechanics);

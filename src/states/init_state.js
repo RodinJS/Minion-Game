@@ -166,9 +166,9 @@ const initLowMinions = evt => {
             y: 3
         },
         rotation: {
-            x: Math.PI/2 + 0.0234,
+            x: -Math.PI/2 + 0.0234,
             z: Math.PI,
-            y: -Math.PI
+            y: Math.PI
         }
     });
 

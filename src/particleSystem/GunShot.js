@@ -9,15 +9,32 @@ const lerpBezier = (p0, p1, p2, t) => {
     return res;
 };
 
-export class GunShot extends R.Sphere {
+const center = (v1, v2) => {
+    return new THREE.Vector3().copy(v1).add(v2).multiplyScalar(.5);
+}
+
+export class GunShot extends R.Sculpt {
     constructor(gun, target) {
         const position = gun.globalPosition.clone();
         const direction = new THREE.Vector3(0, 0, -1).applyQuaternion(gun.globalQuaternion);
-        const speed = position.distanceTo(target);
+        const speed = position.distanceTo(target) / 3;
 
         target = target.clone();
 
-        super(.1);
+        const material = new THREE.LineBasicMaterial({
+            color: 0xffffff,
+            linewidth: 2
+        });
+
+        const distortion = 4;
+        const geometry = new THREE.Geometry();
+
+        for (let i = 0; i < distortion; ++i) {
+            geometry.vertices.push(new THREE.Vector3());
+        }
+
+        super(new THREE.Line(geometry, material));
+
         this.position.copy(position);
 
         const distance = position.distanceTo(target);
@@ -29,29 +46,42 @@ export class GunShot extends R.Sphere {
         const p2 = direction.clone().multiplyScalar(position.distanceTo(target) / 1.5).add(position);
         const p3 = target.clone();
 
-        // console.log('1', p1);
-        // console.log('2', p2);
-        // console.log('3', p3);
-        //
-        // const b1 = new R.Box(.1);
-        // b1.position.copy(p1);
-        // R.Scene.add(b1);
-        //
-        // const b2 = new R.Box(.1);
-        // b2.position.copy(p2);
-        // R.Scene.add(b2);
-        //
-        // const b3 = new R.Box(.1);
-        // b3.position.copy(p3);
-        // R.Scene.add(b3);
+        const cylinders = [
+            new R.Cylinder(.02, .02, 1),
+            new R.Cylinder(.02, .02, 1),
+            new R.Cylinder(.02, .02, 1),
+            new R.Cylinder(.02, .02, 1)
+        ];
+
+        cylinders[0]._threeObject.geometry.rotateX( Math.PI / 2 );
+
+        this.add(cylinders[0]);
 
         const lerpPosition = () => {
             burnTime = burnTime || R.Time.currentFrameTimestamp;
             const t = (R.Time.currentFrameTimestamp - burnTime) / duration;
-            this.position = lerpBezier(p1.clone(), p2.clone(), p3.clone(), t);
+            // this.position = lerpBezier(p1.clone(), p2.clone(), p3.clone(), t);
+
+            const trajectory = [];
+
+            const startT = Math.max(0, t - .5);
+            const step = (t - startT) / distortion;
+            for (let i = t, vIndex = 0; i >= startT && vIndex < distortion; i -= step, vIndex++) {
+                const pos = lerpBezier(p1.clone(), p2.clone(), p3.clone(), i).sub(position);
+                trajectory.push(pos);
+                geometry.vertices[vIndex].copy(pos.clone());
+            }
+
+            geometry.verticesNeedUpdate = true;
+            cylinders[0].position = center(trajectory[1], trajectory[0]);
+            cylinders[0]._threeObject.lookAt(trajectory[0]);
+            cylinders[0].scale.z = trajectory[0].distanceTo(trajectory[1]);
+
             if (t > 1) {
                 this.emit('haselem', new R.RodinEvent(this));
                 this.parent = null;
+                geometry.dispose();
+                material.dispose();
                 this.removeEventListener(R.CONST.UPDATE, lerpPosition);
             }
         };
