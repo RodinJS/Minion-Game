@@ -70,28 +70,12 @@ function checkMobile() {
 check = function () {
 	if (checkMobile()) {
 		if (!isSupported() || !zAxis || !checkDeviceScreenSize()) {
-			let element = document.createElement('div');
-			element.setAttribute('id', 'notSupported');
-			let border = document.createElement('div');
-			border.setAttribute('id', 'border');
-			let text = document.createElement('span');
-			text.innerText = "Your Device is not supported.";
-			border.appendChild(text);
-			element.appendChild(border);
-			document.body.appendChild(element);
-			return window.stop();
+            let element = document.getElementById('notSupported');
+            element.style.display = "block";
+            return window.stop();
 		} else {
-			let element = document.createElement('div');
-			let text = document.createElement('span');
-			let button = document.createElement('button');
-			text.innerText = 'Hold your phone towards the stage and tap to begin';
-			button.setAttribute('id', 'correction');
-			button.innerText = 'Submit';
-			element.setAttribute('id', 'calibrate');
-			element.appendChild(text);
-			element.appendChild(button);
-			element.style.height = window.innerHeight;
-			document.body.appendChild(element);
+			let element = document.getElementById('calibrate');
+            element.style.display = "block";
 			loadingRodin(true);
 		}
 	}
