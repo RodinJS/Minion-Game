@@ -9,9 +9,7 @@ import {gunShotSound, fireWorkSound, minionsWow} from '../sounds/gameSounds.js';
 const shot = (evt) => {
     const gunShot = new GunShot(evt.globals.gun, evt.globals.ball.globalPosition);
     R.Scene.add(gunShot);
-	gunShotSound.play();
     gunShot.on('haselem', (e) => {
-        minionsWow.play();
         evt.gameMechanics.next();
     });
 };
@@ -21,9 +19,12 @@ const shotNonTaron = (evt) => {
     R.Scene.add(gunShot);
 };
 
-const playShotSound =() =>{
+const shotLaptop = (evt) => {
+    const gunShot = new GunShot(evt.globals.gun, evt.globals.ball.globalPosition);
     gunShotSound.play();
+    R.Scene.add(gunShot);
 };
+
 
 export const state_gun_shot_firework = {
     taron: new State('state_gun_shot_firework'),
@@ -65,8 +66,7 @@ state_gun_shot_firework.cardboard.on('fastForward', (evt) => {
  */
 
 state_gun_shot_firework.laptop.on('start', (evt) => {
-    shotNonTaron(evt);
-    playShotSound(evt);
+    shotLaptop(evt);
 });
 
 state_gun_shot_firework.laptop.on('finish', (evt) => {

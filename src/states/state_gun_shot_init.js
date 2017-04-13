@@ -1,7 +1,7 @@
 import State from '../GameMechanics/State.js';
 import {highlightMinion} from '../random/highlight.js';
 import * as R from 'rodin/core';
-import {gunShotSound, waterGunLoadingSound} from '../sounds/gameSounds.js';
+import {waterGunLoadingSound} from '../sounds/gameSounds.js';
 
 /**
  * Taron mode
@@ -23,9 +23,14 @@ const addGun2Hand = (evt) => {
  */
 const addGun2Scene = (evt) => {
     R.Scene.add(evt.globals.gun);
-    waterGunLoadingSound.play();
     evt.globals.sharedGun.active(true);
 };
+
+const addGun2SceneLaptop = evt => {
+    R.Scene.add(evt.globals.gun);
+    waterGunLoadingSound.play();
+    evt.globals.sharedGun.active(true);
+}
 
 /**
  * Add listener for first shot
@@ -85,12 +90,12 @@ state_gun_shot_init.cardboard.on('fastForward', (evt) => {
  */
 
 state_gun_shot_init.laptop.on('start', (evt) => {
-    addGun2Scene(evt);
+    addGun2SceneLaptop(evt);
 });
 
 state_gun_shot_init.laptop.on('finish', (evt) => {
 });
 
 state_gun_shot_init.laptop.on('fastForward', (evt) => {
-    addGun2Scene(evt);
+    addGun2SceneLaptop(evt);
 });

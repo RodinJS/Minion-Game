@@ -11,11 +11,7 @@ import {gunShotSound, minionsScream, minionsWow, minionLaughing} from '../sounds
 const shot = (evt) => {
     const gunShot = new GunShot(evt.globals.gun, new THREE.Vector3(0, 1, 0).add(evt.globals.flyingMinions[1].globalPosition));
     R.Scene.add(gunShot);
-    gunShotSound.play();
     gunShot.on('haselem', (e) => {
-        minionsScream.play();
-        minionsWow.play();
-        minionLaughing.play();
         evt.globals.flyingMinions[1].animation.start('throw');
         highlightMinion(evt.globals.flyingMinions[2], evt);
         addListenerForNextShot(evt);
@@ -24,9 +20,17 @@ const shot = (evt) => {
 
 const shotNonTaron = (evt) => {
     const gunShot = new GunShot(evt.globals.gun, new THREE.Vector3(0, 1, 0).add(evt.globals.flyingMinions[1].globalPosition));
-    gunShotSound.play();
     R.Scene.add(gunShot);
 
+    gunShot.on('haselem', (e) => {
+        evt.globals.flyingMinions[1].animation.start('throw');
+    });
+};
+
+const shotLaptop = evt => {
+    const gunShot = new GunShot(evt.globals.gun, new THREE.Vector3(0, 1, 0).add(evt.globals.flyingMinions[1].globalPosition));
+    gunShotSound.play();
+    R.Scene.add(gunShot);
     gunShot.on('haselem', (e) => {
         minionsScream.play();
         minionsWow.play();
@@ -88,7 +92,8 @@ state_gun_shot_1.cardboard.on('fastForward', (evt) => {
  */
 
 state_gun_shot_1.laptop.on('start', (evt) => {
-    shotNonTaron(evt);
+    // shotNonTaron(evt);
+    shotLaptop(evt)
 });
 
 state_gun_shot_1.laptop.on('finish', (evt) => {
