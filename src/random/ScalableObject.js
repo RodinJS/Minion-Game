@@ -1,4 +1,5 @@
 import * as R from 'rodin/core';
+import {balloonBounceSound} from '../sounds/gameSounds.js'
 
 /**
  * @Aram
@@ -65,6 +66,7 @@ export const makeScalable = (sculpt) => {
     const btnUp = (evt) => {
 
         if (sculpt.gripVectors && sculpt.gripVectors.firstHand && sculpt.gripVectors.secondHand) {
+            balloonBounceSound.play();
             sculpt.gripVectors.firstHand = null;
             sculpt.gripVectors.secondHand = null;
             let bounceAnim = new R.AnimationClip("bounceAnim", {

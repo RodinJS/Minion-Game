@@ -2,7 +2,7 @@ import State from '../GameMechanics/State.js';
 import {GunShot} from '../particleSystem/GunShot.js';
 import {highlightMinion} from '../random/highlight.js';
 import * as R from 'rodin/core';
-import {gunShotSound} from '../sounds/gameSounds.js';
+import {gunShotSound, minionsScream, minionsWow, minionLaughing} from '../sounds/gameSounds.js';
 
 /**
  * Shot
@@ -10,7 +10,6 @@ import {gunShotSound} from '../sounds/gameSounds.js';
 const shot = (evt) => {
     const gunShot = new GunShot(evt.globals.gun, new THREE.Vector3(0, 1, 0).add(evt.globals.flyingMinions[2].globalPosition));
     R.Scene.add(gunShot);
-	gunShotSound.play();
     gunShot.on('haselem', (e) => {
         evt.globals.flyingMinions[2].animation.start('throw');
         highlightMinion(evt.globals.flyingMinions[3], evt);
@@ -21,12 +20,22 @@ const shot = (evt) => {
 const shotNonTaron = (evt) => {
     const gunShot = new GunShot(evt.globals.gun, new THREE.Vector3(0, 1, 0).add(evt.globals.flyingMinions[2].globalPosition));
     R.Scene.add(gunShot);
-    gunShotSound.play();
     gunShot.on('haselem', (e) => {
         evt.globals.flyingMinions[2].animation.start('throw');
     });
 };
 
+const shotLaptop = (evt) => {
+    const gunShot = new GunShot(evt.globals.gun, new THREE.Vector3(0, 1, 0).add(evt.globals.flyingMinions[0].globalPosition));
+    R.Scene.add(gunShot);
+    gunShotSound.play();
+    gunShot.on('haselem', (e) => {
+        minionsScream.play();
+        minionsWow.play();
+        minionLaughing.play();
+        evt.globals.flyingMinions[0].animation.start('throw');
+    });
+};
 /**
  * Add listener for first shot
  */
@@ -80,7 +89,8 @@ state_gun_shot_2.cardboard.on('fastForward', (evt) => {
  */
 
 state_gun_shot_2.laptop.on('start', (evt) => {
-    shotNonTaron(evt);
+    // shotNonTaron(evt);
+    shotLaptop(evt);
 });
 
 state_gun_shot_2.laptop.on('finish', (evt) => {

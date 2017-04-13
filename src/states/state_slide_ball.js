@@ -41,6 +41,7 @@ const initThrowingWall = (evt) => {
     evt.globals.throwingWall = throwingWall;
 };
 
+
 export const state_slide_ball = {
     taron: new State('state_slide_ball'),
     cardboard: new State('state_slide_ball'),
