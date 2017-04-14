@@ -81,6 +81,8 @@ gameMechanicsLoader.on(R.CONST.READY, () => {
 				break;
 			}
 		}
+			gameMechanics.start(init, startingState);
+		
 		if (calibrate) {
 			calibrate.addEventListener('click', function (e) {
 				R.Scene.active._controls.resetPose();

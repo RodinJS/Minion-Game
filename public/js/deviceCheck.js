@@ -1,4 +1,4 @@
-let zAxis, device;
+let zAxis;
 var currentDevice;
 const devices = {
 	"browser": {
@@ -23,7 +23,7 @@ function checkDeviceScreenSize() {
 	return screen.width <= 500 || screen.height <= 500
 }
 function isBrowserSupported() {
-	let ua = navigator.userAgent, tem,
+	var ua = navigator.userAgent, tem,
 		M = ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
 	if (/trident/i.test(M[1])) {
 		tem = /\brv[ :]+(\d+)/g.exec(ua) || [];
@@ -49,7 +49,7 @@ function isBrowserSupported() {
 }
 
 function isMobileSupported() {
-	let device;
+	var device;
 	if (/iP(hone|od|ad)/.test(navigator.platform)) {
 		let match = (navigator.appVersion).match(/OS (\d+)_(\d+)_?(\d+)?/);
 		device = {
@@ -58,14 +58,13 @@ function isMobileSupported() {
 		};
 		currentDevice = "ios";
 	} else if (/android\s([0-9\.]*)/.test(navigator.userAgent.toLowerCase())) {
-		let ua = navigator.userAgent.toLowerCase();
+		var ua = navigator.userAgent.toLowerCase();
 		let match = ua.match(/android\s([0-9\.]*)/);
 		device = {
 			name: "android",
 			version: match[1]
 		};
 	}
-
 	return parseFloat(device.version) >= devices.device[device.name].version
 }
 
