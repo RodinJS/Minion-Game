@@ -61,11 +61,11 @@ const syncGruMotion = (evt) => {
     const sculptBones = evt.globals.gru.bones.map(i => new R.Sculpt(i));
 
     R.GamePad.viveLeft.sculpt.add(evt.globals.leftHand);
-    evt.globals.leftHand.position.x -= 0.2;
-    evt.globals.leftHand.position.z -= 0.2;
+    evt.globals.leftHand.position.x -= 0.05;
+    evt.globals.leftHand.position.z -= 0.1;
     R.GamePad.viveRight.sculpt.add(evt.globals.rightHand);
-    evt.globals.rightHand.position.x += 0.2;
-    evt.globals.rightHand.position.z -= 0.2;
+    evt.globals.rightHand.position.x += 0.05;
+    evt.globals.rightHand.position.z -= 0.1;
 
     evt.globals.gru.on(R.CONST.UPDATE, () => {
         const pos = R.Scene.activeCamera.position.clone();
