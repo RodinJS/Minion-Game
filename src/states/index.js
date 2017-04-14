@@ -35,7 +35,7 @@ import {state_firework} from './state_firework.js';
 /**
  * Change environment
  */
-import {state_change_environment_0} from './state_change_environment_0.js';
+import {state_change_env_0} from './state_change_env_0.js';
 
 export default [
     state_init,
@@ -57,5 +57,5 @@ export default [
 
     state_firework,
 
-    state_change_environment_0
+    state_change_env_0
 ];

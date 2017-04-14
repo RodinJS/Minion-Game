@@ -104,6 +104,18 @@ const loadPresentationSlides = (gameMechanics) => {
 };
 
 /**
+ * load presentation slides
+ */
+const loadEnvTextures = (gameMechanics) => {
+    const envTextures = [
+        '/public/resource/images/env/env1.jpg',
+        '/public/resource/images/env/env2.jpg'
+    ].map(R.Loader.loadTexture);
+
+    gameMechanics.globals.envTextures = envTextures;
+};
+
+/**
  * load ball model
  */
 const loadBallModel = (gameMechanics) => {
@@ -196,6 +208,7 @@ class GameMechanicsLoader extends R.EventEmitter {
         loadVeryLowMinionModel(this.gameMechanics);
         loadMinionModel(this.gameMechanics);
         loadLowMinionModel(this.gameMechanics);
+        loadEnvTextures(this.gameMechanics);
     }
 
     /**
@@ -212,6 +225,7 @@ class GameMechanicsLoader extends R.EventEmitter {
         loadVeryLowMinionModel(this.gameMechanics);
         loadMinionModel(this.gameMechanics);
         loadLowMinionModel(this.gameMechanics);
+        loadEnvTextures(this.gameMechanics);
     }
 
     /**
@@ -228,6 +242,7 @@ class GameMechanicsLoader extends R.EventEmitter {
         loadVeryLowMinionModel(this.gameMechanics);
         loadMinionModel(this.gameMechanics);
         loadLowMinionModel(this.gameMechanics);
+        loadEnvTextures(this.gameMechanics);
     }
 
     /**

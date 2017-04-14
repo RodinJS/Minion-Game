@@ -29,6 +29,7 @@ const initFirework = (evt) => {
     const firework = new Firework(2, 0xfaffba, [[2, -1, 1500, 0xffbae6], [-2, 1, 1600, 0xbae9ff], [2, 1, 3000, 0xbaffbe], [-2, -1.5, 3200, 0xbcb5ff]]);
     firework.position.set(0, 7, 5);
     R.Scene.add(firework);
+    addListenerForNext(evt);
 };
 
 /**
@@ -57,6 +58,15 @@ const ball2FireworkLaptop = evt => {
             minionsWow.play();
         }
     });
+};
+
+const addListenerForNext = (evt) => {
+    const listener = (e) => {
+        evt.gameMechanics.next();
+        R.Scene.active.removeEventListener(R.CONST.GAMEPAD_BUTTON_DOWN, listener);
+    };
+
+    R.Scene.active.on(R.CONST.GAMEPAD_BUTTON_DOWN, listener);
 };
 
 export const state_firework = {
