@@ -1,20 +1,35 @@
 import State from '../GameMechanics/State.js';
+import {chengeEnv} from '../random/changeEnv.js';
 import * as R from 'rodin/core';
-import {SkySphere} from '../random/SkySphere.js';
 
 const hideStuff = (evt) => {
     evt.globals.room.parent = null;
-};
+    evt.globals.presentationScreen.parent = null;
 
-const chengeEnv = (evt) => {
-    if(evt.globals.env) {
-        evt.globals.env.dispose();
+    for (let i = 0; i < evt.globals.hideMinions.length; i++) {
+        evt.globals.hideMinions[i].parent = null;
     }
 
-    evt.globals.env = new SkySphere(evt.globals.envTextures[0]);
-    R.Scene.add(evt.globals.env);
+    for (let i = 0; i < evt.globals.lowMinions.length; i++) {
+        evt.globals.lowMinions[i].children[0]._threeObject.material.materials[0].color = new THREE.Color(0.8, 0.8, 0.8);
+    }
 };
 
+let snowInited = false;
+
+const addListenerForNext = (evt) => {
+    const listener = (e) => {
+        if(!snowInited) {
+            evt.globals.snow.visible = true;
+            snowInited = true;
+        } else {
+            evt.gameMechanics.next();
+            R.Scene.active.removeEventListener(R.CONST.GAMEPAD_BUTTON_DOWN, listener);
+        }
+    };
+
+    R.Scene.active.on(R.CONST.GAMEPAD_BUTTON_DOWN, listener);
+};
 
 export const state_change_env_0 = {
     taron: new State('state_change_env_0'),
@@ -28,7 +43,8 @@ export const state_change_env_0 = {
 
 state_change_env_0.taron.on('start', (evt) => {
     hideStuff(evt);
-    chengeEnv(evt);
+    chengeEnv(evt, 0);
+    addListenerForNext(evt);
 });
 
 state_change_env_0.taron.on('finish', (evt) => {
@@ -37,7 +53,7 @@ state_change_env_0.taron.on('finish', (evt) => {
 
 state_change_env_0.taron.on('fastForward', (evt) => {
     hideStuff(evt);
-    chengeEnv(evt);
+    chengeEnv(evt, 0);
 });
 
 /**
@@ -46,7 +62,7 @@ state_change_env_0.taron.on('fastForward', (evt) => {
 
 state_change_env_0.cardboard.on('start', (evt) => {
     hideStuff(evt);
-    chengeEnv(evt);
+    chengeEnv(evt, 0);
 });
 
 state_change_env_0.cardboard.on('finish', (evt) => {
@@ -55,7 +71,7 @@ state_change_env_0.cardboard.on('finish', (evt) => {
 
 state_change_env_0.cardboard.on('fastForward', (evt) => {
     hideStuff(evt);
-    chengeEnv(evt);
+    chengeEnv(evt, 0);
 });
 
 /**
@@ -64,7 +80,7 @@ state_change_env_0.cardboard.on('fastForward', (evt) => {
 
 state_change_env_0.laptop.on('start', (evt) => {
     hideStuff(evt);
-    chengeEnv(evt);
+    chengeEnv(evt, 0);
 });
 
 state_change_env_0.laptop.on('finish', (evt) => {
@@ -73,5 +89,5 @@ state_change_env_0.laptop.on('finish', (evt) => {
 
 state_change_env_0.laptop.on('fastForward', (evt) => {
     hideStuff(evt);
-    chengeEnv(evt);
+    chengeEnv(evt, 0);
 });

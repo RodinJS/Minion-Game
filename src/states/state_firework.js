@@ -29,7 +29,6 @@ const initFirework = (evt) => {
     const firework = new Firework(2, 0xfaffba, [[2, -1, 1500, 0xffbae6], [-2, 1, 1600, 0xbae9ff], [2, 1, 3000, 0xbaffbe], [-2, -1.5, 3200, 0xbcb5ff]]);
     firework.position.set(0, 7, 5);
     R.Scene.add(firework);
-    addListenerForNext(evt);
 };
 
 /**
@@ -82,6 +81,7 @@ export const state_firework = {
 state_firework.taron.on('start', (evt) => {
     evt.globals.sharedBall.active(false);
     ball2firework(evt);
+    addListenerForNext(evt);
 });
 
 state_firework.taron.on('finish', (evt) => {

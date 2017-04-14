@@ -17,7 +17,7 @@ export class GunShot extends R.Sculpt {
     constructor(gun, target) {
         const position = gun.globalPosition.clone();
         const direction = new THREE.Vector3(0, 0, -1).applyQuaternion(gun.globalQuaternion);
-        const speed = position.distanceTo(target) * 6;
+        const speed = position.distanceTo(target) * 1.5;
 
         target = target.clone();
 

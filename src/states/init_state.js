@@ -1,8 +1,11 @@
 import State from '../GameMechanics/State.js';
-import {makeScalable} from '../random/ScalableObject.js';
 import * as R from 'rodin/core';
 import {getAngle} from '../util/angle.js';
+import {scaleSound} from '../sounds/gameSounds.js';
+import {GunShot} from '../particleSystem/GunShot.js';
 import {addOnChangeEvent, removeOnChangeEvent} from '../random/onChangeEvent.js';
+import {SharedObject} from '../GameMechanics/SharedObject.js';
+import {Snow} from '../particleSystem/Snow.js';
 
 /**
  * Init room
@@ -11,6 +14,8 @@ import {addOnChangeEvent, removeOnChangeEvent} from '../random/onChangeEvent.js'
 const initRoom = (evt) => {
     evt.globals.room.position.y = -0.48;
     R.Scene.add(evt.globals.room);
+    R.GamePad.cardboard.gazePoint.Sculpt.parent = null;
+    R.GamePad.cardboard.gazePoint.Sculpt.visible = false;
 };
 
 /**
@@ -74,9 +79,9 @@ const syncGruMotion = (evt) => {
         const yRotation = new THREE.Vector2(worldDirection.x, worldDirection.z).normalize();
         let yAngle = -getAngle(new THREE.Vector2(0, 0), yRotation);
 
-        // yAngle = (yAngle - Math.PI * 2) / 2 + Math.PI * 2;
-        // yAngle -= Math.PI / 2 - Math.PI / 4;
-        yAngle -= Math.PI / 2;
+        yAngle = (yAngle - Math.PI * 2) / 2 + Math.PI * 2;
+        yAngle -= Math.PI / 2 - Math.PI / 4;
+        //yAngle -= Math.PI / 2;
         evt.globals.gru.rotation.y = yAngle;
 
         evt.globals.gru.position = pos;
@@ -111,8 +116,6 @@ const animateMinion = (minion) => {
     });
 };
 
-
-
 const MinionsDistribution = (minion, radius, step) => {
     minion.position.x = radius * Math.cos(step) + (Math.random() * .5 + .2);
     minion.position.y = -1.6;
@@ -126,8 +129,10 @@ const initVeryLowMinions = evt => {
     let minionSculpt = evt.globals.minionsSculpt;
     let minion = evt.globals.veryLowMinions;
 
+    evt.globals.hideMinions = [];
     for (let i = 0; i < 12; i++) {
         let min = minion.clone();
+        evt.globals.hideMinions.push(min);
 
         MinionsDistribution(min, 6, Math.PI / 8 * i - Math.PI/5);
 
@@ -216,6 +221,17 @@ const initHighMinions = (evt) => {
         animateMinion(minion);
     }
 };
+
+const initSnow = (evt) => {
+    let snow = new Snow();
+    R.Scene.add(snow);
+    evt.globals.snow = snow;
+    snow.visible = false;
+
+    const sharedSnow = new SharedObject(snow, ['visible']).active(true).lerp(false).updateInterval(100);
+    evt.gameMechanics.addSharedObject(sharedSnow);
+};
+
 
 /**
  *
@@ -327,6 +343,7 @@ state_init.taron.on('start', (evt) => {
     initPresentationScreen(evt);
     initPresentationControls(evt);
     initMinions(evt);
+    initSnow(evt);
 });
 
 state_init.taron.on('finish', (evt) => {
@@ -341,6 +358,7 @@ state_init.taron.on('fastForward', (evt) => {
     initPresentationScreen(evt);
     initPresentationControls(evt);
     initMinions(evt);
+    initSnow(evt);
 });
 
 /**
@@ -353,6 +371,7 @@ state_init.cardboard.on('start', (evt) => {
     initGru(evt);
     initPresentationScreen(evt);
     initMinions(evt);
+    initSnow(evt);
 });
 
 state_init.cardboard.on('finish', (evt) => {
@@ -365,6 +384,7 @@ state_init.cardboard.on('fastForward', (evt) => {
     initGru(evt);
     initMinions(evt);
     initPresentationScreen(evt);
+    initSnow(evt);
 });
 
 /**
@@ -382,6 +402,7 @@ state_init.laptop.on('start', (evt) => {
         scaleSound.play();
         removeOnChangeEvent(evt.globals.ball, 'scale.z');
     });
+    initSnow(evt);
 });
 
 state_init.laptop.on('finish', (evt) => {
@@ -399,4 +420,5 @@ state_init.laptop.on('fastForward', (evt) => {
 
         removeOnChangeEvent(evt.globals.ball, 'scale.z');
     });
+    initSnow(evt);
 });

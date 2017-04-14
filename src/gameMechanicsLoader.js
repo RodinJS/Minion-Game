@@ -109,7 +109,11 @@ const loadPresentationSlides = (gameMechanics) => {
 const loadEnvTextures = (gameMechanics) => {
     const envTextures = [
         '/public/resource/images/env/env0.jpg',
-        '/public/resource/images/env/env1.jpg'
+        '/public/resource/images/env/env1.jpg',
+        '/public/resource/images/env/env2.jpg',
+        '/public/resource/images/env/env3.jpg',
+        '/public/resource/images/env/env4.jpg',
+        '/public/resource/images/env/env5.jpg'
     ].map(R.Loader.loadTexture);
 
     gameMechanics.globals.envTextures = envTextures;

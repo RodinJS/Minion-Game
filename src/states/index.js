@@ -36,13 +36,18 @@ import {state_firework} from './state_firework.js';
  * Change environment
  */
 import {state_change_env_0} from './state_change_env_0.js';
+import {state_change_env_1} from './state_change_env_1.js';
+import {state_change_env_2} from './state_change_env_2.js';
+import {state_change_env_3} from './state_change_env_3.js';
+import {state_change_env_4} from './state_change_env_4.js';
+import {state_final} from './state_final.js';
 
 export default [
     state_init,
 
-    state_slide_0,
-    state_slide_1,
-    state_slide_2,
+    // state_slide_0,
+    // state_slide_1,
+    // state_slide_2,
 
     state_slide_ball,
     state_ball_flying,
@@ -57,5 +62,10 @@ export default [
 
     state_firework,
 
-    state_change_env_0
+    state_change_env_0,
+    state_change_env_1,
+    state_change_env_2,
+    state_change_env_3,
+    state_change_env_4,
+    state_final,
 ];
