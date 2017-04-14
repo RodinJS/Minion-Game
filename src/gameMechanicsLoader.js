@@ -94,10 +94,10 @@ const loadLowMinionModel = (gameMechanics) => {
  */
 const loadPresentationSlides = (gameMechanics) => {
     const presentationSlides = [
-        '/public/resource/images/slides/7580037833793f7eb6dee40c1a41d3ed.jpg',
-        '/public/resource/images/slides/16fb70b76be78e675e3acaeff6a65953.jpg',
-        '/public/resource/images/slides/7dcbc0d5263ece7fa15cfd16f6cb4735.jpg',
-        '/public/resource/images/slides/41359fed28d845f781afa2d6c101cf98.jpg'
+        '/public/resource/images/slides/Demo slides_Page_02.jpg',
+        '/public/resource/images/slides/Demo slides_Page_03.jpg',
+        '/public/resource/images/slides/Demo slides_Page_04.jpg',
+        '/public/resource/images/slides/Demo slides_Page_05.jpg'
     ].map(R.Loader.loadTexture);
 
     gameMechanics.globals.presentationSlides = presentationSlides;

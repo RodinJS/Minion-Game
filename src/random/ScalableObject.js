@@ -68,11 +68,12 @@ export const makeScalable = (sculpt) => {
         if (sculpt.gripVectors && sculpt.gripVectors.firstHand && sculpt.gripVectors.secondHand) {
             sculpt.gripVectors.firstHand = null;
             sculpt.gripVectors.secondHand = null;
+            let scaleVal = sculpt.helper.scale.z > 2.5 ? 2.5 : sculpt.helper.scale.z;
             let bounceAnim = new R.AnimationClip("bounceAnim", {
                 scale: {
-                    x: {from: sculpt.initScaleObj, to: sculpt.helper.scale.z},
-                    y: {from: sculpt.initScaleObj, to: sculpt.helper.scale.z},
-                    z: {from: sculpt.helper.scale.z, to: sculpt.helper.scale.z}
+                    x: {from: sculpt.initScaleObj,   to: scaleVal},
+                    y: {from: sculpt.initScaleObj,   to: scaleVal},
+                    z: {from: sculpt.helper.scale.z, to: scaleVal}
                 }
             });
             bounceAnim.duration(500);
