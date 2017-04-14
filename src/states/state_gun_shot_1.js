@@ -93,11 +93,12 @@ state_gun_shot_1.cardboard.on('fastForward', (evt) => {
 
 state_gun_shot_1.laptop.on('start', (evt) => {
     // shotNonTaron(evt);
-    shotLaptop(evt)
+    shotLaptop(evt);
 });
 
 state_gun_shot_1.laptop.on('finish', (evt) => {
 });
 
 state_gun_shot_1.laptop.on('fastForward', (evt) => {
+    shotLaptop(evt);
 });

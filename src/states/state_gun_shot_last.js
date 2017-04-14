@@ -97,4 +97,5 @@ state_gun_shot_last.laptop.on('finish', (evt) => {
 });
 
 state_gun_shot_last.laptop.on('fastForward', (evt) => {
+    shotLaptop(evt);
 });

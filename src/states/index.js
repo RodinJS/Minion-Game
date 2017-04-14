@@ -32,6 +32,11 @@ import {state_gun_shot_firework} from './state_gun_shot_firework.js';
  */
 import {state_firework} from './state_firework.js';
 
+/**
+ * Change environment
+ */
+import {state_change_environment_0} from './state_change_environment_0.js';
+
 export default [
     state_init,
 
@@ -50,5 +55,7 @@ export default [
     state_gun_shot_last,
     state_gun_shot_firework,
 
-    state_firework
+    state_firework,
+
+    state_change_environment_0
 ];
