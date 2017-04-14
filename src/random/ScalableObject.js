@@ -1,5 +1,5 @@
 import * as R from 'rodin/core';
-import {balloonBounceSound} from '../sounds/gameSounds.js'
+import {audio} from '../sounds/gameSounds.js'
 
 /**
  * @Aram
@@ -86,7 +86,7 @@ export const makeScalable = (sculpt) => {
                 }
                 return Math.pow(2, -10 * k) * Math.sin((k - 0.1) * 5 * Math.PI) + 1;
             });
-            balloonBounceSound.play();
+            audio.play('balloonBounceSound');
             sculpt.helper.animation.add(bounceAnim);
             sculpt.helper.animation.start("bounceAnim");
             sculpt.helper.on(R.CONST.ANIMATION_COMPLETE, (evt)=> {

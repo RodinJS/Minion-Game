@@ -2,12 +2,12 @@ import * as R from 'rodin/core';
 import { gameMechanicsLoader } from './gameMechanicsLoader.js';
 R.start();
 
+import { audio } from './sounds/gameSounds.js';
 import GameMechanics from './GameMechanics/GameMechanics.js';
 import { shareObjects } from './shareObject.js';
 import { QueryString } from './util/url.js';
 
 import states from './states/index.js';
-
 const calibrate = document.getElementById('correction');
 
 const queryParameters = QueryString();
@@ -15,8 +15,6 @@ if (!queryParameters.device) {
 	queryParameters.device = 'cardboard';
 }
 const currentDevice = queryParameters.device;
-console.log(currentDevice);
-
 const SS = new RodinSocket();
 SS.connect({});
 
@@ -81,8 +79,9 @@ gameMechanicsLoader.on(R.CONST.READY, () => {
 				break;
 			}
 		}
-			gameMechanics.start(init, startingState);
-		
+		gameMechanics.start(init, startingState);
+		audio.playPreloadSound();
+
 		if (calibrate) {
 			calibrate.addEventListener('click', function (e) {
 				R.Scene.active._controls.resetPose();

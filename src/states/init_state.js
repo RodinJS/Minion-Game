@@ -2,9 +2,6 @@ import State from '../GameMechanics/State.js';
 import {makeScalable} from '../random/ScalableObject.js';
 import * as R from 'rodin/core';
 import {getAngle} from '../util/angle.js';
-import {scaleSound} from '../sounds/gameSounds.js';
-import {GunShot} from '../particleSystem/GunShot.js';
-import {music} from '../sounds/gameSounds.js';
 import {addOnChangeEvent, removeOnChangeEvent} from '../random/onChangeEvent.js';
 
 /**
@@ -12,7 +9,6 @@ import {addOnChangeEvent, removeOnChangeEvent} from '../random/onChangeEvent.js'
  * Set rotation position and EE
  */
 const initRoom = (evt) => {
-    // music.play('gunShotSound')
     evt.globals.room.position.y = -0.48;
     R.Scene.add(evt.globals.room);
 };

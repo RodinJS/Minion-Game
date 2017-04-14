@@ -1,7 +1,7 @@
 import State from '../GameMechanics/State.js';
 import {GunShot} from '../particleSystem/GunShot.js';
 import * as R from 'rodin/core';
-import {gunShotSound, fireWorkSound, minionsWow} from '../sounds/gameSounds.js';
+import {audio} from '../sounds/gameSounds.js';
 
 /**
  * Shot
@@ -21,7 +21,7 @@ const shotNonTaron = (evt) => {
 
 const shotLaptop = (evt) => {
     const gunShot = new GunShot(evt.globals.gun, evt.globals.ball.globalPosition);
-    gunShotSound.play();
+    audio.play('gunShotSound');
     R.Scene.add(gunShot);
 };
 
