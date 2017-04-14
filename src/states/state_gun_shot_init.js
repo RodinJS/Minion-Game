@@ -30,7 +30,7 @@ const addGun2SceneLaptop = evt => {
     R.Scene.add(evt.globals.gun);
     waterGunLoadingSound.play();
     evt.globals.sharedGun.active(true);
-}
+};
 
 /**
  * Add listener for first shot

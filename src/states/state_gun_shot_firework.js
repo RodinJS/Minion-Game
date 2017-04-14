@@ -73,4 +73,5 @@ state_gun_shot_firework.laptop.on('finish', (evt) => {
 });
 
 state_gun_shot_firework.laptop.on('fastForward', (evt) => {
+    shotLaptop(evt);
 });

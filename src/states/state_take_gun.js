@@ -1,6 +1,6 @@
 import State from '../GameMechanics/State.js';
 import * as R from 'rodin/core';
-import {waterGunLoadingSound} from '../sounds/gameSounds.js';
+// import {waterGunLoadingSound} from '../sounds/gameSounds.js';
 
 /**
  * Add gun
@@ -67,7 +67,6 @@ state_take_gun.cardboard.on('fastForward', (evt) => {
  */
 
 state_take_gun.laptop.on('start', (evt) => {
-    // waterGunLoadingSound.play();
 });
 
 state_take_gun.laptop.on('finish', (evt) => {
