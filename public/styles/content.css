@@ -1,4 +1,16 @@
 @media only screen and (min-width: 320px) and (max-width: 994px) {
+    #wait {
+        width: 100%;
+        height: auto;
+        z-index: 999999;
+        margin: 0 auto;
+        position: absolute;
+    }
+    .waitfordemo {
+        max-width: 100%;
+        z-index: 99999;
+        max-height: 100%;
+    }
         .imageBackground {
         max-width: 100%;
         z-index: 99999;
