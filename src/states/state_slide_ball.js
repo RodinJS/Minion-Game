@@ -76,6 +76,10 @@ const initBallAnimation = (evt) => {
     ball.on(R.CONST.GAMEPAD_BUTTON_DOWN, listener);
 };
 
+const removeSplash = (evt)=>{
+    document.getElementById('wait').style.display = 'none';
+};
+
 export const state_slide_ball = {
     taron: new State('state_slide_ball'),
     cardboard: new State('state_slide_ball'),
@@ -113,6 +117,7 @@ state_slide_ball.taron.on('fastForward', (evt) => {
 state_slide_ball.cardboard.on('start', (evt) => {
     showSlideOnMainScreen(evt, 3);
     showBall(evt);
+    removeSplash(evt);
 });
 
 state_slide_ball.cardboard.on('finish', (evt) => {
@@ -122,6 +127,7 @@ state_slide_ball.cardboard.on('finish', (evt) => {
 state_slide_ball.cardboard.on('fastForward', (evt) => {
     showSlideOnMainScreen(evt, 3);
     showBall(evt);
+    removeSplash(evt);
 });
 
 /**
