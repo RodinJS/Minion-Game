@@ -1,6 +1,7 @@
 import State from '../GameMechanics/State.js';
 import {chengeEnv} from '../random/changeEnv.js';
 import * as R from 'rodin/core';
+import {audio} from '../sounds/gameSounds.js'
 
 export const state_change_env_1 = {
     taron: new State('state_change_env_1'),
@@ -58,6 +59,8 @@ state_change_env_1.cardboard.on('fastForward', (evt) => {
 
 state_change_env_1.laptop.on('start', (evt) => {
     chengeEnv(evt, 1);
+    audio.play('minionsWow');
+
 });
 
 state_change_env_1.laptop.on('finish', (evt) => {

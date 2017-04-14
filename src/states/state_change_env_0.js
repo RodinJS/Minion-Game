@@ -1,6 +1,7 @@
 import State from '../GameMechanics/State.js';
 import {chengeEnv} from '../random/changeEnv.js';
 import * as R from 'rodin/core';
+import {audio} from "../sounds/gameSounds.js";
 
 const hideStuff = (evt) => {
     evt.globals.room.parent = null;
@@ -81,6 +82,7 @@ state_change_env_0.cardboard.on('fastForward', (evt) => {
 state_change_env_0.laptop.on('start', (evt) => {
     hideStuff(evt);
     chengeEnv(evt, 0);
+    audio.play('minionsWow');
 });
 
 state_change_env_0.laptop.on('finish', (evt) => {

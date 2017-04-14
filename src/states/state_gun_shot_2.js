@@ -2,7 +2,7 @@ import State from '../GameMechanics/State.js';
 import {GunShot} from '../particleSystem/GunShot.js';
 import {highlightMinion} from '../random/highlight.js';
 import * as R from 'rodin/core';
-import {audio, gunShotSound, minionsScream, minionsWow, minionLaughing} from '../sounds/gameSounds.js';
+import {audio} from '../sounds/gameSounds.js';
 
 /**
  * Shot

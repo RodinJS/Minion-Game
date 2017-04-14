@@ -1,11 +1,11 @@
 import State from '../GameMechanics/State.js';
 import * as R from 'rodin/core';
 import {getAngle} from '../util/angle.js';
-import {scaleSound} from '../sounds/gameSounds.js';
 import {GunShot} from '../particleSystem/GunShot.js';
 import {addOnChangeEvent, removeOnChangeEvent} from '../random/onChangeEvent.js';
 import {SharedObject} from '../GameMechanics/SharedObject.js';
 import {Snow} from '../particleSystem/Snow.js';
+import {audio} from "../sounds/gameSounds.js";
 
 /**
  * Init room
@@ -399,7 +399,7 @@ state_init.laptop.on('start', (evt) => {
     initPresentationScreen(evt);
     initMinions(evt);
     addOnChangeEvent(evt.globals.ball, 'scale.z', ()=> {
-        scaleSound.play();
+        audio.play('scaleSound');
         removeOnChangeEvent(evt.globals.ball, 'scale.z');
     });
     initSnow(evt);
@@ -416,8 +416,7 @@ state_init.laptop.on('fastForward', (evt) => {
     initMinions(evt);
     initPresentationScreen(evt);
     addOnChangeEvent(evt.globals.ball, 'scale.z', ()=> {
-        scaleSound.play();
-
+        audio.play('scaleSound');
         removeOnChangeEvent(evt.globals.ball, 'scale.z');
     });
     initSnow(evt);

@@ -2,7 +2,7 @@ import State from '../GameMechanics/State.js';
 import {GunShot} from '../particleSystem/GunShot.js';
 import {highlightMinion} from '../random/highlight.js';
 import * as R from 'rodin/core';
-import {audio, gunShotSound, minionsScream, minionsWow, minionLaughing} from '../sounds/gameSounds.js';
+import {audio} from '../sounds/gameSounds.js';
 
 
 /**
@@ -32,9 +32,9 @@ const shotLaptop = evt => {
     audio.play('gunShotSound');
     R.Scene.add(gunShot);
     gunShot.on('haselem', (e) => {
-        audio.play(minionsScream)
-        audio.play(minionsWow)
-        audio.play(minionLaughin)
+        audio.play('minionsScream');
+        audio.play('minionsWow');
+        audio.play('minionLaughin');
         evt.globals.flyingMinions[1].animation.start('throw');
     });
 };

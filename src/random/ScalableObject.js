@@ -76,6 +76,7 @@ export const makeScalable = (sculpt) => {
                     z: {from: sculpt.helper.scale.z, to: scaleVal}
                 }
             });
+            audio.play('balloonBounceSound');
             bounceAnim.duration(500);
             bounceAnim.easing(function (k) {
                 if (k === 0) {
@@ -86,7 +87,6 @@ export const makeScalable = (sculpt) => {
                 }
                 return Math.pow(2, -10 * k) * Math.sin((k - 0.1) * 5 * Math.PI) + 1;
             });
-            audio.play('balloonBounceSound');
             sculpt.helper.animation.add(bounceAnim);
             sculpt.helper.animation.start("bounceAnim");
             sculpt.helper.on(R.CONST.ANIMATION_COMPLETE, (evt)=> {

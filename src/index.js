@@ -9,7 +9,6 @@ import {QueryString} from './util/url.js';
 
 import states from './states/index.js';
 const calibrate = document.getElementById('correction');
-
 const queryParameters = QueryString();
 if (!queryParameters.device) {
     queryParameters.device = 'cardboard';
@@ -80,8 +79,9 @@ gameMechanicsLoader.on(R.CONST.READY, () => {
                 break;
             }
         }
+        audio.playPreloadSound();
         gameMechanics.start(init, startingState);
-
+        loadingRodin();
         if (calibrate) {
             calibrate.addEventListener('click', function (e) {
                 R.Scene.active._controls.resetPose();
