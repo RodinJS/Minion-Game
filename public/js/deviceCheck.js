@@ -1,4 +1,5 @@
-let zAxis;
+let zAxis, device;
+var currentDevice;
 const devices = {
 	"browser": {
 		"chrome": 51,
@@ -14,14 +15,15 @@ const devices = {
 		}
 	}
 };
+
 window.addEventListener('devicemotion', e => {
 	zAxis = e.acceleration.z;
 });
 function checkDeviceScreenSize() {
-	return screen.width <= 500 ||  screen.height <= 500
+	return screen.width <= 500 || screen.height <= 500
 }
 function isBrowserSupported() {
-	var ua = navigator.userAgent, tem,
+	let ua = navigator.userAgent, tem,
 		M = ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
 	if (/trident/i.test(M[1])) {
 		tem = /\brv[ :]+(\d+)/g.exec(ua) || [];
@@ -33,6 +35,16 @@ function isBrowserSupported() {
 	}
 	M = M[2] ? [M[1], M[2]] : [navigator.appName, navigator.appVersion, '-?'];
 	if ((tem = ua.match(/version\/(\d+)/i)) != null) M.splice(1, 1, tem[1]);
+
+	let iOS = !!ua.match(/iPad/i) || !!ua.match(/iPhone/i);
+	let webkit = !!ua.match(/WebKit/i);
+	let iOSSafari = iOS && webkit && !ua.match(/CriOS/i);
+
+	if (currentDevice == "ios" && !iOSSafari) {
+		let element = document.getElementById('safari');
+		element.style.display = "block";
+		setTimeout(() => element.style.display = "none", 3000)
+	}
 	return M[1] >= devices.browser[M[0].toLowerCase()];
 }
 
@@ -44,6 +56,7 @@ function isMobileSupported() {
 			name: "ios",
 			version: match[1]
 		};
+		currentDevice = "ios";
 	} else if (/android\s([0-9\.]*)/.test(navigator.userAgent.toLowerCase())) {
 		let ua = navigator.userAgent.toLowerCase();
 		let match = ua.match(/android\s([0-9\.]*)/);
@@ -52,11 +65,12 @@ function isMobileSupported() {
 			version: match[1]
 		};
 	}
+
 	return parseFloat(device.version) >= devices.device[device.name].version
 }
 
 function isSupported() {
-	return !!(isBrowserSupported() && isMobileSupported())
+	return !!(isMobileSupported() && isBrowserSupported())
 }
 
 function checkMobile() {
@@ -70,28 +84,12 @@ function checkMobile() {
 check = function () {
 	if (checkMobile()) {
 		if (!isSupported() || !zAxis || !checkDeviceScreenSize()) {
-			let element = document.createElement('div');
-			element.setAttribute('id', 'notSupported');
-			let border = document.createElement('div');
-			border.setAttribute('id', 'border');
-			let text = document.createElement('span');
-			text.innerText = "Your Device is not supported.";
-			border.appendChild(text);
-			element.appendChild(border);
-			document.body.appendChild(element);
+			let element = document.getElementById('notSupported');
+			element.style.display = "block";
 			return window.stop();
 		} else {
-			let element = document.createElement('div');
-			let text = document.createElement('span');
-			let button = document.createElement('button');
-			text.innerText = 'Hold your phone towards the stage and tap to begin';
-			button.setAttribute('id', 'correction');
-			button.innerText = 'Submit';
-			element.setAttribute('id', 'calibrate');
-			element.appendChild(text);
-			element.appendChild(button);
-			element.style.height = window.innerHeight;
-			document.body.appendChild(element);
+			let element = document.getElementById('calibrate');
+			element.style.display = "block";
 			loadingRodin(true);
 		}
 	}

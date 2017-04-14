@@ -23,9 +23,18 @@
     </style>
 </head>
 <body>
+<div id="safari" style="display: none;">
+    <img src="/public/images/deviceCheck/use_safari-50.jpg" alt="notCompotable" class="imageBackgroundsafari">
+</div>
+<div id="notSupported" style="display: none;">
+    <img src="/public/images/deviceCheck/device_is_not_compotable.jpg" alt="notCompotable" class="imageBackground">
+</div>
+<div id="calibrate" style="display: none;">
+    <img src="/public/images/deviceCheck/calibrate.jpg" alt="calibrate" id="correction" class="imageBackgroundCalibrate">
+    <!--<button class="button-start">START</button>-->
+</div>
 <div class="loader" id="loaderContent" style="display: none;">
-    <img src="/public/images/loader-rodin-logo.png" alt="">
-    <p class="text-loading">Loading ...</p>
+    <img src="/public/images/deviceCheck/Loading-50.jpg" alt="">
 </div>
 <script>
     var loader = document.getElementById("loaderContent");
