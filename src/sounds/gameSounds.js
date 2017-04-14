@@ -55,8 +55,9 @@ class AudioControll {
     }
 
     play(name) {
-        console.log(this.preloadedSounds[name])
-        this.preloadedSounds[name].play()
+        if (this.preloadedSounds[name]) {
+            this.preloadedSounds[name].play()
+        }
     }
 }
 export const audio = new AudioControll();
