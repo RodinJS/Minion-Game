@@ -23,12 +23,15 @@
     </style>
 </head>
 <body>
-<div id="notSupported">
+<div id="safari" style="display: none;">
+    <img src="/public/images/deviceCheck/use_safari-50.jpg" alt="notCompotable" class="imageBackgroundsafari">
+</div>
+<div id="notSupported" style="display: none;">
     <img src="/public/images/deviceCheck/device_is_not_compotable.jpg" alt="notCompotable" class="imageBackground">
 </div>
-<div id="calibrate">
-    <img src="/public/images/deviceCheck/calibrate.jpg" alt="calibrate" class="imageBackgroundCalibrate">
-    <button class="button-start">START</button>
+<div id="calibrate" style="display: none;">
+    <img src="/public/images/deviceCheck/calibrate.jpg" alt="calibrate" id="correction" class="imageBackgroundCalibrate">
+    <!--<button class="button-start">START</button>-->
 </div>
 <div class="loader" id="loaderContent" style="display: none;">
     <img src="/public/images/deviceCheck/Loading-50.jpg" alt="">
@@ -42,7 +45,7 @@
 <script type="text/javascript" src="https://cdn.rodin.io/v0.0.4/vendor/vendor.js"></script>
 <script type="text/javascript" src="systemjs/system.js"></script>
 <script type="text/javascript" src="systemjs/config.js"></script>
-<script src="/socket-server?debug=true&host=http://192.168.1.5:3010"></script>
+<script src="/socket-server?debug=true&host=http://192.168.0.22:3010"></script>
 <script>System.import('build/index.js');</script>
 
 <script type="text/javascript" src="public/NoSleep.min.js"></script>

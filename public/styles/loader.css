@@ -76,7 +76,8 @@
     text-align: center;
 }
 .loader > img {
-    /*padding-top: 45px;*/
+    margin: 0 auto;
+    display: block;
     max-height: 100%;
 }
 .text-loading {

@@ -1,4 +1,12 @@
-@media only screen and (min-width: 320px) and (max-width: 768px) {
+@media only screen and (min-width: 320px) and (max-width: 994px) {
+        .imageBackground {
+        max-width: 100%;
+        z-index: 99999;
+        max-height: 100%;
+        /*position: absolute;*/
+        /*top: 0;*/
+    }
+
     #notSupported {
         width: 100%;
         height: auto;
@@ -6,16 +14,23 @@
         z-index: 99999;
     }
 
-    .imageBackground {
+    #safari {
         width: 100%;
+        height: auto;
+        display: none;
+        background: #091930;
         z-index: 99999;
+    }
+
+    .imageBackgroundsafari {
+        margin: 0 auto;
         max-height: 100%;
-        /*position: absolute;*/
-        /*top: 0;*/
+        z-index: 99999;
+        display: block;
     }
 
     .imageBackgroundCalibrate {
-        /*margin: 20% auto;*/
+        margin: 0 auto;
         max-height: 100%;
         z-index: 99999;
         display: block;
@@ -30,6 +45,7 @@
     }
 
     #calibrate {
+        margin: 0 auto;
         position: absolute;
         background: #091930;
         z-index: 10000;
