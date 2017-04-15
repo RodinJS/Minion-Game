@@ -45,7 +45,7 @@ export const shareObjects = (gameMechanics) => {
         'globalRotation.x',
         'globalRotation.y',
         'globalRotation.z',
-    ]).active(true).lerp(false).updateInterval(50);
+    ]).active(true).lerp(false).updateInterval(100);
     gameMechanics.addSharedObject(sharedGru);
 
 
@@ -60,7 +60,7 @@ export const shareObjects = (gameMechanics) => {
         'globalRotation.x',
         'globalRotation.y',
         'globalRotation.z',
-    ]).active(true).lerp(false).updateInterval(50);
+    ]).active(true).lerp(false).updateInterval(100);
     gameMechanics.addSharedObject(sharedRightHand);
 
     /**
