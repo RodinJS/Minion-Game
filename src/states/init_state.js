@@ -1,7 +1,6 @@
 import State from '../GameMechanics/State.js';
 import * as R from 'rodin/core';
 import {getAngle} from '../util/angle.js';
-import {GunShot} from '../particleSystem/GunShot.js';
 import {addOnChangeEvent, removeOnChangeEvent} from '../random/onChangeEvent.js';
 import {SharedObject} from '../GameMechanics/SharedObject.js';
 import {Snow} from '../particleSystem/Snow.js';
@@ -23,12 +22,12 @@ const initRoom = (evt) => {
  */
 const initPresentationScreen = (evt) => {
     const presentationScreen = new R.Sculpt(new THREE.Mesh(new THREE.PlaneGeometry(8, 4), new THREE.MeshBasicMaterial({
-        side: THREE.DoubleSide
+        side: THREE.DoubleSide,
+        map: evt.globals.presentationSlide
     })));
     presentationScreen.position.set(0, 2.6, -2);
+    evt.globals.presentationScreen = presentationScreen;
     R.Scene.add(presentationScreen);
-
-    gameMechanics.globals.presentationScreen = presentationScreen;
 };
 
 /**

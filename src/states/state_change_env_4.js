@@ -1,5 +1,5 @@
 import State from '../GameMechanics/State.js';
-import {chengeEnv} from '../random/changeEnv.js';
+import {changeEnv} from '../random/changeEnv.js';
 import * as R from 'rodin/core';
 import {audio} from '../sounds/gameSounds.js'
 
@@ -25,7 +25,7 @@ const addListenerForNext = (evt) => {
  */
 
 state_change_env_4.taron.on('start', (evt) => {
-    chengeEnv(evt, 4);
+    changeEnv(evt, 4);
     addListenerForNext(evt);
     evt.globals.snow.visible = true;
 });
@@ -35,7 +35,7 @@ state_change_env_4.taron.on('finish', (evt) => {
 });
 
 state_change_env_4.taron.on('fastForward', (evt) => {
-    chengeEnv(evt, 4);
+    changeEnv(evt, 4);
     evt.globals.snow.visible = true;
 });
 
@@ -44,7 +44,7 @@ state_change_env_4.taron.on('fastForward', (evt) => {
  */
 
 state_change_env_4.cardboard.on('start', (evt) => {
-    chengeEnv(evt, 4);
+    changeEnv(evt, 4);
 });
 
 state_change_env_4.cardboard.on('finish', (evt) => {
@@ -52,7 +52,7 @@ state_change_env_4.cardboard.on('finish', (evt) => {
 });
 
 state_change_env_4.cardboard.on('fastForward', (evt) => {
-    chengeEnv(evt, 4);
+    changeEnv(evt, 4);
 });
 
 /**
@@ -60,8 +60,8 @@ state_change_env_4.cardboard.on('fastForward', (evt) => {
  */
 
 state_change_env_4.laptop.on('start', (evt) => {
-    chengeEnv(evt, 4);
-    audio.play('minionsWow');
+    changeEnv(evt, 4);
+    // audio.play('minionsWow');
 });
 
 state_change_env_4.laptop.on('finish', (evt) => {
@@ -69,5 +69,5 @@ state_change_env_4.laptop.on('finish', (evt) => {
 });
 
 state_change_env_4.laptop.on('fastForward', (evt) => {
-    chengeEnv(evt, 4);
+    changeEnv(evt, 4);
 });
