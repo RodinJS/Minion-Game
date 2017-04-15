@@ -59,6 +59,10 @@ const ball2FireworkLaptop = evt => {
     });
 };
 
+const ball2FireworkForward = evt => {
+    evt.globals.ball.parent = null;
+};
+
 const addListenerForNext = (evt) => {
     const listener = (e) => {
         evt.gameMechanics.next();
@@ -89,7 +93,7 @@ state_firework.taron.on('finish', (evt) => {
 
 state_firework.taron.on('fastForward', (evt) => {
     evt.globals.sharedBall.active(false);
-    ball2firework(evt);
+    ball2FireworkForward(evt);
 });
 
 /**
@@ -105,7 +109,7 @@ state_firework.cardboard.on('finish', (evt) => {
 });
 
 state_firework.cardboard.on('fastForward', (evt) => {
-    ball2firework(evt);
+    ball2FireworkForward(evt);
 });
 
 /**
@@ -114,7 +118,6 @@ state_firework.cardboard.on('fastForward', (evt) => {
 
 state_firework.laptop.on('start', (evt) => {
     ball2FireworkLaptop(evt);
-    // ball2firework(evt);
 });
 
 state_firework.laptop.on('finish', (evt) => {
@@ -122,6 +125,5 @@ state_firework.laptop.on('finish', (evt) => {
 });
 
 state_firework.laptop.on('fastForward', (evt) => {
-    ball2FireworkLaptop(evt);
-    // ball2firework(evt);
+    ball2FireworkForward(evt);
 });

@@ -1,6 +1,5 @@
 export const showSlideOnMainScreen = (evt, slide = 0) => {
     slide %= evt.globals.presentationSlides.length;
-    alert(slide);
 
     evt.globals.presentationScreen._threeObject.material.map = evt.globals.presentationSlides[slide];
     evt.globals.presentationScreen._threeObject.material.needsUpdate = true;
