@@ -1,18 +1,15 @@
 import State from '../GameMechanics/State.js';
 import * as R from 'rodin/core';
-// import {waterGunLoadingSound} from '../sounds/gameSounds.js';
 
 /**
  * Add gun
  * @param evt
  */
 const addTriggerGunEvent = (evt) => {
-    // todo: fix this to vive
     const gamepad = R.GamePad.viveRight;
     evt.globals.gunGamepad = gamepad;
     evt.globals.throwingWall.parent = null;
     const addGunToOculus = (e) => {
-        // todo: fix this to vive
         if(R.Buttons.viveRightTrigger.pressed) {
             gamepad.removeEventListener(R.CONST.UPDATE, addGunToOculus);
             evt.gameMechanics.next();

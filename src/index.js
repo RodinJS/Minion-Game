@@ -78,10 +78,6 @@ gameMechanicsLoader.on(R.CONST.READY, () => {
             }
         }
         gameMechanics.start(init, startingState);
-
-
-        gameMechanics.start(init, startingState);
-
     });
     SS.getConnectedUsersList();
 });

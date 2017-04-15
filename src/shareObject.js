@@ -18,21 +18,21 @@ export const shareObjects = (gameMechanics) => {
 
     gameMechanics.globals.sharedBall = sharedBall;
 
-    /**
-     * shared gun model position and rotation
-     */
-    const sharedGun = new SharedObject(gameMechanics.globals.gun, [
-        'globalPosition.x',
-        'globalPosition.y',
-        'globalPosition.z',
-
-        'globalRotation.x',
-        'globalRotation.y',
-        'globalRotation.z',
-    ]).active(false).lerp(true).updateInterval(100);
-    gameMechanics.addSharedObject(sharedGun);
-
-    gameMechanics.globals.sharedGun = sharedGun;
+    // /**
+    //  * shared gun model position and rotation
+    //  */
+    // const sharedGun = new SharedObject(gameMechanics.globals.gun, [
+    //     'globalPosition.x',
+    //     'globalPosition.y',
+    //     'globalPosition.z',
+    //
+    //     'globalRotation.x',
+    //     'globalRotation.y',
+    //     'globalRotation.z',
+    // ]).active(false).lerp(true).updateInterval(100);
+    // gameMechanics.addSharedObject(sharedGun);
+    //
+    // gameMechanics.globals.sharedGun = sharedGun;
 
     /**
      * shared Gru model
@@ -74,36 +74,6 @@ export const shareObjects = (gameMechanics) => {
         'globalRotation.x',
         'globalRotation.y',
         'globalRotation.z',
-    ]).active(true).lerp(false).updateInterval(50);
+    ]).active(true).lerp(false).updateInterval(100);
     gameMechanics.addSharedObject(sharedLeftHand);
-
-
-    // /**
-    //  * shared Gru model left hand position and rotation
-    //  */
-    // const sharedGruLeftHand = new SharedObject(gameMechanics.globals.gru.bones[8], [
-    //     'rotation.x',
-    //     'rotation.y',
-    //     'rotation.z',
-    // ]).active(true).lerp(false).updateInterval(100);
-    // gameMechanics.addSharedObject(sharedGruLeftHand);
-    //
-    // //gameMechanics.globals.sharedGruLeftHand = sharedGruLeftHand;
-    //
-    // /**
-    //  * shared Gru model right hand position and rotation
-    //  */
-    // const sharedGruRightHand = new SharedObject(gameMechanics.globals.gru.bones[14], [
-    //     'globalPosition.x',
-    //     'globalPosition.y',
-    //     'globalPosition.z',
-    //
-    //     'globalRotation.x',
-    //     'globalRotation.y',
-    //     'globalRotation.z',
-    // ]).active(true).lerp(true).updateInterval(100);
-    // gameMechanics.addSharedObject(sharedGruRightHand);
-
-    //gameMechanics.globals.sharedGruRightHand = sharedGruRightHand;
-
 };

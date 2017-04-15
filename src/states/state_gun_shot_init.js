@@ -7,7 +7,6 @@ import {audio} from "../sounds/gameSounds.js";
  * Taron mode
  */
 const addGun2Hand = (evt) => {
-    //evt.globals.gunGamepad.sculpt.add(evt.globals.gun);
     evt.globals.rightHand.add(evt.globals.gun);
     evt.globals.gun.position.z = -0.1;
     //todo: add transparency
@@ -15,21 +14,23 @@ const addGun2Hand = (evt) => {
     gunEventHandler.position.set(0, 0, -1.5);
     evt.globals.gun.add(gunEventHandler);
     evt.globals.gun.eventHandler = gunEventHandler;
-    evt.globals.sharedGun.active(true);
+    // evt.globals.sharedGun.active(true);
 };
 
 /**
  * Slave mode
  */
 const addGun2Scene = (evt) => {
-    R.Scene.add(evt.globals.gun);
-    evt.globals.sharedGun.active(true);
+    evt.globals.rightHand.add(evt.globals.gun);
+    // R.Scene.add(evt.globals.gun);
+    // evt.globals.sharedGun.active(true);
 };
 
 const addGun2SceneLaptop = evt => {
-    R.Scene.add(evt.globals.gun);
+    // R.Scene.add(evt.globals.gun);
+    evt.globals.rightHand.add(evt.globals.gun);
     audio.play('waterGunLoadingSound');
-    evt.globals.sharedGun.active(true);
+    // evt.globals.sharedGun.active(true);
 };
 
 /**
