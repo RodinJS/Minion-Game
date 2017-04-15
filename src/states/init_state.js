@@ -397,10 +397,10 @@ state_init.laptop.on('start', (evt) => {
     initGru(evt);
     initPresentationScreen(evt);
     initMinions(evt);
-    addOnChangeEvent(evt.globals.ball, 'scale.z', ()=> {
-        audio.play('scaleSound');
-        removeOnChangeEvent(evt.globals.ball, 'scale.z');
-    });
+    // addOnChangeEvent(evt.globals.ball, 'scale.z', ()=> {
+    //     // audio.play('scaleSound');
+    //     removeOnChangeEvent(evt.globals.ball, 'scale.z');
+    // });
     initSnow(evt);
 });
 
@@ -414,9 +414,9 @@ state_init.laptop.on('fastForward', (evt) => {
     initGru(evt);
     initMinions(evt);
     initPresentationScreen(evt);
-    addOnChangeEvent(evt.globals.ball, 'scale.z', ()=> {
-        audio.play('scaleSound');
-        removeOnChangeEvent(evt.globals.ball, 'scale.z');
-    });
+    // addOnChangeEvent(evt.globals.ball, 'scale.z', ()=> {
+    //     // audio.play('scaleSound');
+    //     removeOnChangeEvent(evt.globals.ball, 'scale.z');
+    // });
     initSnow(evt);
 });

@@ -59,7 +59,7 @@ state_change_env_1.cardboard.on('fastForward', (evt) => {
 
 state_change_env_1.laptop.on('start', (evt) => {
     changeEnv(evt, 1);
-    // audio.play('minionsWow');
+    audio.play('minionsWow');
 
 });
 
