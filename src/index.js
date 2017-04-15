@@ -1,14 +1,14 @@
 import * as R from 'rodin/core';
-import {gameMechanicsLoader} from './gameMechanicsLoader.js';
+import { gameMechanicsLoader } from './gameMechanicsLoader.js';
 R.start();
 
 import { audio } from './sounds/gameSounds.js';
+audio.playPreloadSound();
 import GameMechanics from './GameMechanics/GameMechanics.js';
-import {shareObjects} from './shareObject.js';
-import {QueryString} from './util/url.js';
+import { shareObjects } from './shareObject.js';
+import { QueryString } from './util/url.js';
 
 import states from './states/index.js';
-const calibrate = document.getElementById('correction');
 const queryParameters = QueryString();
 if (!queryParameters.device) {
     queryParameters.device = 'cardboard';
@@ -22,13 +22,13 @@ SS.connect({});
 let gameMechanics = new GameMechanics();
 let startingState = 0;
 
-gameMechanics.addDevice({name: 'taron', isMaster: true});
-gameMechanics.addDevice({name: 'cardboard', isMaster: false});
-gameMechanics.addDevice({name: 'laptop', isMaster: false});
+gameMechanics.addDevice({ name: 'taron', isMaster: true });
+gameMechanics.addDevice({ name: 'cardboard', isMaster: false });
+gameMechanics.addDevice({ name: 'laptop', isMaster: false });
 
 gameMechanics.setCurrentDevice(currentDevice);
 if (gameMechanics.isMaster) {
-    SS.setData({isMaster: true});
+    SS.setData({ isMaster: true });
 }
 
 for (let i in states) {
@@ -61,12 +61,13 @@ SS.onMessage('RodinGameEvent', (data) => {
 
 gameMechanics.onStateChange((gameMechanics) => {
     if (gameMechanics.isMaster) {
-        SS.setData({currentState: gameMechanics.state, isMaster: true});
+        SS.setData({ currentState: gameMechanics.state, isMaster: true });
     }
 });
 
 gameMechanicsLoader.gameMechanics = gameMechanics;
 gameMechanicsLoader.on(R.CONST.READY, () => {
+    loadingRodin();
     // startingState will contains the state we should start at:
     // is we are the master it will be 0
     // if we are not it will be whatever state the master is currently
@@ -79,18 +80,10 @@ gameMechanicsLoader.on(R.CONST.READY, () => {
                 break;
             }
         }
-        audio.playPreloadSound();
         gameMechanics.start(init, startingState);
-        loadingRodin();
-        if (calibrate) {
-            calibrate.addEventListener('click', function (e) {
-                R.Scene.active._controls.resetPose();
-                document.getElementById('calibrate').style.display = "none";
-                gameMechanics.start(init, startingState);
-            });
-        } else {
-            gameMechanics.start(init, startingState);
-        }
+
+
+        gameMechanics.start(init, startingState);
 
     });
     SS.getConnectedUsersList();

@@ -1,4 +1,3 @@
-let zAxis;
 var currentDevice;
 const devices = {
 	"browser": {
@@ -16,9 +15,6 @@ const devices = {
 	}
 };
 
-window.addEventListener('devicemotion', e => {
-	zAxis = e.acceleration.z;
-});
 function checkDeviceScreenSize() {
 	return screen.width <= 500 || screen.height <= 500
 }
@@ -82,15 +78,13 @@ function checkMobile() {
 
 check = function () {
 	if (checkMobile()) {
-		if (!isSupported() || !zAxis || !checkDeviceScreenSize()) {
+		console.log(!isSupported() , !checkDeviceScreenSize())
+		if (!isSupported() || !checkDeviceScreenSize()) {
 			let element = document.getElementById('notSupported');
 			element.style.display = "block";
 			return window.stop();
-		} else {
-			let element = document.getElementById('calibrate');
-			element.style.display = "block";
-			loadingRodin(true);
 		}
+		loadingRodin(true);
 	}
 };
 window.onload = check;

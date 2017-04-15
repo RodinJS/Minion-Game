@@ -1,92 +1,120 @@
-@media only screen and (min-width: 320px) and (max-width: 994px) {
-    #final {
-        width: 100%;
-        height: auto;
-        z-index: 99999;
-        margin: 0 auto;
-        position: absolute;
+@media only screen and (min-width: 320px) and (max-width: 1024px) {
+    #loaderContent {
+            display: block;
+    text-align: center;
+    position: absolute;
+    height: 100%;
+    z-index: 1000;
+    background: #091930;
     }
-    .final-img {
-        max-width: 100%;
-        z-index: 99999;
-        max-height: 100%;
+    #final {
+    display: block;
+    text-align: center;
+    position: absolute;
+    height: 100%;
+    z-index: 1000;
+    background: #091930;
     }
     #wait {
-        width: 100%;
-        height: auto;
-        z-index: 99999;
-        margin: 0 auto;
-        position: absolute;
+    display: block;
+    text-align: center;
+    position: absolute;
+    height: 100%;
+    z-index: 1000;
+    background: #091930; 
     }
-    .waitfordemo {
-        max-width: 100%;
-        z-index: 99999;
-        max-height: 100%;
-    }
-    .imageBackground {
-        max-width: 100%;
-        z-index: 99999;
-        max-height: 100%;
-        /*position: absolute;*/
-        /*top: 0;*/
-    }
-
     #notSupported {
-        width: 100%;
-        height: auto;
-        display: none;
-        z-index: 99999;
+       display: block;
+    text-align: center;
+    position: absolute;
+    height: 100%;
+    z-index: 1000;
+    background: #091930;  
     }
-
-    #safari {
-        width: 100%;
-        height: auto;
-        display: none;
-        background: #091930;
-        z-index: 99999;
+    .final-img {
+    display: block;
+    max-width: 125px;
+    margin: 10% auto;
     }
-
-    .imageBackgroundsafari {
-        margin: 0 auto;
-        max-height: 100%;
-        z-index: 99999;
-        display: block;
-    }
-
-    .imageBackgroundCalibrate {
-        margin: 0 auto;
-        max-height: 100%;
-        z-index: 99999;
-        display: block;
-    }
-
-    .calibrateText {
-        display: block;
-        font-size: 20px;
-        text-align: center;
-        width: 85%;
-        margin: 0 auto;
-    }
-
-    #calibrate {
-        margin: 0 auto;
+    .gru-final {
+        max-width: 250px;
         position: absolute;
-        background: #091930;
-        z-index: 10000;
-        width: 100%;
-        display: none;
+        bottom: 0;
+        left: calc(50% - 125px);
+    }
+    .attention {
+        z-index: 1000;
+        margin-top: 20px;
+        font-size: 40px;
+    }
+    .not-compatible {
+        display: block;
+        max-width: 160px;
+        margin: 10% auto;
+    }
+}
+
+@media only screen and (orientation: landscape) and (min-width: 320px) and (max-width: 1024px) {
+    #loaderContent {
+                overflow: hidden;
+        display: block;
+        text-align: center;
+        position: absolute;
         height: 100%;
+        width: 100%;
+        z-index: 1000;
+        background: #091930;
+    }
+    #final {
+        overflow: hidden;
+        display: block;
+        text-align: center;
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        z-index: 1000;
+        background: #091930;
+    }
+    #wait {
+        overflow: hidden;
+        display: block;
+        text-align: center;
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        z-index: 1000;
+        background: #091930;
+    }
+    #notSupported {
+        overflow: hidden;
+        display: block;
+        text-align: center;
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        z-index: 1000;
+        background: #091930;
     }
 
-    .button-start {
-        display: none;
-        border-radius: 40px;
-        padding: 17px 54px;
-        background: transparent;
-        border: 1px solid #008bf4;
-        color: #008bf4;
-        text-align: center;
-        margin: 20% auto;
-        font-size: 25px;
+    .final-img {
+    max-width: 125px;
+    display: block;
+    margin: 5% auto;
+    }
+    .gru-final {
+    max-width: 160px;
+    position: absolute;
+    bottom: -15px;
+    left: calc(50% - 80px);
+    }
+    .attention {
+        z-index: 8000;
+        margin-top: 0;
+        font-size: 32px;
+    }
+     .not-compatible {
+        display: block;
+        max-width: 120px;
+        margin: 0 auto;
     }
 }

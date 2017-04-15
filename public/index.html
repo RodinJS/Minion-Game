@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Rodin | Simple</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0, shrink-to-fit=no">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes" />
+    <link rel="stylesheet" href="/public/styles/bootstrap.min.css">
     <link rel="stylesheet" href="/public/styles/loader.css">
     <link rel="stylesheet" href="/public/styles/content.css">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
@@ -22,50 +24,77 @@
         }
     </style>
 </head>
+
 <body>
-<div id="final" style="display: none;">
-    <img src="/public/images/deviceCheck/Attention_L-50.jpg" alt="" class="final-img">
-</div>
-<div id="wait" style="display: none;">
-    <img src="/public/images/deviceCheck/Wait-50.jpg" alt="notCompotable" class="waitfordemo">
-</div>
-<div id="safari" style="display: none;">
-    <img src="/public/images/deviceCheck/use_safari-50.jpg" alt="notCompotable" class="imageBackgroundsafari">
-</div>
-<div id="notSupported" style="display: none;">
-    <img src="/public/images/deviceCheck/device_is_not_compotable.jpg" alt="notCompotable" class="imageBackground">
-</div>
-<div id="calibrate" style="display: none;">
-    <img src="/public/images/deviceCheck/calibrate.jpg" alt="calibrate" id="correction" class="imageBackgroundCalibrate">
-    <!--<button class="button-start">START</button>-->
-</div>
-<div class="loader" id="loaderContent" style="display: none;">
-    <img src="/public/images/deviceCheck/Loading-50.jpg" alt="">
-</div>
-<script>
-    var loader = document.getElementById("loaderContent");
-    function loadingRodin(inProgress = false) {
-        return inProgress ? loader.style.display = "block" : loader.style.display = "none"
-    }
-</script>
-<script type="text/javascript" src="https://cdn.rodin.io/v0.0.4/vendor/vendor.js"></script>
-<script type="text/javascript" src="systemjs/system.js"></script>
-<script type="text/javascript" src="systemjs/config.js"></script>
-<script src="/socket-server?debug=true&host=http://192.168.0.22:3010"></script>
-<script>System.import('build/index.js');</script>
+    <div class="container-fluid">
+        <div class="row text-center">
+            <div id="final" style="display: none;">
+                <div class="col-xs-12 col-sm-12 col-md-12">
+                    <img src="/public/images/newDeviceCheck/alternative_Logo.png" alt="" class="img-responsive final-img">
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-12">
+                    <p class="attention">NOW ATTENTION TO THE SCREEN</p>
+                </div>
+                <img src="/public/images/newDeviceCheck/gru.png" alt="" class="img-responsive gru-final">
+            </div>
+            <div id="wait" style="display: none;">
+                <div class="col-xs-12 col-sm-12 col-md-12">
+                    <img src="/public/images/newDeviceCheck/alternative_Logo.png" alt="" class="img-responsive final-img">
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-12">
+                    <p class="attention">WAIT FOR DEMO</p>
+                </div>
+                <img src="/public/images/newDeviceCheck/gru.png" alt="" class="img-responsive gru-final">
+            </div>
+            <div id="notSupported" style="display: none;">
+                <div class="col-xs-12 col-sm-12 col-md-12">
+                    <img src="/public/images/newDeviceCheck/sad_minion.png" alt="" class="img-responsive not-compatible">
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-12">
+                    <p class="attention"> SORRY :( <br>
+                    <span style="font-size: medium;">YOUR DEVICE IS NOT COMPATIBLE</span>
+                    </p>
+                </div>
+            </div>
+            <div class="loader" id="loaderContent" style="display: none;">
+                <div class="col-xs-12 col-sm-12 col-md-12">
+                    <img src="/public/images/newDeviceCheck/rodin_logo_white.png" alt="" class="img-responsive not-compatible">
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-12">
+                    <p class="loading"> Loading ... <br>
+                    </p>
+                </div>
+                 <img src="/public/images/newDeviceCheck/loading_minion.png" alt="" class="img-responsive gru-final">
+            </div>
+        </div>
+    </div>
+    <script>
+        var loader = document.getElementById("loaderContent");
+        function loadingRodin(inProgress = false) {
+            return inProgress ? loader.style.display = "block" : loader.style.display = "none"
+        }
+    </script>
+    <script type="text/javascript" src="https://cdn.rodin.io/v0.0.4/vendor/vendor.js"></script>
+    <script type="text/javascript" src="systemjs/system.js"></script>
+    <script type="text/javascript" src="systemjs/config.js"></script>
+    <script src="/socket-server?debug=true&host=http://192.168.0.231:3010"></script>
+    <script>
+        System.import('build/index.js');
+    </script>
 
-<script type="text/javascript" src="public/NoSleep.min.js"></script>
-<script>
-    const noSleep = new NoSleep();
+    <script type="text/javascript" src="public/NoSleep.min.js"></script>
+    <script>
+        const noSleep = new NoSleep();
 
-    function enableNoSleep() {
-        noSleep.enable();
-        document.removeEventListener('click', enableNoSleep, false);
-    }
-    document.addEventListener('click', enableNoSleep, false);
-</script>
+        function enableNoSleep() {
+            noSleep.enable();
+            document.removeEventListener('click', enableNoSleep, false);
+        }
+        document.addEventListener('click', enableNoSleep, false);
+    </script>
 
 </body>
+
 </html>
 
 <!--
