@@ -22,10 +22,10 @@ const initRoom = (evt) => {
  * Create presentation Screen
  */
 const initPresentationScreen = (evt) => {
-    const presentationScreen = new R.Sculpt(new THREE.Mesh(new THREE.PlaneGeometry(9, 3), new THREE.MeshBasicMaterial({
+    const presentationScreen = new R.Sculpt(new THREE.Mesh(new THREE.PlaneGeometry(8, 4), new THREE.MeshBasicMaterial({
         side: THREE.DoubleSide
     })));
-    presentationScreen.position.set(0, 3.6, -2);
+    presentationScreen.position.set(0, 2.6, -2);
     R.Scene.add(presentationScreen);
 
     gameMechanics.globals.presentationScreen = presentationScreen;
@@ -82,7 +82,9 @@ const syncGruMotion = (evt) => {
         yAngle = (yAngle - Math.PI * 2) / 2 + Math.PI * 2;
         yAngle -= Math.PI / 2 - Math.PI / 4;
         //yAngle -= Math.PI / 2;
-        evt.globals.gru.rotation.y = yAngle;
+        evt.globals.gru.globalRotation.y = yAngle;
+        evt.globals.gru.globalRotation.x = 0;
+        evt.globals.gru.globalRotation.z = 0;
 
         evt.globals.gru.position = pos;
 

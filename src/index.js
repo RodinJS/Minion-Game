@@ -2,8 +2,6 @@ import * as R from 'rodin/core';
 import { gameMechanicsLoader } from './gameMechanicsLoader.js';
 R.start();
 
-import { audio } from './sounds/gameSounds.js';
-audio.playPreloadSound();
 import GameMechanics from './GameMechanics/GameMechanics.js';
 import { shareObjects } from './shareObject.js';
 import { QueryString } from './util/url.js';
@@ -54,7 +52,6 @@ SS.onMessage('RodinGameEvent', (data) => {
         return;
     if (!gameMechanics._isRunning)
         return;
-    //console.log('data recieved', data);
     gameMechanics.onData(data);
 });
 

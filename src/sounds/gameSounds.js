@@ -39,7 +39,7 @@ let sounds = [
         name: 'minionLaughing',
         file: '/public/sounds/Minion_Laughing.mp3'
     },
-]
+];
 class AudioControll {
     constructor() {
         this.enabled = true;

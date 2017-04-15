@@ -90,7 +90,7 @@ export const state_slide_ball = {
  */
 
 state_slide_ball.taron.on('start', (evt) => {
-    showSlideOnMainScreen(evt, 3);
+    showSlideOnMainScreen(evt, 0);
     showBall(evt);
     hidePresentationControls(evt);
     initThrowingWall(evt);
@@ -102,7 +102,7 @@ state_slide_ball.taron.on('finish', (evt) => {
 });
 
 state_slide_ball.taron.on('fastForward', (evt) => {
-    showSlideOnMainScreen(evt, 3);
+    showSlideOnMainScreen(evt, 0);
     showBall(evt);
     hidePresentationControls(evt);
     initThrowingWall(evt);
@@ -114,7 +114,7 @@ state_slide_ball.taron.on('fastForward', (evt) => {
  */
 
 state_slide_ball.cardboard.on('start', (evt) => {
-    showSlideOnMainScreen(evt, 3);
+    showSlideOnMainScreen(evt, 0);
     showBall(evt);
     removeSplash(evt);
 });
@@ -124,7 +124,7 @@ state_slide_ball.cardboard.on('finish', (evt) => {
 });
 
 state_slide_ball.cardboard.on('fastForward', (evt) => {
-    showSlideOnMainScreen(evt, 3);
+    showSlideOnMainScreen(evt, 0);
     showBall(evt);
     removeSplash(evt);
 });
@@ -134,7 +134,7 @@ state_slide_ball.cardboard.on('fastForward', (evt) => {
  */
 
 state_slide_ball.laptop.on('start', (evt) => {
-    showSlideOnMainScreen(evt, 3);
+    showSlideOnMainScreen(evt, 0);
     showBall(evt);
 });
 
@@ -143,6 +143,6 @@ state_slide_ball.laptop.on('finish', (evt) => {
 });
 
 state_slide_ball.laptop.on('fastForward', (evt) => {
-    showSlideOnMainScreen(evt, 3);
+    showSlideOnMainScreen(evt, 0);
     showBall(evt);
 });

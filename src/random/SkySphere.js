@@ -7,7 +7,7 @@ export class SkySphere extends R.Sphere {
             side: THREE.DoubleSide
         });
 
-        super(50, 20, 20, material);
+        super(50, 24, 24, material);
         this.material = material;
 
         this.rotation.y = Math.PI;

@@ -1,11 +1,11 @@
 import * as R from 'rodin/core';
 import {loadJD} from './util/loadJD.js'
+import { audio } from './sounds/gameSounds.js';
 
 const queuedElements = [];
 
 const removeFromQueue = (elem) => {
     const index = queuedElements.indexOf(elem);
-    console.log(index);
     if (index === -1)
         return false;
     queuedElements.splice(index, 1);
@@ -94,10 +94,7 @@ const loadLowMinionModel = (gameMechanics) => {
  */
 const loadPresentationSlides = (gameMechanics) => {
     const presentationSlides = [
-        '/public/resource/images/slides/Demo slides_Page_02.jpg',
-        '/public/resource/images/slides/Demo slides_Page_03.jpg',
-        '/public/resource/images/slides/Demo slides_Page_04.jpg',
-        '/public/resource/images/slides/Demo slides_Page_05.jpg'
+        '/public/resource/images/slides/intro_slide.jpg'
     ].map(R.Loader.loadTexture);
 
     gameMechanics.globals.presentationSlides = presentationSlides;
@@ -128,6 +125,7 @@ const loadBallModel = (gameMechanics) => {
     queuedElements.push(ball);
     ballLoad.on(R.CONST.READY, function () {
         ball.add(ballLoad);
+        ball.scale.set(1.6, 1.6, 1.6);
         removeFromQueue(ball);
     });
 
@@ -235,7 +233,6 @@ class GameMechanicsLoader extends R.EventEmitter {
     /**
      * LAPTOP
      */
-
     laptop() {
         loadRoomModel(this.gameMechanics);
         loadPresentationSlides(this.gameMechanics);
@@ -247,6 +244,7 @@ class GameMechanicsLoader extends R.EventEmitter {
         loadMinionModel(this.gameMechanics);
         loadLowMinionModel(this.gameMechanics);
         loadEnvTextures(this.gameMechanics);
+        audio.playPreloadSound();
     }
 
     /**

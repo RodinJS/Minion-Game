@@ -31,7 +31,6 @@ const update = () => {
         events[i][events[i].property] = R.utils.object.getProperty(events[i].sculpt, events[i].property)
     }
 };
-console.log(R);
 R.messenger.on(R.CONST.RENDER_START, () => {
     update();
 });
