@@ -121,7 +121,7 @@ const MinionsDistribution = (minion, radius, step) => {
     minion.position.z = radius * Math.sin(step) + (Math.random() * .5 + .2);
 
     minion.rotation.y = Math.PI;
-    minion.scale.set(1.35, 1.35, 1.35);
+    if(minion.position.z >-0.2) minion.scale.set(1.35, 1.35, 1.35);
 };
 
 const initVeryLowMinions = evt => {
@@ -252,6 +252,17 @@ const initMinions = (evt) => {
  */
 const initPresentationControls = (evt) => {
     const presentationControls = new R.Sculpt();
+    let text = new THREE.Mesh(new THREE.PlaneGeometry(2, 1), new THREE.MeshBasicMaterial({
+            side: THREE.DoubleSide,
+            map: R.Loader.loadTexture('/public/images/text1.png'),
+            transparent: true
+        }));
+    R.Scene.activeCamera.text = text;
+    R.Scene.activeCamera.add(text);
+    text.position.z = -2;
+    text.position.y = 0.1;
+    text.rotation.x = Math.PI/36;
+
 
     /**
      * Presentation controls mini screen
