@@ -27,19 +27,22 @@ const hidePresentationControls = (evt) => {
  * Init throwing wall
  */
 const initThrowingWall = (evt) => {
-    const throwingWall = new R.Sculpt(new THREE.Mesh(new THREE.PlaneGeometry(2, 1, 5, 5), new THREE.MeshBasicMaterial({wireframe: true, side: THREE.DoubleSide})));
-    throwingWall.position.set(0, 2, 1.5);
-    R.Scene.add(throwingWall);
+    //const throwingWall = new R.Sculpt(new THREE.Mesh(new THREE.PlaneGeometry(2, 1, 5, 5), new THREE.MeshBasicMaterial({wireframe: true, side: THREE.DoubleSide})));
+    //throwingWall.position.set(0, 2, 1.5);
+    //R.Scene.add(throwingWall);
 
-    const throwWallUpdate = () => {
-        if(collision.sphere2Plane(evt.globals.ball, throwingWall)) {
-            throwingWall.removeEventListener(R.CONST.UPDATE, throwWallUpdate);
-            evt.gameMechanics.next();
-        }
-    };
+    //const throwWallUpdate = () => {
+    //    if(collision.sphere2Plane(evt.globals.ball, throwingWall)) {
+    //        throwingWall.removeEventListener(R.CONST.UPDATE, throwWallUpdate);
+    //        evt.gameMechanics.next();
+    //    }
+    //};
+    evt.globals.ball.on("SCALED", (e) => {
+        setTimeout(()=>{evt.gameMechanics.next();}, 1500);
+    });
 
-    throwingWall.on(R.CONST.UPDATE, throwWallUpdate);
-    evt.globals.throwingWall = throwingWall;
+    //throwingWall.on(R.CONST.UPDATE, throwWallUpdate);
+    //evt.globals.throwingWall = throwingWall;
 };
 
 const makeBallScalable = (evt) => {
@@ -55,7 +58,7 @@ const initBallAnimation = (evt) => {
             position: {
                 x: hand.globalPosition.x,
                 y: hand.globalPosition.y,
-                z: hand.globalPosition.z,
+                z: hand.globalPosition.z
             }
         });
         anim.duration(500);

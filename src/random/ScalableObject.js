@@ -100,6 +100,8 @@ export const makeScalable = (sculpt) => {
                 if (sculpt.helper && sculpt.helper.parent) sculpt.helper.parent = null;
 
                 if (sculpt.helper.animation.getClip("bounceAnim")) sculpt.helper.animation.remove("bounceAnim");
+                let e = new R.RodinEvent(sculpt);
+                sculpt.emit("SCALED", e);
             });
         }
         else{

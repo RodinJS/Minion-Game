@@ -315,6 +315,7 @@ const initPresentationControls = (evt) => {
     presentationControls.prevButton = prevButton;
 
     prevButton.on(R.CONST.GAMEPAD_BUTTON_DOWN, () => {
+        R.Scene.webVRmanager.hmd.resetPose();
         if (evt.gameMechanics.stateName !== 'state_slide_0')
             evt.gameMechanics.prev();
     });
