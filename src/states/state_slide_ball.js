@@ -27,7 +27,7 @@ const hidePresentationControls = (evt) => {
  * Init throwing wall
  */
 const initThrowingWall = (evt) => {
-    //const throwingWall = new R.Sculpt(new THREE.Mesh(new THREE.PlaneGeometry(2, 1, 5, 5), new THREE.MeshBasicMaterial({wireframe: true, side: THREE.DoubleSide})));
+    const throwingWall = new R.Sculpt(new THREE.Mesh(new THREE.PlaneGeometry(2, 1, 5, 5), new THREE.MeshBasicMaterial({wireframe: true, side: THREE.DoubleSide})));
     //throwingWall.position.set(0, 2, 1.5);
     //R.Scene.add(throwingWall);
 
@@ -42,7 +42,7 @@ const initThrowingWall = (evt) => {
     });
 
     //throwingWall.on(R.CONST.UPDATE, throwWallUpdate);
-    //evt.globals.throwingWall = throwingWall;
+    evt.globals.throwingWall = throwingWall;
 };
 
 const makeBallScalable = (evt) => {
