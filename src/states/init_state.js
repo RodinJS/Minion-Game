@@ -181,9 +181,25 @@ const initLowMinions = evt => {
 
     evt.globals.flyingMinions = [];
 
+    evt.globals.lowMinions[0].position.set( 3.5, -1.6, 3.5);
+    evt.globals.lowMinions[1].position.set( 4, -1.6, 1.5);
+    evt.globals.lowMinions[2].position.set( 4, -1.6, -1.5);
+    evt.globals.lowMinions[3].position.set( 3.5, -1.6, -3.5);
+    evt.globals.lowMinions[4].position.set( 1.5, -1.6, -4);
+    evt.globals.lowMinions[5].position.set( -1.5, -1.6, -4);
+    evt.globals.lowMinions[6].position.set( -3.5, -1.6, -3.5);
+    evt.globals.lowMinions[7].position.set( -4, -1.6, -1.5);
+    evt.globals.lowMinions[8].position.set( -4, -1.6, 1.5);
+    evt.globals.lowMinions[9].position.set( -3.5, -1.6, 3.5);
+    evt.globals.lowMinions[10].position.set( -1.5, -1.6, 4);
+    evt.globals.lowMinions[11].position.set( 1.5, -1.6, 4);
+
     for (let i = 0; i < evt.globals.lowMinions.length; i++) {
         const minion = evt.globals.lowMinions[i];
-        MinionsDistribution(minion, 4, Math.PI / 6 * i);
+        //MinionsDistribution(minion, 4, Math.PI / 6 * i);
+
+        minion.rotation.y = Math.PI;
+        minion.scale.set(1.35, 1.35, 1.35);
 
         const color = {r: 0.5, g: 0.5, b: 0.5};
         minion.children[0]._threeObject.material.materials[0].color.r = color.r;
@@ -205,10 +221,20 @@ const initLowMinions = evt => {
 const initHighMinions = (evt) => {
     const minionSculpt = evt.globals.minionsSculpt;
 
+    evt.globals.highMinions[0].position.set( 1, -1.6, 2);
+    evt.globals.highMinions[1].position.set( 2, -1.6, 0);
+    evt.globals.highMinions[2].position.set( 1, -1.6, -2);
+    evt.globals.highMinions[3].position.set( -1, -1.6, -2);
+    evt.globals.highMinions[4].position.set( -2, -1.6, 0);
+    evt.globals.highMinions[5].position.set( -1, -1.6, 2);
+
     for (let i = 0; i < evt.globals.highMinions.length; i++) {
         const minion = evt.globals.highMinions[i];
 
-        MinionsDistribution(minion, 2, Math.PI / 3 * i);
+        minion.rotation.y = Math.PI;
+        minion.scale.set(1.35, 1.35, 1.35);
+
+        //MinionsDistribution(minion, 2, Math.PI / 3 * i);
 
         const color = {r: 0.8, g: 0.8, b: 0.8};
         minion.children[0]._threeObject.material.materials[0].color.r = color.r;
@@ -289,6 +315,7 @@ const initPresentationControls = (evt) => {
     presentationControls.prevButton = prevButton;
 
     prevButton.on(R.CONST.GAMEPAD_BUTTON_DOWN, () => {
+        R.Scene.webVRmanager.hmd.resetPose();
         if (evt.gameMechanics.stateName !== 'state_slide_0')
             evt.gameMechanics.prev();
     });

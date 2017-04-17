@@ -1,6 +1,6 @@
 import * as R from 'rodin/core';
 import {loadJD} from './util/loadJD.js'
-import { audio } from './sounds/gameSounds.js';
+import {audio} from './sounds/gameSounds.js';
 
 const queuedElements = [];
 
@@ -47,7 +47,13 @@ const loadMinionModel = (gameMechanics) => {
     ];
 
     for (let i = 0; i < minionsCount; i++) {
-        const minion = loadJD(minionsUrls[Math.floor(Math.random() * minionsUrls.length)]);
+        let minion;
+        if (i <= 1 || i >= 4) {
+            minion = loadJD(minionsUrls[0]);
+        } else {
+            minion = loadJD(minionsUrls[Math.floor(Math.random() * minionsUrls.length)]);
+        }
+
         queuedElements.push(minion);
         minion.on('jdReady', () => {
             gameMechanics.globals.highMinions.push(minion);
@@ -80,7 +86,13 @@ const loadLowMinionModel = (gameMechanics) => {
     ];
 
     for (let i = 0; i < minionsCount; i++) {
-        const minion = loadJD(minionsUrls[Math.floor(Math.random() * minionsUrls.length)]);
+        let minion;
+        if (i >= 8){
+            minion = loadJD(minionsUrls[2]);
+        } else {
+            minion = loadJD(minionsUrls[Math.floor(Math.random() * minionsUrls.length)]);
+        }
+
         queuedElements.push(minion);
         minion.on('jdReady', () => {
             gameMechanics.globals.lowMinions.push(minion);
