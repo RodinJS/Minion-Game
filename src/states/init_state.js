@@ -134,6 +134,7 @@ const initVeryLowMinions = evt => {
         evt.globals.hideMinions.push(min);
 
         MinionsDistribution(min, 6, Math.PI / 8 * i - Math.PI/5);
+        min.scale.set(1.35, 1.35, 1.35);
 
         const colors = [
             [{r: 0.416, g: 0.353, b: 0.133}, {r: 0, g: 0, b: 0}, {r: 0.048, g: 0.222, b: 0.453}],
@@ -155,7 +156,8 @@ const initVeryLowMinions = evt => {
 
 const initLowMinions = evt => {
     let minionSculpt = evt.globals.minionsSculpt;
-    const flyingMinionIndex = [9, 6,  11, 7];
+    //const flyingMinionIndex = [9, 6,  11, 7];
+    const flyingMinionIndex = [4, 7,  2, 6];
 
 
     const throwAnimation = new R.AnimationClip('throw', {
@@ -185,14 +187,14 @@ const initLowMinions = evt => {
     evt.globals.lowMinions[1].position.set( 4, -1.6, 1.5);
     evt.globals.lowMinions[2].position.set( 4, -1.6, -1.5);
     evt.globals.lowMinions[3].position.set( 3.5, -1.6, -3.5);
-    evt.globals.lowMinions[4].position.set( 1.5, -1.6, -4);
-    evt.globals.lowMinions[5].position.set( -1.5, -1.6, -4);
+    evt.globals.lowMinions[4].position.set( 1.3, -1.6, -4);
+    evt.globals.lowMinions[5].position.set( -1.4, -1.6, -4);
     evt.globals.lowMinions[6].position.set( -3.5, -1.6, -3.5);
     evt.globals.lowMinions[7].position.set( -4, -1.6, -1.5);
     evt.globals.lowMinions[8].position.set( -4, -1.6, 1.5);
     evt.globals.lowMinions[9].position.set( -3.5, -1.6, 3.5);
-    evt.globals.lowMinions[10].position.set( -1.5, -1.6, 4);
-    evt.globals.lowMinions[11].position.set( 1.5, -1.6, 4);
+    evt.globals.lowMinions[10].position.set( -1.1, -1.6, 4);
+    evt.globals.lowMinions[11].position.set( 1.2, -1.6, 4);
 
     for (let i = 0; i < evt.globals.lowMinions.length; i++) {
         const minion = evt.globals.lowMinions[i];
@@ -249,6 +251,7 @@ const initHighMinions = (evt) => {
 
 const initSnow = (evt) => {
     let snow = new Snow();
+    snow.position.z = 8;
     R.Scene.add(snow);
     evt.globals.snow = snow;
     snow.visible = false;
@@ -267,7 +270,7 @@ const initSnow = (evt) => {
 const initMinions = (evt) => {
     const minionsSculpt = new R.Sculpt();
     R.Scene.add(minionsSculpt);
-    minionsSculpt.position.z = 8;
+    minionsSculpt.position.z = 8;gi8t
     evt.globals.minionsSculpt = minionsSculpt;
     initVeryLowMinions(evt);
     initLowMinions(evt);
