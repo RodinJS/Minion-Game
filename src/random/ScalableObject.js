@@ -68,7 +68,7 @@ export const makeScalable = (sculpt) => {
         if (sculpt.gripVectors && sculpt.gripVectors.firstHand && sculpt.gripVectors.secondHand) {
             sculpt.gripVectors.firstHand = null;
             sculpt.gripVectors.secondHand = null;
-            let scaleVal = sculpt.helper.scale.z > 2.5 ? 2.5 : sculpt.helper.scale.z;
+            let scaleVal = sculpt.helper.scale.z > 1.7 ? 1.7 : sculpt.helper.scale.z;
             let bounceAnim = new R.AnimationClip("bounceAnim", {
                 scale: {
                     x: {from: sculpt.initScaleObj,   to: scaleVal},
@@ -77,7 +77,7 @@ export const makeScalable = (sculpt) => {
                 }
             });
             audio.play('balloonBounceSound');
-            bounceAnim.duration(500);
+            bounceAnim.duration(1000);
             bounceAnim.easing(function (k) {
                 if (k === 0) {
                     return 0;
@@ -90,10 +90,10 @@ export const makeScalable = (sculpt) => {
             sculpt.helper.animation.add(bounceAnim);
             sculpt.helper.animation.start("bounceAnim");
             sculpt.helper.on(R.CONST.ANIMATION_COMPLETE, (evt)=> {
-                sculpt.helper.scale.set(sculpt.helper.scale.z, sculpt.helper.scale.z, sculpt.helper.scale.z);
-                sculpt.initScaleObj = sculpt.helper.scale.z;
+                //sculpt.helper.scale.set(scaleVal, scaleVal, scaleVal);
+                sculpt.initScaleObj = scaleVal;
                 sculpt.parent = R.Scene.active;
-                sculpt.scale.set(sculpt.helper.scale.z, sculpt.helper.scale.z, sculpt.helper.scale.z);
+                //sculpt.scale.set(scaleVal, scaleVal, scaleVal);
 
                 if (sculpt.gripHelper1 && sculpt.gripHelper1.parent) sculpt.gripHelper1.parent = null;
                 if (sculpt.gripHelper2 && sculpt.gripHelper2.parent) sculpt.gripHelper2.parent = null;
