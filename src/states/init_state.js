@@ -270,7 +270,7 @@ const initSnow = (evt) => {
 const initMinions = (evt) => {
     const minionsSculpt = new R.Sculpt();
     R.Scene.add(minionsSculpt);
-    minionsSculpt.position.z = 8;gi8t
+    minionsSculpt.position.z = 8;
     evt.globals.minionsSculpt = minionsSculpt;
     initVeryLowMinions(evt);
     initLowMinions(evt);

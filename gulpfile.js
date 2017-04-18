@@ -69,7 +69,7 @@ gulp.task('connect', () => {
 });
 
 gulp.task('default', (done) => {
-	sequence('clean', ['js', 'lib', 'connect'], done);
+	sequence('clean', ['js', 'lib', 'connect', 'watch'], done);
 });
 
 gulp.task('clientjs', () =>

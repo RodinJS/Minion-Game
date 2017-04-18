@@ -1,65 +1,74 @@
 @media only screen and (min-width: 320px) and (max-width: 1920px) {
     #loaderContent {
-            display: block;
-    text-align: center;
-    position: absolute;
-    height: 100%;
-    z-index: 1000;
-    background: #091930;
+        display: block;
+        text-align: center;
+        position: absolute;
+        height: 100%;
+        z-index: 1000;
+        background: #091930;
     }
+
     #final {
-    display: block;
-    text-align: center;
-    position: absolute;
-    height: 100%;
-    z-index: 1000;
-    width: 100%;
-    background: #091930;
+        display: block;
+        text-align: center;
+        position: fixed;
+        height: 100%;
+        z-index: 1000;
+        width: 100%;
+        background: #091930;
     }
+
     #wait {
-    display: block;
-    text-align: center;
-    position: absolute;
-    height: 100%;
-    z-index: 1000;
-    width: 100%;
-    background: #091930; 
+        display: block;
+        text-align: center;
+        position: absolute;
+        height: 100%;
+        z-index: 1000;
+        width: 100%;
+        background: #091930;
     }
+
     #notSupported {
-       display: block;
-    text-align: center;
-    position: absolute;
-    height: 100%;
-    z-index: 1000;
-    background: #091930;  
+        display: block;
+        text-align: center;
+        position: absolute;
+        height: 100%;
+        z-index: 1000;
+        background: #091930;
     }
+
     .final-img {
-    display: block;
-    max-width: 125px;
-    margin: 10% auto;
+        display: block;
+        max-width: 125px;
+        margin: 10% auto;
     }
+
     .gru-final {
         max-width: 250px;
         position: absolute;
         bottom: 0;
         left: calc(50% - 125px);
     }
+
     .minion-loading {
         max-width: 250px;
         position: absolute;
         bottom: 0;
         left: calc(50% - 125px);
     }
+
     .attention {
         z-index: 1000;
         margin-top: 20px;
         font-size: 40px;
     }
+
     .not-compatible {
         display: block;
         max-width: 125px;
         margin: 10% auto;
     }
+
     .loading {
         font-size: 24px;
         margin-top: 30px;
@@ -77,16 +86,18 @@
         z-index: 1000;
         background: #091930;
     }
+
     #final {
         overflow: hidden;
         display: block;
         text-align: center;
-        position: absolute;
+        position: fixed;
         height: 100%;
         width: 100%;
         z-index: 1000;
         background: #091930;
     }
+
     #wait {
         overflow: hidden;
         display: block;
@@ -97,6 +108,7 @@
         z-index: 1000;
         background: #091930;
     }
+
     #notSupported {
         overflow: hidden;
         display: block;
@@ -113,29 +125,34 @@
         display: block;
         margin: 5% auto;
     }
+
     .gru-final {
         max-width: 160px;
         position: absolute;
         bottom: -15px;
         left: calc(50% - 80px);
     }
+
     .minion-loading {
         max-width: 160px;
         position: absolute;
         left: calc(50% - 80px);
     }
+
     .attention {
         z-index: 8000;
         margin-top: 0;
         font-size: 32px;
     }
-     .not-compatible {
+
+    .not-compatible {
         display: block;
         max-width: 125px;
         margin: 10% auto;
     }
+
     .loading {
         font-size: 24px;
-        margin-top: 30px;
+        margin-top: 0px;
     }
 }
