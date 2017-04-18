@@ -2,7 +2,7 @@
     #loaderContent {
         display: block;
         text-align: center;
-        position: absolute;
+        position: fixed;
         height: 100%;
         z-index: 1000;
         background: #091930;
@@ -21,7 +21,7 @@
     #wait {
         display: block;
         text-align: center;
-        position: absolute;
+        position: fixed;
         height: 100%;
         z-index: 1000;
         width: 100%;
@@ -80,7 +80,7 @@
         overflow: hidden;
         display: block;
         text-align: center;
-        position: absolute;
+        position: fixed;
         height: 100%;
         width: 100%;
         z-index: 1000;
@@ -100,7 +100,7 @@
 
     #wait {
         overflow: hidden;
-        display: block;
+        display: flex;
         text-align: center;
         position: absolute;
         height: 100%;
@@ -113,7 +113,7 @@
         overflow: hidden;
         display: block;
         text-align: center;
-        position: absolute;
+        position: fixed;
         height: 100%;
         width: 100%;
         z-index: 1000;
@@ -128,14 +128,15 @@
 
     .gru-final {
         max-width: 160px;
-        position: absolute;
-        bottom: -15px;
+        position: fixed;
+        bottom: 0px;
         left: calc(50% - 80px);
     }
 
     .minion-loading {
         max-width: 160px;
-        position: absolute;
+        position: fixed;;
+        bottom: 0px;
         left: calc(50% - 80px);
     }
 
