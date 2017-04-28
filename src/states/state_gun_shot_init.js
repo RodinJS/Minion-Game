@@ -22,6 +22,7 @@ const addGun2Hand = (evt) => {
  */
 const addGun2Scene = (evt) => {
     evt.globals.rightHand.add(evt.globals.gun);
+    audio.play('waterGunLoadingSound');
     // R.Scene.add(evt.globals.gun);
     // evt.globals.sharedGun.active(true);
 };

@@ -219,6 +219,7 @@ class GameMechanicsLoader extends R.EventEmitter {
         loadMinionModel(this.gameMechanics);
         loadLowMinionModel(this.gameMechanics);
         loadEnvTextures(this.gameMechanics);
+        audio.playPreloadSound();
     }
 
     /**
@@ -236,6 +237,7 @@ class GameMechanicsLoader extends R.EventEmitter {
         loadMinionModel(this.gameMechanics);
         loadLowMinionModel(this.gameMechanics);
         loadEnvTextures(this.gameMechanics);
+        audio.playPreloadSound();
     }
 
     /**
