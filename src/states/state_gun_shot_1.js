@@ -11,7 +11,11 @@ import {audio} from '../sounds/gameSounds.js';
 const shot = (evt) => {
     const gunShot = new GunShot(evt.globals.gun, new THREE.Vector3(0, 1, 0).add(evt.globals.flyingMinions[1].globalPosition));
     R.Scene.add(gunShot);
+    audio.play('gunShotSound');
     gunShot.on('haselem', (e) => {
+        audio.play('minionsScream');
+        audio.play('minionsWow');
+        audio.play('minionLaughin');
         evt.globals.flyingMinions[1].animation.start('throw');
         highlightMinion(evt.globals.flyingMinions[2], evt);
         addListenerForNextShot(evt);
@@ -21,7 +25,6 @@ const shot = (evt) => {
 const shotNonTaron = (evt) => {
     const gunShot = new GunShot(evt.globals.gun, new THREE.Vector3(0, 1, 0).add(evt.globals.flyingMinions[1].globalPosition));
     R.Scene.add(gunShot);
-
     gunShot.on('haselem', (e) => {
         evt.globals.flyingMinions[1].animation.start('throw');
     });

@@ -1,10 +1,8 @@
 import State from '../GameMechanics/State.js';
 import * as R from 'rodin/core';
 import {getAngle} from '../util/angle.js';
-import {addOnChangeEvent, removeOnChangeEvent} from '../random/onChangeEvent.js';
 import {SharedObject} from '../GameMechanics/SharedObject.js';
 import {Snow} from '../particleSystem/Snow.js';
-import {audio} from "../sounds/gameSounds.js";
 
 const hideViveControllers = () => {
     const hideObject = (object) => {

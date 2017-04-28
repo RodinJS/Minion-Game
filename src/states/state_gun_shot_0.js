@@ -10,7 +10,11 @@ import {audio} from '../sounds/gameSounds.js';
 const shot = (evt) => {
     const gunShot = new GunShot(evt.globals.gun, new THREE.Vector3(0, 1, 0).add(evt.globals.flyingMinions[0].globalPosition));
     R.Scene.add(gunShot);
+    audio.play('gunShotSound');
     gunShot.on('haselem', (e) => {
+        audio.play('minionsScream');
+        audio.play('minionsWow');
+        audio.play('minionLaughing');
         evt.globals.flyingMinions[0].animation.start('throw');
         highlightMinion(evt.globals.flyingMinions[1], evt);
         addListenerForNextShot(evt);
@@ -80,9 +84,12 @@ state_gun_shot_0.cardboard.on('start', (evt) => {
 });
 
 state_gun_shot_0.cardboard.on('finish', (evt) => {
+    shotNonTaron(evt);
 });
 
 state_gun_shot_0.cardboard.on('fastForward', (evt) => {
+    shotNonTaron(evt);
+
 });
 
 /**

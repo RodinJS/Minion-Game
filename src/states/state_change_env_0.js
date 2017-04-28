@@ -42,6 +42,8 @@ state_change_env_0.taron.on('start', (evt) => {
     hideStuff(evt);
     changeEnv(evt, 0);
     addListenerForNext(evt);
+    audio.play('minionsWow');
+
 });
 
 state_change_env_0.taron.on('finish', (evt) => {
@@ -60,6 +62,7 @@ state_change_env_0.taron.on('fastForward', (evt) => {
 state_change_env_0.cardboard.on('start', (evt) => {
     hideStuff(evt);
     changeEnv(evt, 0);
+
 });
 
 state_change_env_0.cardboard.on('finish', (evt) => {

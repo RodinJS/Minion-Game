@@ -28,6 +28,8 @@ state_change_env_4.taron.on('start', (evt) => {
     changeEnv(evt, 4);
     addListenerForNext(evt);
     evt.globals.snow.visible = true;
+    audio.play('minionsWow');
+
 });
 
 state_change_env_4.taron.on('finish', (evt) => {
@@ -45,6 +47,7 @@ state_change_env_4.taron.on('fastForward', (evt) => {
 
 state_change_env_4.cardboard.on('start', (evt) => {
     changeEnv(evt, 4);
+
 });
 
 state_change_env_4.cardboard.on('finish', (evt) => {

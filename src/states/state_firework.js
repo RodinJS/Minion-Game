@@ -37,10 +37,13 @@ const initFirework = (evt) => {
 const ball2firework = (evt) => {
     const ball = evt.globals.ball;
     shrinkBaall(evt);
+    audio.play('fireWorkSound');
     ball.on(R.CONST.ANIMATION_COMPLETE, (e) => {
         if (e.animation === 'shrink') {
             ball.parent = null;
             initFirework(evt);
+            audio.play('fireWorkSound');
+            audio.play('minionsWow');
         }
     });
 };

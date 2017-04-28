@@ -27,6 +27,8 @@ const addListenerForNext = (evt) => {
 state_change_env_3.taron.on('start', (evt) => {
     changeEnv(evt, 3);
     addListenerForNext(evt);
+    audio.play('minionsWow');
+
 });
 
 state_change_env_3.taron.on('finish', (evt) => {
@@ -43,6 +45,7 @@ state_change_env_3.taron.on('fastForward', (evt) => {
 
 state_change_env_3.cardboard.on('start', (evt) => {
     changeEnv(evt, 3);
+
 });
 
 state_change_env_3.cardboard.on('finish', (evt) => {
