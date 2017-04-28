@@ -16,6 +16,7 @@ const shot = (evt) => {
 
 const shotNonTaron = (evt) => {
     const gunShot = new GunShot(evt.globals.gun, evt.globals.ball.globalPosition);
+    audio.play('gunShotSound');
     R.Scene.add(gunShot);
 };
 

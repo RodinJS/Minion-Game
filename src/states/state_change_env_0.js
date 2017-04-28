@@ -54,6 +54,7 @@ state_change_env_0.taron.on('start', (evt) => {
     text.position.z = -2;
     text.position.y = 0;
     text.rotation.x = Math.PI/36;
+    audio.play('minionsWow');
     hideStuff(evt);
     changeEnv(evt, 0);
     addListenerForNext(evt);
@@ -75,6 +76,7 @@ state_change_env_0.taron.on('fastForward', (evt) => {
 state_change_env_0.cardboard.on('start', (evt) => {
     hideStuff(evt);
     changeEnv(evt, 0);
+    audio.play('minionsWow');
 });
 
 state_change_env_0.cardboard.on('finish', (evt) => {

@@ -78,7 +78,6 @@ function checkMobile() {
 
 check = function () {
 	if (checkMobile()) {
-		console.log(!isSupported() , !checkDeviceScreenSize())
 		if (!isSupported() || !checkDeviceScreenSize()) {
 			let element = document.getElementById('notSupported');
 			element.style.display = "block";
