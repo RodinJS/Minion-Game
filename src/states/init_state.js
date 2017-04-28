@@ -6,6 +6,20 @@ import {SharedObject} from '../GameMechanics/SharedObject.js';
 import {Snow} from '../particleSystem/Snow.js';
 import {audio} from "../sounds/gameSounds.js";
 
+const hideViveControllers = () => {
+    const hideObject = (object) => {
+        if (object.isReady)
+            object.visible = false;
+        else
+            object.on(R.CONST.READY, () => {
+                object.visible = false;
+            })
+    };
+
+    hideObject(R.GamePad.viveLeft.controllerModel);
+    hideObject(R.GamePad.viveRight.controllerModel);
+};
+
 /**
  * Init room
  * Set rotation position and EE
@@ -36,14 +50,12 @@ const initPresentationScreen = (evt) => {
  */
 const initGru = (evt) => {
     const gru = evt.globals.gru;
-    //gru.scale.set(0.8, 0.8, 0.8);
     R.Scene.add(gru);
     gru.animations[0].play();
     // hoverBoardSound.play();
     R.Scene.add(evt.globals.rightHand);
     R.Scene.add(evt.globals.leftHand);
 
-    //R.Scene.add(new R.Box(0.1, 3.2));
 };
 
 const hideGru = (evt) => {
@@ -51,42 +63,25 @@ const hideGru = (evt) => {
 };
 
 const syncGruMotion = (evt) => {
-    const rBox = new R.Box(0.3);
-    const lBox = new R.Box(0.3);
-
-    // evt.globals.rBox = rBox;
-    // evt.globals.lBox = lBox;
-
-    R.Scene.add(rBox, lBox);
-
     const sculptBones = evt.globals.gru.bones.map(i => new R.Sculpt(i));
 
     R.GamePad.viveLeft.sculpt.add(evt.globals.leftHand);
-    evt.globals.leftHand.position.x -= 0.2;
-    evt.globals.leftHand.position.z -= 0.2;
     R.GamePad.viveRight.sculpt.add(evt.globals.rightHand);
-    evt.globals.rightHand.position.x += 0.2;
-    evt.globals.rightHand.position.z -= 0.2;
 
     evt.globals.gru.on(R.CONST.UPDATE, () => {
         const pos = R.Scene.activeCamera.position.clone();
         pos.y = 0.0;
-        //pos.z -= -.8;
         const worldDirection = R.Scene.activeCamera.getWorldDirection();
         const yRotation = new THREE.Vector2(worldDirection.x, worldDirection.z).normalize();
         let yAngle = -getAngle(new THREE.Vector2(0, 0), yRotation);
 
         yAngle = (yAngle - Math.PI * 2) / 2 + Math.PI * 2;
         yAngle -= Math.PI / 2 - Math.PI / 4;
-        //yAngle -= Math.PI / 2;
         evt.globals.gru.globalRotation.y = yAngle;
         evt.globals.gru.globalRotation.x = 0;
         evt.globals.gru.globalRotation.z = 0;
 
         evt.globals.gru.position = pos;
-
-        // rBox.position = sculptBones[8].globalPosition;
-        // lBox.position = sculptBones[14].globalPosition;
 
         sculptBones[8].quaternion.setFromUnitVectors(
             sculptBones[8].globalPosition.clone().normalize(),
@@ -115,49 +110,9 @@ const animateMinion = (minion) => {
     });
 };
 
-const MinionsDistribution = (minion, radius, step) => {
-    minion.position.x = radius * Math.cos(step) + (Math.random() * .5 + .2);
-    minion.position.y = -1.6;
-    minion.position.z = radius * Math.sin(step) + (Math.random() * .5 + .2);
-
-    minion.rotation.y = Math.PI;
-    if(minion.position.z >-0.2) minion.scale.set(1.35, 1.35, 1.35);
-};
-
-const initVeryLowMinions = evt => {
-    let minionSculpt = evt.globals.minionsSculpt;
-    let minion = evt.globals.veryLowMinions;
-
-    evt.globals.hideMinions = [];
-    for (let i = 0; i < 12; i++) {
-        let min = minion.clone();
-        evt.globals.hideMinions.push(min);
-
-        MinionsDistribution(min, 6, Math.PI / 8 * i - Math.PI/5);
-        min.scale.set(1.35, 1.35, 1.35);
-
-        const colors = [
-            [{r: 0.416, g: 0.353, b: 0.133}, {r: 0, g: 0, b: 0}, {r: 0.048, g: 0.222, b: 0.453}],
-            [{r: 0.337, g: 0.288, b: 0.011}, {r: 0, g: 0, b: 0}, {r: 0.020, g: 0.168, b: 0.337}],
-            [{r: 0.213, g: 0.182, b: 0.066}, {r: 0, g: 0, b: 0}, {r: 0.008, g: 0.071, b: 0.155}],
-        ];
-
-        const color = colors[2];
-
-        for (let i = 0; i < minion.children[0]._threeObject.material.materials.length; i++){
-            minion.children[0]._threeObject.material.materials[i].color.r = color[i].r;
-            minion.children[0]._threeObject.material.materials[i].color.g = color[i].g;
-            minion.children[0]._threeObject.material.materials[i].color.b = color[i].b;
-        }
-
-        minionSculpt.add(min)
-    }
-};
-
 const initLowMinions = evt => {
     let minionSculpt = evt.globals.minionsSculpt;
-    //const flyingMinionIndex = [9, 6,  11, 7];
-    const flyingMinionIndex = [4, 7,  2, 6];
+    const flyingMinionIndex = [4, 7, 2, 6];
 
 
     const throwAnimation = new R.AnimationClip('throw', {
@@ -165,7 +120,7 @@ const initLowMinions = evt => {
             y: 3
         },
         rotation: {
-            x: -Math.PI/2 + 0.0234,
+            x: -Math.PI / 2 + 0.0234,
             z: Math.PI,
             y: Math.PI
         }
@@ -183,22 +138,21 @@ const initLowMinions = evt => {
 
     evt.globals.flyingMinions = [];
 
-    evt.globals.lowMinions[0].position.set( 3.5, -1.6, 3.5);
-    evt.globals.lowMinions[1].position.set( 4, -1.6, 1.5);
-    evt.globals.lowMinions[2].position.set( 4, -1.6, -1.5);
-    evt.globals.lowMinions[3].position.set( 3.5, -1.6, -3.5);
-    evt.globals.lowMinions[4].position.set( 1.3, -1.6, -4);
-    evt.globals.lowMinions[5].position.set( -1.4, -1.6, -4);
-    evt.globals.lowMinions[6].position.set( -3.5, -1.6, -3.5);
-    evt.globals.lowMinions[7].position.set( -4, -1.6, -1.5);
-    evt.globals.lowMinions[8].position.set( -4, -1.6, 1.5);
-    evt.globals.lowMinions[9].position.set( -3.5, -1.6, 3.5);
-    evt.globals.lowMinions[10].position.set( -1.1, -1.6, 4);
-    evt.globals.lowMinions[11].position.set( 1.2, -1.6, 4);
+    evt.globals.lowMinions[0].position.set(3.5, -1.6, 3.5);
+    evt.globals.lowMinions[1].position.set(4, -1.6, 1.5);
+    evt.globals.lowMinions[2].position.set(4, -1.6, -1.5);
+    evt.globals.lowMinions[3].position.set(3.5, -1.6, -3.5);
+    evt.globals.lowMinions[4].position.set(1.3, -1.6, -4);
+    evt.globals.lowMinions[5].position.set(-1.4, -1.6, -4);
+    evt.globals.lowMinions[6].position.set(-3.5, -1.6, -3.5);
+    evt.globals.lowMinions[7].position.set(-4, -1.6, -1.5);
+    evt.globals.lowMinions[8].position.set(-4, -1.6, 1.5);
+    evt.globals.lowMinions[9].position.set(-3.5, -1.6, 3.5);
+    evt.globals.lowMinions[10].position.set(-1.1, -1.6, 4);
+    evt.globals.lowMinions[11].position.set(1.2, -1.6, 4);
 
     for (let i = 0; i < evt.globals.lowMinions.length; i++) {
         const minion = evt.globals.lowMinions[i];
-        //MinionsDistribution(minion, 4, Math.PI / 6 * i);
 
         minion.rotation.y = Math.PI;
         minion.scale.set(1.35, 1.35, 1.35);
@@ -208,7 +162,7 @@ const initLowMinions = evt => {
         minion.children[0]._threeObject.material.materials[0].color.g = color.g;
         minion.children[0]._threeObject.material.materials[0].color.b = color.b;
 
-        let minionIndex =flyingMinionIndex.indexOf(i);
+        let minionIndex = flyingMinionIndex.indexOf(i);
         if (minionIndex !== -1) {
             minion.animation.add(throwAnimation);
             evt.globals.flyingMinions[minionIndex] = (minion);
@@ -217,18 +171,17 @@ const initLowMinions = evt => {
         minionSculpt.add(minion);
         animateMinion(minion);
     }
-
 };
 
 const initHighMinions = (evt) => {
     const minionSculpt = evt.globals.minionsSculpt;
 
-    evt.globals.highMinions[0].position.set( 1, -1.6, 2);
-    evt.globals.highMinions[1].position.set( 2, -1.6, 0);
-    evt.globals.highMinions[2].position.set( 1, -1.6, -2);
-    evt.globals.highMinions[3].position.set( -1, -1.6, -2);
-    evt.globals.highMinions[4].position.set( -2, -1.6, 0);
-    evt.globals.highMinions[5].position.set( -1, -1.6, 2);
+    evt.globals.highMinions[0].position.set(1, -1.6, 2);
+    evt.globals.highMinions[1].position.set(2, -1.6, 0);
+    evt.globals.highMinions[2].position.set(1, -1.6, -2);
+    evt.globals.highMinions[3].position.set(-1, -1.6, -2);
+    evt.globals.highMinions[4].position.set(-2, -1.6, 0);
+    evt.globals.highMinions[5].position.set(-1, -1.6, 2);
 
     for (let i = 0; i < evt.globals.highMinions.length; i++) {
         const minion = evt.globals.highMinions[i];
@@ -236,13 +189,10 @@ const initHighMinions = (evt) => {
         minion.rotation.y = Math.PI;
         minion.scale.set(1.35, 1.35, 1.35);
 
-        //MinionsDistribution(minion, 2, Math.PI / 3 * i);
-
         const color = {r: 0.8, g: 0.8, b: 0.8};
         minion.children[0]._threeObject.material.materials[0].color.r = color.r;
         minion.children[0]._threeObject.material.materials[0].color.g = color.g;
         minion.children[0]._threeObject.material.materials[0].color.b = color.b;
-
 
         minionSculpt.add(minion);
         animateMinion(minion);
@@ -251,7 +201,7 @@ const initHighMinions = (evt) => {
 
 const initSnow = (evt) => {
     let snow = new Snow();
-    snow.position.z = 8;
+    snow.position.z = 5;
     R.Scene.add(snow);
     evt.globals.snow = snow;
     snow.visible = false;
@@ -266,77 +216,53 @@ const initSnow = (evt) => {
  * Init all types of minions
  * Set minions sculpt position
  */
-
 const initMinions = (evt) => {
     const minionsSculpt = new R.Sculpt();
     R.Scene.add(minionsSculpt);
     minionsSculpt.position.z = 8;
     evt.globals.minionsSculpt = minionsSculpt;
-    initVeryLowMinions(evt);
     initLowMinions(evt);
     initHighMinions(evt);
 };
+
 /**
  * Create presentation controls (only for taron)
  */
 const initPresentationControls = (evt) => {
     const presentationControls = new R.Sculpt();
-    let text = new THREE.Mesh(new THREE.PlaneGeometry(2, 1), new THREE.MeshBasicMaterial({
-            side: THREE.DoubleSide,
-            map: R.Loader.loadTexture('/public/images/text1.png'),
-            transparent: true
-        }));
-    R.Scene.activeCamera.text = text;
-    R.Scene.activeCamera.add(text);
-    text.position.z = -2;
-    text.position.y = 0.1;
-    text.rotation.x = Math.PI/36;
-
 
     /**
-     * Presentation controls mini screen
-     * @type {*}
-     */
-    const screen = new R.Sculpt(new THREE.Mesh(new THREE.PlaneGeometry(1.61 / 5, 1 / 5), new THREE.MeshBasicMaterial({
-        side: THREE.DoubleSide
-    })));
-    screen.position.set(0, -0.25, -1);
-    presentationControls.add(screen);
-    presentationControls.screen = screen;
-
-    /**
-     * Prev button
+     * Start button text style
      * @type {Text}
      */
-    const prevButton = new R.Text({
-        text: 'Prev',
-        color: 0xffffff
-    });
-
-    prevButton.position.set(-0.30, -0.25, -1);
-    presentationControls.add(prevButton);
-    presentationControls.prevButton = prevButton;
-
-    prevButton.on(R.CONST.GAMEPAD_BUTTON_DOWN, () => {
-        R.Scene.webVRmanager.hmd.resetPose();
-        if (evt.gameMechanics.stateName !== 'state_slide_0')
-            evt.gameMechanics.prev();
+    const startButtonText = new R.Text({
+        text: 'START',
+        color: 0xffd200,
+        fontSize: 0.08
     });
 
     /**
-     * Next button
-     * @type {Text}
+     * Start button style parameters
      */
-    const nextButton = new R.Text({
-        text: 'Next',
-        color: 0xffffff
-    });
+    let startBtnParams = {name: "startBtn", width: 0.4, height: 0.18};
+    startBtnParams.background = {color: 0x336699, opacity: 0.8};
+    startBtnParams.border = {radius: 0.18};
 
-    nextButton.position.set(0.30, -0.25, -1);
-    presentationControls.add(nextButton);
-    presentationControls.nextButton = nextButton;
+    /**
+     * Create start button given parameters
+     */
+    let startButton = new R.Element(startBtnParams);
+    startButton.position.set(0, 0, -1);
+    presentationControls.add(startButton);
+    presentationControls.startButton = startButton;
 
-    nextButton.on(R.CONST.GAMEPAD_BUTTON_DOWN, () => {
+    startButton.add(startButtonText);
+    startButtonText.position.z = 0.02;
+
+    /**
+     * Add button down event, for starting game
+     */
+    startButton.on(R.CONST.GAMEPAD_BUTTON_DOWN, () => {
         evt.gameMechanics.next();
     });
 
@@ -384,6 +310,7 @@ state_init.taron.on('start', (evt) => {
     initPresentationControls(evt);
     initMinions(evt);
     initSnow(evt);
+    hideViveControllers(evt);
 });
 
 state_init.taron.on('finish', (evt) => {
@@ -399,6 +326,7 @@ state_init.taron.on('fastForward', (evt) => {
     initPresentationControls(evt);
     initMinions(evt);
     initSnow(evt);
+    hideViveControllers(evt);
 });
 
 /**
@@ -438,10 +366,6 @@ state_init.laptop.on('start', (evt) => {
     initGru(evt);
     initPresentationScreen(evt);
     initMinions(evt);
-    // addOnChangeEvent(evt.globals.ball, 'scale.z', ()=> {
-    //     // audio.play('scaleSound');
-    //     removeOnChangeEvent(evt.globals.ball, 'scale.z');
-    // });
     initSnow(evt);
 });
 
@@ -455,9 +379,5 @@ state_init.laptop.on('fastForward', (evt) => {
     initGru(evt);
     initMinions(evt);
     initPresentationScreen(evt);
-    // addOnChangeEvent(evt.globals.ball, 'scale.z', ()=> {
-    //     // audio.play('scaleSound');
-    //     removeOnChangeEvent(evt.globals.ball, 'scale.z');
-    // });
     initSnow(evt);
 });

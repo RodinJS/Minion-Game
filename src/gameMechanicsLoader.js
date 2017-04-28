@@ -62,16 +62,6 @@ const loadMinionModel = (gameMechanics) => {
     }
 };
 
-const loadVeryLowMinionModel = (gameMechanics) => {
-    const url = '/public/resource/models/minion/minoin_low_very_low.JD';
-    const minion = loadJD(url);
-    queuedElements.push(minion);
-    minion.on('jdReady', () => {
-        gameMechanics.globals.veryLowMinions = minion;
-        removeFromQueue(minion);
-    });
-};
-
 /**
  * Load low poly minions model
  */
@@ -183,19 +173,6 @@ const loadGunModel = (gameMechanics) => {
 };
 
 /**
- * load gun model
- */
-const loadShootingModel = (gameMechanics) => {
-    const shooting = loadJD('/public/resource/models/shooting_model/shooting.JD');
-    queuedElements.push(shooting);
-    shooting.on('jdReady', function () {
-        removeFromQueue(shooting);
-    });
-
-    gameMechanics.globals.shooting = shooting;
-};
-
-/**
  * Class for loading all models, images and ee before start
  */
 class GameMechanicsLoader extends R.EventEmitter {
@@ -214,8 +191,6 @@ class GameMechanicsLoader extends R.EventEmitter {
         loadBallModel(this.gameMechanics);
         loadGruModel(this.gameMechanics);
         loadGunModel(this.gameMechanics);
-        loadShootingModel(this.gameMechanics);
-        loadVeryLowMinionModel(this.gameMechanics);
         loadMinionModel(this.gameMechanics);
         loadLowMinionModel(this.gameMechanics);
         loadEnvTextures(this.gameMechanics);
@@ -231,8 +206,6 @@ class GameMechanicsLoader extends R.EventEmitter {
         loadBallModel(this.gameMechanics);
         loadGruModel(this.gameMechanics);
         loadGunModel(this.gameMechanics);
-        loadShootingModel(this.gameMechanics);
-        loadVeryLowMinionModel(this.gameMechanics);
         loadMinionModel(this.gameMechanics);
         loadLowMinionModel(this.gameMechanics);
         loadEnvTextures(this.gameMechanics);
@@ -247,8 +220,6 @@ class GameMechanicsLoader extends R.EventEmitter {
         loadBallModel(this.gameMechanics);
         loadGruModel(this.gameMechanics);
         loadGunModel(this.gameMechanics);
-        loadShootingModel(this.gameMechanics);
-        loadVeryLowMinionModel(this.gameMechanics);
         loadMinionModel(this.gameMechanics);
         loadLowMinionModel(this.gameMechanics);
         loadEnvTextures(this.gameMechanics);

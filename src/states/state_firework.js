@@ -26,7 +26,7 @@ const shrinkBaall = (evt) => {
  * Init firework
  */
 const initFirework = (evt) => {
-    const firework = new Firework(2, 0xfaffba, [[2, -1, 1500, 0xffbae6], [-2, 1, 1600, 0xbae9ff]]);
+    const firework = new Firework(2);
     firework.position.set(0, 7, 5);
     R.Scene.add(firework);
 };

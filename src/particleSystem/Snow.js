@@ -15,7 +15,7 @@ Math.randomFloatIn = (a = 0, b = 1) => {
  * @param {number} [gravity = 1] - gravity.
  */
 export class Snow extends R.Sculpt {
-    constructor(areaSize = 15.0,
+    constructor(areaSize = 18.0,
                 particleSize = 0.02,
                 density = 5,
                 windSpeed = 0.5,

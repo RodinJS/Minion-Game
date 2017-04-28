@@ -43,13 +43,6 @@ const ballFlyingFastForward = (evt) => {
     ball.position.set(0, 5, 5);
 };
 
-/**
- * Hide throwing wall
- */
-const hideThrowingWall = (evt) => {
-    evt.globals.throwingWall.parent = null;
-};
-
 export const state_ball_flying = {
     taron: new State('state_ball_flying'),
     cardboard: new State('state_ball_flying'),
@@ -62,7 +55,6 @@ export const state_ball_flying = {
 
 state_ball_flying.taron.on('start', (evt) => {
     startBallFlying(evt);
-    hideThrowingWall(evt);
 });
 
 state_ball_flying.taron.on('finish', (evt) => {
@@ -71,7 +63,6 @@ state_ball_flying.taron.on('finish', (evt) => {
 
 state_ball_flying.taron.on('fastForward', (evt) => {
     ballFlyingFastForward(evt);
-    hideThrowingWall(evt);
 });
 
 /**

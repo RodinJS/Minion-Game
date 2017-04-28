@@ -9,12 +9,10 @@ import {audio} from "../sounds/gameSounds.js";
 const addGun2Hand = (evt) => {
     evt.globals.rightHand.add(evt.globals.gun);
     evt.globals.gun.position.z = -0.1;
-    //todo: add transparency
-    const gunEventHandler = new R.Box(1, new THREE.MeshBasicMaterial({wireframe: true}));
+    const gunEventHandler = new R.Box(0.001, new THREE.MeshBasicMaterial({transparent: true, opacity: 0 }));
     gunEventHandler.position.set(0, 0, -1.5);
     evt.globals.gun.add(gunEventHandler);
     evt.globals.gun.eventHandler = gunEventHandler;
-    // evt.globals.sharedGun.active(true);
 };
 
 /**
@@ -22,15 +20,11 @@ const addGun2Hand = (evt) => {
  */
 const addGun2Scene = (evt) => {
     evt.globals.rightHand.add(evt.globals.gun);
-    // R.Scene.add(evt.globals.gun);
-    // evt.globals.sharedGun.active(true);
 };
 
 const addGun2SceneLaptop = evt => {
-    // R.Scene.add(evt.globals.gun);
     evt.globals.rightHand.add(evt.globals.gun);
     audio.play('waterGunLoadingSound');
-    // evt.globals.sharedGun.active(true);
 };
 
 /**

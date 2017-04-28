@@ -7,10 +7,6 @@ const hideStuff = (evt) => {
     evt.globals.room.parent = null;
     evt.globals.presentationScreen.parent = null;
 
-    for (let i = 0; i < evt.globals.hideMinions.length; i++) {
-        evt.globals.hideMinions[i].parent = null;
-    }
-
     for (let i = 0; i < evt.globals.lowMinions.length; i++) {
         evt.globals.lowMinions[i].children[0]._threeObject.material.materials[0].color = new THREE.Color(0.8, 0.8, 0.8);
     }
@@ -43,17 +39,6 @@ export const state_change_env_0 = {
  */
 
 state_change_env_0.taron.on('start', (evt) => {
-    R.Scene.activeCamera.remove(R.Scene.activeCamera.text);
-    let text = new THREE.Mesh(new THREE.PlaneGeometry(2, 1), new THREE.MeshBasicMaterial({
-        side: THREE.DoubleSide,
-        map: R.Loader.loadTexture('/public/images/text2.png'),
-        transparent: true
-    }));
-    R.Scene.activeCamera.text = text;
-    R.Scene.activeCamera.add(text);
-    text.position.z = -2;
-    text.position.y = 0;
-    text.rotation.x = Math.PI/36;
     hideStuff(evt);
     changeEnv(evt, 0);
     addListenerForNext(evt);

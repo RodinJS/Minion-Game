@@ -8,7 +8,6 @@ import * as R from 'rodin/core';
 const addTriggerGunEvent = (evt) => {
     const gamepad = R.GamePad.viveRight;
     evt.globals.gunGamepad = gamepad;
-    evt.globals.throwingWall.parent = null;
     const addGunToOculus = (e) => {
         if(R.Buttons.viveRightTrigger.pressed) {
             gamepad.removeEventListener(R.CONST.UPDATE, addGunToOculus);
@@ -22,7 +21,6 @@ const addTriggerGunEvent = (evt) => {
 const takeGunForward = (evt) => {
     const gamepad = R.GamePad.oculusTouchRight;
     evt.globals.gunGamepad = gamepad;
-    evt.globals.throwingWall.parent = null;
 };
 
 export const state_take_gun = {

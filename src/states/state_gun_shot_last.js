@@ -11,6 +11,7 @@ const shot = (evt) => {
     R.Scene.add(gunShot);
     gunShot.on('haselem', (e) => {
         evt.globals.flyingMinions[3].animation.start('throw');
+        evt.globals.minionHighLightBox.parent = null;
         addListenerForNextShot(evt);
     });
 };

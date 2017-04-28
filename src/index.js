@@ -69,7 +69,6 @@ gameMechanicsLoader.on(R.CONST.READY, () => {
     // is we are the master it will be 0
     // if we are not it will be whatever state the master is currently
     SS.onMessage('getConnectedUsersList', (data) => {
-        //loadingRodin();
         for (let i in data) {
             if (data[i].isMaster === true) {
                 startingState = data[i].currentState;
@@ -83,9 +82,5 @@ gameMechanicsLoader.on(R.CONST.READY, () => {
 });
 
 gameMechanicsLoader.load();
-
-// document.onclick = function () {
-//     gameMechanics.next();
-// };
 
 window.gameMechanics = gameMechanics;
